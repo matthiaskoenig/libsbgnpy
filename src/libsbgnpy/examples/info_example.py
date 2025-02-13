@@ -2,6 +2,7 @@
 """
 Display information from SBGN files.
 """
+
 import os
 
 import libsbgnpy.libsbgn as libsbgn  # import the bindings

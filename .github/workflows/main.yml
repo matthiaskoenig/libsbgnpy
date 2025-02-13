@@ -1,43 +1,38 @@
 name: CI-CD
 
-on:
-  push:
-    branches:
-    - master
-    - develop
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
-      - '[0-9]+.[0-9]+.[0-9]+a[0-9]+'
-  pull_request:
-    branches:
-    - master
-    - develop
-
+on: [push]
 jobs:
   test:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]  # [ubuntu-latest, macos-latest, windows-latest]
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        exclude:
+          - os: windows-latest
+            python-version: "3.10"
+          - os: windows-latest
+            python-version: "3.11"
+          - os: windows-latest
+            python-version: "3.13"
+          - os: macos-latest
+            python-version: "3.10"
+          - os: macos-latest
+            python-version: "3.11"
+          - os: macos-latest
+            python-version: "3.13"
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v4
+    - name: Install uv and set the python version
+      uses: astral-sh/setup-uv@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip setuptools wheel
-        python -m pip install tox tox-gh-actions
+        enable-cache: true
     - name: Test with tox
       run:
-        tox -- --cov-report=xml
-    - name: Report coverage
-      shell: bash
-      run: bash <(curl -s https://codecov.io/bash)
+        uvx --with tox-uv tox -e py${{ matrix.python-version }}
 
   release:
     needs: test
@@ -46,44 +41,39 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.8]
-
+        python-version: ["3.13"]
+    environment:
+      name: pypi
+      url: https://pypi.org/p/<your-pypi-project-name>
+    permissions:
+      id-token: write
+      contents: write
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Get tag
       id: tag
-      run: echo "::set-output name=version::${GITHUB_REF#refs/tags/}"
+      run: echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip setuptools wheel
-        python -m pip install twine
+        python -m pip install --upgrade pip
+        python -m pip install hatch twine
+
     - name: Build package
-      run: python setup.py sdist bdist_wheel
+      # run: python setup.py sdist bdist_wheel
+      run: hatch build
     - name: Check the package
       run: twine check dist/*
     - name: Publish to PyPI
-      env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-      run:
-        twine upload --skip-existing --non-interactive dist/*
-    - name: Create GitHub release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
-        body_path: "release-notes/${{ steps.tag.outputs.version }}.md"
+        packages-dir: dist
+    - name: Create GitHub release
+      uses: softprops/action-gh-release@v1
+      with:
+        body_path: "release-notes/${{ github.ref_name }}.md"
         draft: false
         prerelease: false
-    - name: Pull request to master
-      uses: vsoch/pull-request-action@1.0.6
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PULL_REQUEST_FROM_BRANCH: "develop"
-        PULL_REQUEST_BRANCH: "master"

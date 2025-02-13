@@ -3,6 +3,7 @@
 Write and read notes information.
 Notes must be XML elements in a <notes>Tag</notes>
 """
+
 from libsbgnpy import Language, Notes, libsbgn, utils
 
 

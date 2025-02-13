@@ -3,6 +3,7 @@
 Definition of Language, GlyphClass and ArcClass types.
 Created manually from schema file.
 """
+
 from enum import Enum, unique
 
 

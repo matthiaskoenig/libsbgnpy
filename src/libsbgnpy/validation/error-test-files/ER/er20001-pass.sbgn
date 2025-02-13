@@ -25,17 +25,17 @@
 	<arc class="stimulation" source="g4_1" target="g5" id="a1">
 		<start x="230" y="207" />
 		<end x="230" y="250" />
-	</arc>	
+	</arc>
 
 	<arcgroup class="interaction">
-	
+
 		<glyph class="interaction" id="g4">
 			<bbox x="209" y="159" w="42" h="42" />
 			<glyph class="outcome" id="g4_1">
 				<bbox x="224" y="195" w="12" h="12" />
 			</glyph>
 		</glyph>
-		
+
 		<arc class="interaction" source="g4" target="g1" id="a2">
 			<start x="215" y="164" />
 			<end x="142" y="90" />
@@ -50,8 +50,8 @@
 			<start x="245" y="164" />
 			<end x="318" y="90" />
 		</arc>
-		
+
 	</arcgroup>
-	
+
 </map>
 </sbgn>

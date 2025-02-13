@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "pymetadata"
+name = "libsbgnpy"
 dynamic = ["version"]
-description = "pymetadata are python utilities for working with metadata."
+description = "libsbgnpy are python utilities for working with SBGN."
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
@@ -31,21 +31,11 @@ keywords = [
 	"modeling",
 	"standardization",
 	"COMBINE",
-	"metadata",
-	"archive",
-	"annotation",
+	"SBGN",
 ]
 dependencies = [
-    "depinfo>=2.2.0",
+    "requests",
 	"lxml>=5.3",
-	"rich>=13.9.4",
-	"requests>=2.32.3",
-	"zeep>=4.3.1",
-	"pronto>=2.5.8",
-	"fastobo>=0.12.3",
-	"jinja2>=3.1.5",
-	"xmltodict>=0.14.2",
-	"pydantic>=2.10.4",
 ]
 
 [project.optional-dependencies]
@@ -54,6 +44,7 @@ dev = [
 	"ruff>=0.8.6",
 	"pre-commit>=4.0.1",
 	"mypy>=1.9.0",
+	"pytest>=8.1.1",
 ]
 test = [
     "tox>=4.14.2",
@@ -62,11 +53,11 @@ test = [
 ]
 
 [project_urls]
-Homepage = "https://github.com/matthiaskoenig/pymetadata"
-Repository = "https://github.com/matthiaskoenig/pymetadata"
-Documentation = "https://github.com/matthiaskoenig/pymetadata"
-Issues = "https://github.com/matthiaskoenig/pymetadata/issues"
-Download = "https://pypi.org/project/pymetadata"
+Homepage = "https://github.com/matthiaskoenig/libsbgnpy"
+Repository = "https://github.com/matthiaskoenig/libsbgnpy"
+Documentation = "https://github.com/matthiaskoenig/libsbgnpy"
+Issues = "https://github.com/matthiaskoenig/libsbgnpy/issues"
+Download = "https://pypi.org/project/libsbgnpy"
 
 [tool.hatch.version]
-path = "./src/pymetadata/__init__.py"
+path = "./src/libsbgnpy/__init__.py"

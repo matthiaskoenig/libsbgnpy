@@ -1,7 +1,6 @@
 # Release information
 
 ## make release
-* update ontologies via `ontology.update_ontology_files()`
 * update release notes in `release-notes` with commit
 * make sure all tests run (`tox -p`)
 * check formating and linting (`ruff check`)
@@ -40,6 +39,6 @@ tox run-parallel
 # Setup pre-commit
 ```bash
 uv pip install pre-commit
-pre-commit install
-pre-commit run
+uv run pre-commit install
+uv run pre-commit run
 ```

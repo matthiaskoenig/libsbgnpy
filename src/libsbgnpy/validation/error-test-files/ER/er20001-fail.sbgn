@@ -32,9 +32,9 @@
 	<arc class="stimulation" source="g4_1" target="g5" id="a1">
 		<start x="230" y="207" />
 		<end x="230" y="250" />
-	</arc>	
-	
-	
+	</arc>
+
+
 	<arc class="interaction" source="g4" target="g1" id="a2">
 		<start x="215" y="164" />
 		<end x="142" y="90" />
@@ -49,7 +49,7 @@
 		<start x="245" y="164" />
 		<end x="318" y="90" />
 	</arc>
-	
-	
+
+
 </map>
 </sbgn>

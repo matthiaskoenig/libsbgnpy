@@ -6,11 +6,12 @@ and high-level validation using schematron.
 At this point only the XSD validation is implemented.
 see [#7](https://github.com/matthiaskoenig/libsbgn-python/issues/7)
 """
+
 import os
 import sys
 from enum import Enum
 
-from lxml import etree, isoschematron
+from lxml import etree
 
 import libsbgnpy.utils as utils
 from libsbgnpy.libsbgnTypes import Language
@@ -32,7 +33,6 @@ def validate_xsd(f):
     is_valid = xmlschema.validate(doc)
     if not is_valid:
         log = xmlschema.error_log
-        error = log.last_error
         sys.stderr.write(str(log) + "\n")
         return log
 
@@ -60,19 +60,19 @@ class Issue(object):
             self.severity = Severity.WARNING
 
     def get_severity(self):
-        """ Severity of the issue, i.e.: is it an error, or a warning? """
+        """Severity of the issue, i.e.: is it an error, or a warning?"""
         return self.severity
 
     def get_message(self):
-        """ Human readable description of the issue. """
+        """Human readable description of the issue."""
         return self.message
 
     def get_diagnostic_id(self):
-        """ Identifier of the element that this issue is about. """
+        """Identifier of the element that this issue is about."""
         return self.diagnostic_id
 
     def get_rule_id(self):
-        """ Identifier of the issue """
+        """Identifier of the issue"""
         return self.rule_id
 
     def __str__(self):

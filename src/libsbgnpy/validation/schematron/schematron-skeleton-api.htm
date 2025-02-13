@@ -16,7 +16,7 @@
 the implementation of Schematron called <TT>iso_schematron_skeleton.xsl</TT>.
 (available in an XSLT1 and XSLT2 version). The API makes available as
 much information from the schema, however there may be some edge
-cases where it is not exhaustive.   
+cases where it is not exhaustive.
 </P>
 <P>The <I>skeleton</I> is an XSLT script which provides all the basic
 parsing and validating routines for compiling a Schematron schema
@@ -28,17 +28,17 @@ default ones. (The program you write is sometimes called a
 as the XSLT script, not the skeleton. There are several
 pre-processing stages which the Schematron schema should be processed
 through first, to handle such things as include statements and
-abstract patterns. 
+abstract patterns.
 </P>
 <P>Phases and error reporting for problems in the schema itself are
 handled by the skeleton with no interaction with a &ldquo;meta-stylesheet&rdquo;.
 Note that there is no guarantee that the context node is always the
 element being handled: in most cases the only information available
-is the information in the parameters. 
+is the information in the parameters.
 </P>
 <P>For an introductory tutorial on using this API, see Bob DuCharme's
 <A HREF="http://www.xml.com/pub/a/2004/10/05/tr.html">Schematron 1.5:
-Looking Under the Hood</A> 
+Looking Under the Hood</A>
 </P>
 <H1>Superset of API for Schematron 1.5 and 1.6</H1>
 <P>(This is an updated version of the API for the Schematron 1.5
@@ -65,11 +65,11 @@ implementation is no action.</P>
 the schema (which is not the same thing as the root of the document /
 and need not be the document element /*) .</P>
 <DL>
-	<DT><TT><I>node-list</I></TT><TT> $contents</TT> 
+	<DT><TT><I>node-list</I></TT><TT> $contents</TT>
 	</DT><DT>
-	<TT><I>string</I></TT><TT> $schemaVersion</TT> 
+	<TT><I>string</I></TT><TT> $schemaVersion</TT>
 	</DT><DD>
-	The version of the schema, perhaps a datestamp. 
+	The version of the schema, perhaps a datestamp.
 	</DD><DT>
 	<TT><FONT COLOR="#ff0000"><I>&quot;xslt&quot; | &quot;xpath&quot; |
 	&quot;xslt2&quot; | ...</I></FONT></TT><TT><FONT COLOR="#ff0000">
@@ -77,9 +77,9 @@ and need not be the document element /*) .</P>
 	</DT><DD>
 	<FONT COLOR="#ff0000">The query language binding. </FONT>
 	</DD><DT>
-	<TT><I>string</I></TT><TT> $title</TT> 
+	<TT><I>string</I></TT><TT> $title</TT>
 	</DT><DD>
-	The title of this schema 
+	The title of this schema
 	</DD><DT>
 	<TT><FONT COLOR="#ff0000"><I>&quot;iso&quot; | &quot;1.5&quot; |
 	&quot;1.6&quot; | ...</I></FONT></TT><TT><FONT COLOR="#ff0000">
@@ -131,17 +131,17 @@ mode=&quot;do-schema-p&quot; /&gt;</TT></P>
 <HR>
 <H2><TT>process-assert</TT></H2>
 <P>The <TT>process-assert</TT> template handles asserts whose test
-has failed. 
+has failed.
 </P>
 <DL>
-	<DT><TT><I>XPath</I></TT><TT> $test</TT> 
+	<DT><TT><I>XPath</I></TT><TT> $test</TT>
 	</DT><DD>
-	The test 
+	The test
 	</DD><DT>
-	<TT><I>XML IDREFS</I></TT><TT> $diagnostics</TT> 
+	<TT><I>XML IDREFS</I></TT><TT> $diagnostics</TT>
 	</DT><DD>
 	A list of the idrefs diagnostic elements related to the current
-	assertion 
+	assertion
 	</DD><DT>
 	<TT><FONT COLOR="#ff0000"><I>XML NMTOKEN</I></FONT></TT><TT><FONT COLOR="#ff0000">
 	$flag</FONT></TT><FONT COLOR="#ff0000"> </FONT>
@@ -149,7 +149,7 @@ has failed.
 	<FONT COLOR="#ff0000">The name of a flag that becomes true because
 	this assertion fails. The flag is true for the document if it is
 	flagged true on any assertion. For compatability, this parameter
-	should not be used with Schematron 1.5.</FONT> 
+	should not be used with Schematron 1.5.</FONT>
 	</DD></DL>
 <P>
 Rich properties:</P>
@@ -254,9 +254,9 @@ context of the rule.</P>
 markup, which is only needed by certain human scripts such as Arabic.</P>
 <DL>
 	<DT><TT><I>&quot;ltr&quot; or &quot;rtl&quot; or &quot;&quot;</I></TT><TT>
-	$value</TT> 
+	$value</TT>
 	</DT><DD STYLE="margin-bottom: 0.5cm">
-	Left-to-right or right-to-left or unspecified 
+	Left-to-right or right-to-left or unspecified
 	</DD><HR>
 </DL>
 <H2><TT>process-emph</TT></H2>
@@ -267,13 +267,13 @@ parameters.</P>
 <H2><TT>process-message</TT></H2>
 <P>The <TT>process-message</TT> handles default outputing of text.</P>
 <DL>
-	<DT><TT><I>string</I></TT><TT> $pattern</TT> 
+	<DT><TT><I>string</I></TT><TT> $pattern</TT>
 	</DT><DD>
-	Some text that may be some kind of pattern 
+	Some text that may be some kind of pattern
 	</DD><DT>
-	<TT><I>string</I></TT><TT> $role</TT> 
+	<TT><I>string</I></TT><TT> $role</TT>
 	</DT><DD STYLE="margin-bottom: 0.5cm">
-	Some text that may be some kind of role 
+	Some text that may be some kind of role
 	</DD><HR>
 </DL>
 <H2><TT>process-name</TT></H2>
@@ -284,10 +284,10 @@ provide <TT>name</TT> subelements rather than the more general
 descriptions rather than specific diagnostics, for which purpose the
 <TT>diagnostics</TT> elements are used.</P>
 <DL>
-	<DT><TT><I>string</I></TT><TT> $name</TT> 
+	<DT><TT><I>string</I></TT><TT> $name</TT>
 	</DT><DD STYLE="margin-bottom: 0.5cm">
 	The name of the current element, or of the node specified by a <TT>name</TT>
-	element 
+	element
 	</DD><HR>
 </DL>
 <H2><TT>process-ns</TT></H2>
@@ -295,52 +295,52 @@ descriptions rather than specific diagnostics, for which purpose the
 declarations, which are used to transmit on namespace information by
 the skeleton.</P>
 <DL>
-	<DT><TT><I>Namespace NCName</I></TT><TT> $prefix</TT> 
+	<DT><TT><I>Namespace NCName</I></TT><TT> $prefix</TT>
 	</DT><DD>
-	The prefix of a namespace 
+	The prefix of a namespace
 	</DD><DT>
-	<TT><I>XML SystemId</I></TT><TT> $uri</TT> 
+	<TT><I>XML SystemId</I></TT><TT> $uri</TT>
 	</DT><DD STYLE="margin-bottom: 0.5cm">
-	The (internationalized) URI Reference of a namespace 
+	The (internationalized) URI Reference of a namespace
 	</DD><HR>
 </DL>
 <H2><TT>process-p</TT></H2>
 <P>The <TT>process-p</TT> template handles paragraphs.</P>
 <DL>
-	<DT><TT><I>XML NMTOKEN</I></TT><TT> $class</TT> 
+	<DT><TT><I>XML NMTOKEN</I></TT><TT> $class</TT>
 	</DT><DD>
-	An attribute that can be used for stylesheet style 
+	An attribute that can be used for stylesheet style
 	</DD><DT>
-	<TT><I>XML ID</I></TT><TT> $id</TT> 
+	<TT><I>XML ID</I></TT><TT> $id</TT>
 	</DT><DD>
-	The unique identifier with the schema for the <TT>p</TT> element. 
+	The unique identifier with the schema for the <TT>p</TT> element.
 	</DD><DT>
-	<TT><I>XML SystemId</I></TT><TT> $icon</TT> 
+	<TT><I>XML SystemId</I></TT><TT> $icon</TT>
 	</DT><DD>
-	The URI of an icon 
+	The URI of an icon
 	</DD><DT>
-	<TT><I>IETF Language</I></TT><TT> $lang</TT> 
+	<TT><I>IETF Language</I></TT><TT> $lang</TT>
 	</DT><DD STYLE="margin-bottom: 0.5cm">
-	The human language used in this paragraph 
+	The human language used in this paragraph
 	</DD></DL>
 <P>
 To print the text contents, use <TT>&lt;xsl:apply-templates
-mode=&quot;text&quot; /&gt;</TT> 
+mode=&quot;text&quot; /&gt;</TT>
 </P>
 <HR>
 <H2><TT>process-pattern</TT></H2>
 <P>The <TT>process-pattern</TT> reports on the start of evaluation of
 a <TT>pattern</TT> element.</P>
 <DL>
-	<DT><TT><I>string</I></TT><TT> $name</TT> 
+	<DT><TT><I>string</I></TT><TT> $name</TT>
 	</DT><DD>
-	The title of the current pattern 
+	The title of the current pattern
 	</DD><DT>
-	<TT><I>XML NCNAMES</I></TT><TT> $is-a</TT> 
+	<TT><I>XML NCNAMES</I></TT><TT> $is-a</TT>
 	</DT><DD STYLE="margin-bottom: 0.5cm">
 	Empty or not provided if the pattern is not derived from an abstract
 	pattern. Otherwise the name of the abstract pattern. A list may be
-	used if there was a sequence of abstract patterns. 
+	used if there was a sequence of abstract patterns.
 	</DD></DL>
 <P>
 Rich properties:</P>
@@ -386,16 +386,16 @@ mode=&quot;do-pattern-p&quot;/&gt;</TT></P>
 <HR>
 <H2><TT>process-report</TT></H2>
 <P>The <TT>process-report</TT> template handles <TT>report</TT> whose
-test has succeeded. 
+test has succeeded.
 </P>
 <DL>
-	<DT><TT><I>XPath</I></TT><TT> $test</TT> 
+	<DT><TT><I>XPath</I></TT><TT> $test</TT>
 	</DT><DD>
-	The test 
+	The test
 	</DD><DT>
-	<TT><I>XML IDREFS</I></TT><TT> $diagnostics</TT> 
+	<TT><I>XML IDREFS</I></TT><TT> $diagnostics</TT>
 	</DT><DD>
-	A list of the diagnostic elements related to the current assertion 
+	A list of the diagnostic elements related to the current assertion
 	</DD><DT>
 	<TT><FONT COLOR="#ff0000"><I>XML NMTOKEN</I></FONT></TT><TT><FONT COLOR="#ff0000">
 	$flag</FONT></TT><FONT COLOR="#ff0000"> </FONT>
@@ -403,7 +403,7 @@ test has succeeded.
 	<FONT COLOR="#ff0000">The name of a flag that becomes true because
 	this assertion fails. The flag is true for the document if it is
 	flagged true on any assertion. For compatability, this parameter
-	should not be used with Schematron 1.5.</FONT> 
+	should not be used with Schematron 1.5.</FONT>
 	</DD></DL>
 <P>
 Rich properties:</P>
@@ -464,9 +464,9 @@ mode=&quot;text&quot; /&gt;</TT></P>
 <P>The <TT>process-rule</TT> reports that a <TT>rule</TT> element has
 fired: its <TT>context</TT> attribute matched some nodes. .</P>
 <DL>
-	<DT><TT><I>XSLT expression</I></TT><TT> $context</TT> 
+	<DT><TT><I>XSLT expression</I></TT><TT> $context</TT>
 	</DT><DD STYLE="margin-bottom: 0.5cm">
-	The expression that gives the context of the current 
+	The expression that gives the context of the current
 	</DD></DL>
 <P>
 Rich properties:</P>
@@ -524,18 +524,18 @@ Linking properties:</P>
 <P>The <TT>process-span</TT> handles span elements, which are generic
 elements for styling, like HTML's .</P>
 <DL>
-	<DT><TT><I>XML NMTOKEN</I></TT><TT> $class</TT> 
+	<DT><TT><I>XML NMTOKEN</I></TT><TT> $class</TT>
 	</DT><DD STYLE="margin-bottom: 0.5cm">
-	An attribute that can be used for stylesheet style 
+	An attribute that can be used for stylesheet style
 	</DD><HR>
 </DL>
 <H2><TT>process-title</TT></H2>
 <P>The <TT>process-title</TT> handles title elements, which are
 generic elements for styling, like HTML's .</P>
 <DL>
-	<DT><TT><I>XML NMTOKEN</I></TT><TT> $class</TT> 
+	<DT><TT><I>XML NMTOKEN</I></TT><TT> $class</TT>
 	</DT><DD STYLE="margin-bottom: 0.5cm">
-	An attribute that can be used for stylesheet style 
+	An attribute that can be used for stylesheet style
 	</DD></DL>
 <P>
 By default, titles are handled by invocing <TT>process-p</TT> with
@@ -546,7 +546,7 @@ the parameter class with a value &quot;title&quot;.</P>
 elements, which are used in diagnostic messages to allow very
 specific hinting .</P>
 <DL>
-	<DT><TT><I>XPath</I></TT><TT> $select</TT> 
+	<DT><TT><I>XPath</I></TT><TT> $select</TT>
 	</DT><DD STYLE="margin-bottom: 0.5cm">
 	The path of some node that will be evaluated and printed.</DD><HR>
 </DL>
@@ -717,7 +717,7 @@ string-length(<I>variable</I><SPAN STYLE="font-style: normal">) &lt;
 	</TR>
 </TABLE>
 <DL>
-	<DD STYLE="margin-bottom: 0.5cm"> 
+	<DD STYLE="margin-bottom: 0.5cm">
 	</DD></DL>
 </BODY>
 </HTML>

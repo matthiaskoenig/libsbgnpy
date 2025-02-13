@@ -57,7 +57,7 @@ class map ->
         :return: Language instance.
         """
         return Language(self.language)
-    
+
     def set_language(self, language):
         """ Sets the language and checks that within allowed values.
         :param language:
@@ -79,7 +79,7 @@ class glyph ->
     def get_class(self):
         """ Returns the GlyphClass."""
         return GlyphClass(self.class_)
-        
+
     def set_class(self, class_):
         """ Sets the class and checks that in allowed GlyphClasses
         :param class_:
@@ -91,7 +91,7 @@ class glyph ->
             self.class_ = _cast(None, class_.value)
         else:
             self.class_ = _cast(None, class_)
-        
+
     def get_orientation(self):
         """ Get orientation.
         :return: Orientation instance.
@@ -107,17 +107,17 @@ class glyph ->
         if not isinstance(orientation, Orientation):
             raise TypeError('orientation must be of type Orientation')
         self.orientation = _cast(None, orientation.value)
-        
+
     __init__
         self.set_class(class_)
         self.set_orientation(orientation)
-     
+
 class arc ->
 
     def get_class(self):
         """ Get the ArcClass. """
         return ArcClass(self.class_)
-    
+
     def set_class(self, class_):
         """ Set the ArcClass.
         :param class_:
@@ -129,7 +129,7 @@ class arc ->
             self.class_ = _cast(None, class_.value)
         else:
             self.class_ = _cast(None, class_)
-            
+
     __init__
         self.set_class(class_)
 ```
@@ -140,7 +140,7 @@ class bbox ->
     def __init__(self, x=None, y=None, w=None,  h=None, notes=None, extension=None):
 
 class calloutType ->
-    # ensure that id is written in SBGN 
+    # ensure that id is written in SBGN
     def set_target(self, target):
         if isinstance(target, glyph):
             self.target = target.get_id()

@@ -6,6 +6,7 @@ Currently uses the webservice provided at "http://sysbioapps.dyndns.org/Layout/G
 For documentation see
 http://sysbioapps.dyndns.org/Home/Services
 """
+
 import tempfile
 
 import requests
@@ -30,7 +31,7 @@ def render_sbgn(sbgn, image_file, file_format="png"):
     :param image_file: image to create
     :return: None
     """
-    if file_format is not "png":
+    if file_format != "png":
         raise ValueError("Only png rendering supported.")
     if not image_file.endswith(".{}".format(file_format)):
         raise ValueError(

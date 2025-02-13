@@ -3,6 +3,7 @@ SBOTerm to SBGN mapping.
 
 Cleanup based on initial mapping provided by Augustin.
 """
+
 import os
 import re
 from collections import defaultdict
@@ -21,7 +22,7 @@ def _clean_line(line):
 
 
 def _is_sbo(sbo_term):
-    """ Check is sbo_term is really a SBO term."""
+    """Check is sbo_term is really a SBO term."""
     res = re.search("^SBO:\d{7}$", sbo_term)
     return res is not None
 

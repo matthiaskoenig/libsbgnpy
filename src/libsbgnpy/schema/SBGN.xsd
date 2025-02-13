@@ -1,4 +1,4 @@
-<xsd:schema 
+<xsd:schema
 	targetNamespace="http://sbgn.org/libsbgn/0.2"
   xmlns ="http://sbgn.org/libsbgn/0.2"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -50,7 +50,7 @@
     </xsd:sequence>
   </xsd:complexType>
 
-  
+
 <!-- PointAttributes attribute group -->
 	<xsd:attributeGroup name="PointAttributes">
 		<xsd:annotation>
@@ -147,7 +147,7 @@
 	</xsd:element>
 
 <!-- label element -->
-	
+
 	<xsd:element name="label">
 		<xsd:annotation>
 			<xsd:documentation>
@@ -253,12 +253,12 @@
               <xsd:annotation>
                 <xsd:documentation>
                   <p>
-                    The bbox element on a map is not mandatory, it allows the 
-					application to define a canvas, and at the same time 
+                    The bbox element on a map is not mandatory, it allows the
+					application to define a canvas, and at the same time
 					define a whitespace margin around the glyphs.
 				</p>
 				<p>
-					If a bbox is defined on a map, all glyphs and arcs must be 
+					If a bbox is defined on a map, all glyphs and arcs must be
 					inside this bbox, otherwise they could be
 					clipped off by applications.
 				</p>
@@ -621,7 +621,7 @@
                 <xsd:enumeration value="entity"/>
                 <xsd:enumeration value="outcome"/>
                 <!-- Other (ER) -->
-				                
+
 				<xsd:enumeration value="interaction"/>
                 <xsd:enumeration value="influence target"/>
                 <xsd:enumeration value="annotation"/>
@@ -636,16 +636,16 @@
                 <xsd:enumeration value="cardinality"/>
                 <!-- used for cis / trans and stoichiometry -->
                 <!-- NB Arc classes are in a separate enumeration -->
-				
+
 				<!-- The use of observable is deprecated in newer versions of SBGN.
-				Because it occurs in older versions of the SBGN spec, 
+				Because it occurs in older versions of the SBGN spec,
 				we will keep it around indefinitely.
 				!-->
                 <xsd:enumeration value="observable"/>
               </xsd:restriction>
             </xsd:simpleType>
           </xsd:attribute>
-		  
+
           <xsd:attribute name="orientation" default="horizontal">
             <xsd:annotation>
               <xsd:documentation>
@@ -674,7 +674,7 @@
               </xsd:restriction>
             </xsd:simpleType>
           </xsd:attribute>
-		  
+
           <xsd:attribute name="id" type="xsd:ID" use="required">
             <xsd:annotation>
               <xsd:documentation>
@@ -687,7 +687,7 @@
               </xsd:documentation>
             </xsd:annotation>
           </xsd:attribute>
-		  
+
           <xsd:attribute name="compartmentRef" type="xsd:IDREF" use="optional">
             <xsd:annotation>
               <xsd:documentation>
@@ -709,7 +709,7 @@
               </xsd:documentation>
             </xsd:annotation>
           </xsd:attribute>
-		  
+
   		  <xsd:attribute name="compartmentOrder" type="xsd:float" use="optional">
             <xsd:annotation>
               <xsd:documentation>
@@ -730,7 +730,7 @@
               </xsd:documentation>
             </xsd:annotation>
           </xsd:attribute>
-		  
+
         </xsd:extension>
       </xsd:complexContent>
 		</xsd:complexType>
@@ -804,7 +804,7 @@
 					The arc element describes an SBGN arc between two SBGN nodes. It contains:
 					<ul>
 						<li>For PD: an optional stoichiometry marker,</li>
-						<li>For ER: an optional cardinality marker, 
+						<li>For ER: an optional cardinality marker,
 						zero or more ports (influence targets), and zero or more outcomes,</li>
 						<li>a mandatory source and target (glyph or port),</li>
 						<li>a geometric description of its whole path, from start to end.</li>

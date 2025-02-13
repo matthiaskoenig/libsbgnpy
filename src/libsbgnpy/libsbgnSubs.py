@@ -1,6 +1,7 @@
 """
 Overwritten classes (Notes & Extension)
 """
+
 try:
     from lxml import etree as etree_
 except ImportError:

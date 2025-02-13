@@ -2,6 +2,7 @@
 """
 Helper functions to work with SBGN.
 """
+
 import libsbgnpy.libsbgn as libsbgn
 
 

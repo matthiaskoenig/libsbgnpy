@@ -36,4 +36,3 @@ The libsbgn-python package is available from `pypi
 <https://github.com/matthiaskoenig/libsbgn-python>`_ and can be installed via::
 
     pip install libsbgnpy
-

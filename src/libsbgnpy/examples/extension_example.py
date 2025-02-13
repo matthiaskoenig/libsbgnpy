@@ -3,6 +3,7 @@
 Write and read extension information.
 see https://github.com/sbgn/sbgn/wiki/SBGN-ML_Extensions
 """
+
 from libsbgnpy import Extension, Language, libsbgn, utils
 
 

@@ -6,7 +6,7 @@
 		<label text="RAS"/>
 		<bbox x="100" y="20" w="100" h="60"/>
 	</glyph>
-	
+
 	<glyph class="tag" orientation="left" id="glyph2">
 		<label text="RAS" />
 		<bbox x="270" y="20" w="100" h="60"/>
@@ -14,8 +14,8 @@
 
 	<arc class="equivalence arc" source="glyph2" target="glyph1" id="a1">
 		<start x="270" y="50" />
-		<end x="200" y="50" />			
+		<end x="200" y="50" />
 	</arc>
-	
+
   </map>
 </sbgn>

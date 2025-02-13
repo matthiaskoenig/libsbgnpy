@@ -20,7 +20,6 @@ import base64
 import datetime as datetime_
 import re as re_
 import sys
-import warnings as warnings_
 
 
 try:
@@ -57,7 +56,7 @@ def parsexml_(infile, parser=None, **kwargs):
 
 try:
     from generatedssuper import GeneratedsSuper
-except ImportError as exp:
+except ImportError:
 
     class GeneratedsSuper(object):
         tzoff_pattern = re_.compile(r"(\+|-)((0\d|1[0-3]):[0-5]\d|14:00)$")
@@ -871,10 +870,6 @@ class SBGNBase(GeneratedsSuper):
         fromsubclass_=False,
         pretty_print=True,
     ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         if self.notes is not None:
             self.notes.export(
                 outfile, level, namespace_, name_="notes", pretty_print=pretty_print
@@ -1394,10 +1389,6 @@ class label(SBGNBase):
         super(label, self).exportChildren(
             outfile, level, namespace_, name_, True, pretty_print=pretty_print
         )
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         if self.bbox is not None:
             self.bbox.export(
                 outfile,
@@ -1534,10 +1525,6 @@ class sbgn(SBGNBase):
         super(sbgn, self).exportChildren(
             outfile, level, namespace_, name_, True, pretty_print=pretty_print
         )
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         if self.map is not None:
             self.map.export(
                 outfile,
@@ -1777,10 +1764,6 @@ class map(SBGNBase):
         super(map, self).exportChildren(
             outfile, level, namespace_, name_, True, pretty_print=pretty_print
         )
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         if self.bbox is not None:
             self.bbox.export(
                 outfile,
@@ -2392,10 +2375,6 @@ class glyph(SBGNBase):
         super(glyph, self).exportChildren(
             outfile, level, namespace_, name_, True, pretty_print=pretty_print
         )
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         if self.label is not None:
             self.label.export(
                 outfile,
@@ -2681,10 +2660,6 @@ class arcgroup(SBGNBase):
         super(arcgroup, self).exportChildren(
             outfile, level, namespace_, name_, True, pretty_print=pretty_print
         )
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         for glyph_ in self.glyph:
             glyph_.export(
                 outfile,
@@ -2865,7 +2840,7 @@ class arc(SBGNBase):
         self.end = end
 
     def get_class(self):
-        """ Get the ArcClass. """
+        """Get the ArcClass."""
         return ArcClass(self.class_)
 
     def set_class(self, class_):
@@ -3018,10 +2993,6 @@ class arc(SBGNBase):
         super(arc, self).exportChildren(
             outfile, level, namespace_, name_, True, pretty_print=pretty_print
         )
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         for glyph_ in self.glyph:
             glyph_.export(
                 outfile,
@@ -3207,10 +3178,6 @@ class notesType(GeneratedsSuper):
         fromsubclass_=False,
         pretty_print=True,
     ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         for obj_ in self.anytypeobjs_:
             obj_.export(outfile, level, namespace_, pretty_print=pretty_print)
 
@@ -3336,10 +3303,6 @@ class extensionType(GeneratedsSuper):
         fromsubclass_=False,
         pretty_print=True,
     ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         for obj_ in self.anytypeobjs_:
             obj_.export(outfile, level, namespace_, pretty_print=pretty_print)
 
@@ -3604,10 +3567,6 @@ class cloneType(GeneratedsSuper):
         fromsubclass_=False,
         pretty_print=True,
     ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         if self.label is not None:
             self.label.export(
                 outfile,
@@ -3668,9 +3627,6 @@ class calloutType(GeneratedsSuper):
 
     def get_target(self):
         return self.target
-
-    def set_target(self, target):
-        self.target = target
 
     def set_target(self, target):
         if isinstance(target, glyph):
@@ -3751,10 +3707,6 @@ class calloutType(GeneratedsSuper):
         fromsubclass_=False,
         pretty_print=True,
     ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         if self.point is not None:
             self.point.export(
                 outfile,
@@ -4165,10 +4117,6 @@ class nextType(GeneratedsSuper):
         fromsubclass_=False,
         pretty_print=True,
     ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         for point_ in self.point:
             point_.export(
                 outfile,
@@ -4336,10 +4284,6 @@ class endType(GeneratedsSuper):
         fromsubclass_=False,
         pretty_print=True,
     ):
-        if pretty_print:
-            eol_ = "\n"
-        else:
-            eol_ = ""
         for point_ in self.point:
             point_.export(
                 outfile,

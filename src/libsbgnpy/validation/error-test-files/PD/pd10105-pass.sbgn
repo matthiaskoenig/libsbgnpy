@@ -18,9 +18,9 @@
 	<arc class="consumption" source="glyph1" target="pn1.1" id="a01">
 		<start x="98" y="160" />
 		<end x="136" y="180" />
-	</arc>	
+	</arc>
 	<arc class="production" source="pn1.2" target="glyph_ethanal" id="a05">
-		<start x="184" y="180" />			
+		<start x="184" y="180" />
 		<end x="224" y="154" />
 	</arc>
   </map>
