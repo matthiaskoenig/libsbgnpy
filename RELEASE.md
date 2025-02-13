@@ -1,21 +1,45 @@
 # Release information
 
-## update documentation
-* make necessary updates to notebooks
-* build documentation `cd docs_builder` and `make html`
-
 ## make release
-* sort imports (`isort src/libsbgnpy`)
-* code formating (`black src/libsbgnpy`)
-* make sure all tests run (`tox --`)
-* update release notes in `release-notes`
-* commit changes
-* bump version (`bumpversion patch` or `bumpversion` minor)
+* update ontologies via `ontology.update_ontology_files()`
+* update release notes in `release-notes` with commit
+* make sure all tests run (`tox -p`)
+* check formating and linting (`ruff check`)
+* test bump version (`uvx bump-my-version bump [major|minor|patch] --dry-run -vv`)
+* bump version (`uvx bump-my-version bump [major|minor|patch]`)
 * `git push --tags` (triggers release)
-
+* `git push`
 * test installation in virtualenv from pypi
+```bash
+uv venv --python 3.13
+uv pip install pymetadata
 ```
-mkvirtualenv test --python=python3.8
-(test) pip install libsbgnpy
+
+# Install dev dependencies:
+```bash
+# install core dependencies
+uv sync
+# install dev dependencies
+uv pip install -r pyproject.toml --extra dev
 ```
-* merge pull request to master
+
+## Setup tox testing
+See information on https://github.com/tox-dev/tox-uv
+```bash
+uv tool install tox --with tox-uv
+```
+Run single tox target
+```bash
+tox r -e py312
+```
+Run all tests in parallel
+```bash
+tox run-parallel
+```
+
+# Setup pre-commit
+```bash
+uv pip install pre-commit
+pre-commit install
+pre-commit run
+```

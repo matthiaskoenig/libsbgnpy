@@ -1,0 +1,22 @@
+{
+  "upload_type": "software",
+  "title": "pymetadata are python utilities for working with metadata",
+  "creators": [
+    {
+      "orcid": "0000-0003-1725-179X",
+      "affiliation": "Humboldt-University Berlin, Institute for Theoretical Biology, Berlin",
+      "name": "König, Matthias"
+    }
+  ],
+  "description": "<p><code>pymetadata</code> is a collection of python utilities for working with metadata in the context of COMBINE standards with source code available from available from <a href=\"https://github.com/matthiaskoenig/pymetadata\">https://github.com/matthiaskoenig/pymetadata</a></p><p>Features include among others<ul><li>annotation classes and helpers</li></ul></p><p>If you have any questions or issues please <a href=\"https://github.com/matthiaskoenig/pymetadata/issues\">open an issue</a></p><h2>Funding</h2><p>Matthias König (MK) was supported by the Federal Ministry of Education and Research (BMBF, Germany) within the research network Systems Medicine of the Liver (**LiSyM**, grant number 031L0054). MK is supported by the Federal Ministry of Education and Research (BMBF, Germany) within ATLAS by grant number 031L0304B and by the German Research Foundation (DFG) within the Research Unit Program FOR 5151 QuaLiPerF (Quantifying Liver Perfusion-Function Relationship in Complex Resection - A Systems Medicine Approach) by grant number 436883643 and by grant number 465194077 (Priority Programme SPP 2311, Subproject SimLivA).</p>",
+  "access_right": "open",
+  "license": "MIT",
+  "keywords": [
+	"modeling",
+	"standardization",
+	"COMBINE",
+	"metadata",
+	"archive",
+	"annotation"
+  ]
+}
