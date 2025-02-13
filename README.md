@@ -1,12 +1,12 @@
-![libsbgnpy logo](https://github.com/matthiaskoenig/libsbgn-python/raw/develop/docs/images/libsbgnpy.png)
+![libsbgnpy logo](https://github.com/matthiaskoenig/libsbgnpy/raw/develop/docs/images/libsbgnpy.png)
 
 
 # libsbgnpy : Python library for SBGN
 
-[![GitHub Actions CI/CD Status](https://github.com/matthiaskoenig/libsbgn-python/workflows/CI-CD/badge.svg)](https://github.com/matthiaskoenig/libsbgn-python/actions/workflows/main.yml)
-[![Version](https://img.shields.io/pypi/v/pymetadata.svg)](https://pypi.org/project/pymetadata/)
-[![Python Versions](https://img.shields.io/pypi/pyversions/pymetadata.svg)](https://pypi.org/project/pymetadata/)
-[![MIT License](https://img.shields.io/pypi/l/pymetadata.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Actions CI/CD Status](https://github.com/matthiaskoenig/libsbgnpy/workflows/CI-CD/badge.svg)](https://github.com/matthiaskoenig/libsbgnpy/actions/workflows/main.yml)
+[![Version](https://img.shields.io/pypi/v/libsbgnpy.svg)](https://pypi.org/project/libsbgnpy/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/libsbgnpy.svg)](https://pypi.org/project/libsbgnpy/)
+[![MIT License](https://img.shields.io/pypi/l/libsbgnpy.svg)](https://opensource.org/licenses/MIT)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5308801.svg)](https://doi.org/10.5281/zenodo.5308801)
 
 
@@ -15,7 +15,7 @@ writing and validation of SBGN files.
 
 The initial library was generated using [generateDS](https://pypi.org/project/generateDS/). Additional utility functions for reading, writing, and rendering SBGN documents are provided.
 
-Documentation with examples is available at https://libsbgn-python.readthedocs.io.
+Documentation with examples is available at https://libsbgnpy.readthedocs.io.
 
 * `libsbgn.py` python library
 * `libsbgnTypes.py` SBGN type definitions (GlyphClasses, ArcClasses, Languages)
