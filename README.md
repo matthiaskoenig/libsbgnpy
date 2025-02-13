@@ -1,6 +1,5 @@
 ![libsbgnpy logo](https://github.com/matthiaskoenig/libsbgnpy/raw/develop/docs/images/libsbgnpy.png)
 
-
 # libsbgnpy : Python library for SBGN
 
 [![GitHub Actions CI/CD Status](https://github.com/matthiaskoenig/libsbgnpy/workflows/CI-CD/badge.svg)](https://github.com/matthiaskoenig/libsbgnpy/actions/workflows/main.yml)
