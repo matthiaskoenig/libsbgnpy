@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=libsbgn-python
+set SPHINXPROJ=libsbgnpy
 
 if "%1" == "" goto help
 

@@ -5,7 +5,7 @@ from libsbgnpy.libsbgnTypes import ArcClass, GlyphClass, Language
 
 def test_basestring_issue(tmpdir: Path) -> None:
     """
-    This tests issue: https://github.com/matthiaskoenig/libsbgn-python/issues/4
+    This tests issue: https://github.com/matthiaskoenig/libsbgnpy/issues/4
     """
     # create empty sbgn
     sbgn = libsbgn.sbgn()

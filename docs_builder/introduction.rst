@@ -1,6 +1,6 @@
 Introduction
 ===============
-.. image:: ./images/libsbgn-python-logo-small.png
+.. image:: ./images/libsbgnpy.png
 
 Overview
 ------------
@@ -9,30 +9,19 @@ writing and validation of SBGN files.
 The initial library was generated using `generateDS <https://pypi.org/project/generateDS/>`_. Additional utility functions for
 reading, writing and rendering SBGN documents are provided.
 
-To cite libsbgnpy use the following BibTex or equivalent::
-
-    @software{libsbgnpy,
-        author = {Matthias König},
-        title = {{matthiaskoenig/libsbgn-python: libsbgn-python-v0.2.0}},
-        month = mar,
-        year = 2020,
-        publisher = {Zenodo},
-        version = {v0.2.0},
-        doi = {10.5281/zenodo.3712285},
-        url = {https://doi.org/10.5281/zenodo.3712285}
-    }
+To cite libsbgnpy use the following information `10.5281/zenodo.597155 <https://zenodo.org/badge/DOI/10.5281/zenodo.597155>`_.
 
 Source code is available from
-`https://github.com/matthiaskoenig/libsbgn-python
-<https://github.com/matthiaskoenig/libsbgn-python>`_.
+`https://github.com/matthiaskoenig/libsbgnpy
+<https://github.com/matthiaskoenig/libsbgnpy>`_.
 
 To report bugs, request features or asking questions please file an
 `issue
-<https://github.com/matthiaskoenig/libsbgn-python/issues>`_.
+<https://github.com/matthiaskoenig/libsbgnpy/issues>`_.
 
 Installation
 ------------
-The libsbgn-python package is available from `pypi
-<https://github.com/matthiaskoenig/libsbgn-python>`_ and can be installed via::
+The libsbgnpy package is available from `pypi
+<https://github.com/matthiaskoenig/libsbgnpy>`_ and can be installed via::
 
     pip install libsbgnpy

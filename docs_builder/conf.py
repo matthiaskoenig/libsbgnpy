@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# libsbgn-python documentation build configuration file, created by
+# libsbgnpy documentation build configuration file, created by
 # sphinx-quickstart on Fri Mar 24 18:52:46 2017.
 #
 # This file is execfile()d with the current directory set to its
@@ -72,7 +72,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "libsbgn-python"
+project = "libsbgnpy"
 copyright = "2017-2025, Matthias König"
 author = "Matthias König"
 
@@ -89,7 +89,7 @@ version = ".".join("0.3.0".split(".")[:3])
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -133,7 +133,7 @@ html_static_path = ["_static"]
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "libsbgn-pythondoc"
+htmlhelp_basename = "libsbgnpydoc"
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -159,8 +159,8 @@ latex_elements = {
 latex_documents = [
     (
         master_doc,
-        "libsbgn-python.tex",
-        "libsbgn-python Documentation",
+        "libsbgnpy.tex",
+        "libsbgnpy Documentation",
         "Matthias König",
         "manual",
     ),
@@ -172,7 +172,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, "libsbgn-python", "libsbgn-python Documentation", [author], 1)
+    (master_doc, "libsbgnpy", "libsbgnpy Documentation", [author], 1)
 ]
 
 
@@ -184,10 +184,10 @@ man_pages = [
 texinfo_documents = [
     (
         master_doc,
-        "libsbgn-python",
-        "libsbgn-python Documentation",
+        "libsbgnpy",
+        "libsbgnpy Documentation",
         author,
-        "libsbgn-python",
+        "libsbgnpy",
         "One line description of project.",
         "Miscellaneous",
     ),

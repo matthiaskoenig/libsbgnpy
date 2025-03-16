@@ -4,7 +4,7 @@ This is an example that shows both low-level validation against the XSD Schema,
 and high-level validation using schematron.
 
 At this point only the XSD validation is implemented.
-see [#7](https://github.com/matthiaskoenig/libsbgn-python/issues/7)
+see [#7](https://github.com/matthiaskoenig/libsbgnpy/issues/7)
 """
 
 import os

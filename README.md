@@ -1,12 +1,12 @@
 ![libsbgnpy logo](https://github.com/matthiaskoenig/libsbgnpy/raw/develop/docs/images/libsbgnpy.png)
 
-# libsbgnpy : Python library for SBGN
+# libsbgnpy: Python library for SBGN
 
 [![GitHub Actions CI/CD Status](https://github.com/matthiaskoenig/libsbgnpy/workflows/CI-CD/badge.svg)](https://github.com/matthiaskoenig/libsbgnpy/actions/workflows/main.yml)
 [![Version](https://img.shields.io/pypi/v/libsbgnpy.svg)](https://pypi.org/project/libsbgnpy/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/libsbgnpy.svg)](https://pypi.org/project/libsbgnpy/)
 [![MIT License](https://img.shields.io/pypi/l/libsbgnpy.svg)](https://opensource.org/licenses/MIT)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5308801.svg)](https://doi.org/10.5281/zenodo.5308801)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.597155.svg)](https://doi.org/10.5281/zenodo.597155)
 [![Documentation Status](https://readthedocs.org/projects/libsbgnpy/badge/?version=latest)](http://libsbgnpy.readthedocs.io/en/latest/?badge=latest)
 
 
@@ -27,7 +27,7 @@ Documentation with examples is available at https://libsbgnpy.readthedocs.io.
 
 
 # How to cite
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5308801.svg)](https://doi.org/10.5281/zenodo.5308801)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.597155.svg)](https://doi.org/10.5281/zenodo.597155)
 
 # Installation
 `libsbgnpy` is available from [pypi](https://pypi.python.org/pypi/libsbgnpy) and

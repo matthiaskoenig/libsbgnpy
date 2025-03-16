@@ -1,15 +1,18 @@
 # Documentation Builder
 
-## Requirements
+## Pandoc
 ```bash
-cd docs_builder
+sudo apt -Y install pandoc
+```
+
+## Python requirements (sphinx)
+```bash
 pip install -r requirements-docs.txt
 ```
 
 ## Build documentation
 ```bash
-cd docs_builder
-make html
+uv run make html
 ```
 
 ## Update jupyter notebooks
