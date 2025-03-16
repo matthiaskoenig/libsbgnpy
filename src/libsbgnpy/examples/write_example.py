@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Some examples for the creation of SBGN files from scratch.
 """
