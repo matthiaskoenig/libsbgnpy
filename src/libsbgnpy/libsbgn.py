@@ -791,7 +791,7 @@ class SBGNBase(GeneratedsSuper):
         :param namespace:
         :return:
         """
-        f = open(outfile, "w")
+        f = open(outfile, "w", encoding="utf-8")
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         self.export(f, level=0, namespace_="sbgn", name_="")
         f.close()
