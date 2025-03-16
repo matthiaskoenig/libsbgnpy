@@ -39,7 +39,7 @@ def render_sbgn(sbgn, image_file: Path, file_format: str = "png") -> None:
         )
 
     # Create temporary file for request
-    with tempfile.TemporaryDirectory() as tmp_dir:
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_dir:
         f_in: Path = Path(tmp_dir) / "render.sbgn"
         utils.write_to_file(sbgn, f_in)
 
@@ -56,4 +56,4 @@ def render_sbgn(sbgn, image_file: Path, file_format: str = "png") -> None:
                 fd.write(chunk)
             fd.close()
 
-    print("SBGN rendered:", image_file)
+        print("SBGN rendered:", image_file)
