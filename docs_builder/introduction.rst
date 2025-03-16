@@ -5,7 +5,7 @@ Introduction
 Overview
 ------------
 Python library to work with `SBGN <http://sbgn.github.io/sbgn/>`_. This library is based on the SBGN XML schema and supports reading,
-writing and validation of SBGN files. Python 3 is supported.
+writing and validation of SBGN files.
 The initial library was generated using `generateDS <https://pypi.org/project/generateDS/>`_. Additional utility functions for
 reading, writing and rendering SBGN documents are provided.
 

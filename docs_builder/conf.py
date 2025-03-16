@@ -74,7 +74,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "libsbgn-python"
-copyright = "2017, Matthias König"
+copyright = "2017-2025, Matthias König"
 author = "Matthias König"
 
 # The version info for the project you're documenting, acts as replacement for

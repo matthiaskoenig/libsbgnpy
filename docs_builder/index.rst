@@ -1,9 +1,11 @@
 Documentation for libsbgn-python
 ================================
 
-.. image:: ./images/libsbgn-python-logo-small.png
+.. image:: ./images/libsbgnpy.png
 
-Source code and support are available at
+Python library to work with the Systems Biology Graphical Notation SBGN. This library is based on the SBGN XML schema and supports reading, writing and validation of SBGN files.
+
+Source code and support are available from
 `https://github.com/matthiaskoenig/libsbgn-python
 <https://github.com/matthiaskoenig/libsbgn-python>`_.
 
