@@ -39,8 +39,8 @@ def render_sbgn(sbgn, image_file: Path, file_format: str = "png") -> None:
         )
 
     # Create temporary file for request
-    with tempfile.TemporaryDirectory() as tmpdir:
-        f_in: Path = Path(tmpdir) / "render.sbgn"
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        f_in: Path = Path(tmp_dir) / "render.sbgn"
         utils.write_to_file(sbgn, f_in)
 
         # Call webservice for rendering
@@ -54,4 +54,5 @@ def render_sbgn(sbgn, image_file: Path, file_format: str = "png") -> None:
         with open(image_file, "wb") as fd:
             for chunk in r.iter_content(chunk_size=128):
                 fd.write(chunk)
+
     print("SBGN rendered:", image_file)
