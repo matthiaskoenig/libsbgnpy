@@ -7,6 +7,7 @@
 [![Python Versions](https://img.shields.io/pypi/pyversions/libsbgnpy.svg)](https://pypi.org/project/libsbgnpy/)
 [![MIT License](https://img.shields.io/pypi/l/libsbgnpy.svg)](https://opensource.org/licenses/MIT)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5308801.svg)](https://doi.org/10.5281/zenodo.5308801)
+[![Documentation Status](https://readthedocs.org/projects/libsbgn-python/badge/?version=latest)](http://libsbgn-python.readthedocs.io/en/latest/?badge=latest)
 
 
 Python library to work with the Systems Biology Graphical Notation ([SBGN](http://sbgn.github.io/sbgn/)). This library is based on the SBGN XML schema and supports reading,
