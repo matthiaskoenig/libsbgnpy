@@ -3,7 +3,7 @@ line-length = 88
 indent-width = 4
 
 target-version = "py313"
-
+extend-exclude = ["*.ipynb"]
 
 [lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
