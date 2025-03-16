@@ -7,7 +7,7 @@ http://sysbioapps.dyndns.org/Home/Services
 """
 
 import tempfile
-
+from pathlib import Path
 import requests
 
 from libsbgnpy import utils
@@ -16,7 +16,7 @@ from libsbgnpy import utils
 RENDER_URL = "http://sysbioapps.spdns.org/Layout"
 
 
-def render_sbgn(sbgn, image_file, file_format="png"):
+def render_sbgn(sbgn, image_file: Path, file_format: str = "png") -> None:
     """Render given sbgn object to image.
 
     Currently supports the following file_formats:
@@ -32,7 +32,8 @@ def render_sbgn(sbgn, image_file, file_format="png"):
     """
     if file_format != "png":
         raise ValueError("Only png rendering supported.")
-    if not image_file.endswith(".{}".format(file_format)):
+
+    if not str(image_file).endswith(f".{file_format}"):
         raise ValueError(
             "The filename must end in <.file_format>, e.g. for png it must end in <.png>."
         )

@@ -3,33 +3,32 @@ Tests the SBGN utility functions.
 """
 
 from pathlib import Path
-import tempfile
 
 import pytest
-
+from libsbgnpy import sbgn_examples_dir
 from libsbgnpy import utils as utils
 from libsbgnpy.libsbgnTypes import Language
 
 
 @pytest.fixture
-def f_adh():
-    return Path(__file__).parent / "../src/libsbgnpy/examples/sbgn/adh.sbgn"
+def f_adh() -> Path:
+    """ADH example SBGN."""
+    return sbgn_examples_dir / "adh.sbgn"
 
 
-def test_read_from_file(f_adh):
+def test_read_from_file(f_adh) -> None:
     sbgn = utils.read_from_file(f_adh)
     assert sbgn is not None
 
 
-def test_write_to_file(f_adh):
+def test_write_to_file(f_adh: Path, tmpdir: Path) -> None:
     sbgn = utils.read_from_file(f_adh)
-    f_out = tempfile.NamedTemporaryFile(suffix=".sbgn")
-    utils.write_to_file(sbgn, f_out.name)
-    sbgn2 = utils.read_from_file(f_out)
+    utils.write_to_file(sbgn, tmpdir / "test.sbgn")
+    sbgn2 = utils.read_from_file(tmpdir / "test.sbgn")
     assert sbgn2 is not None
 
 
-def test_write_to_string(f_adh):
+def test_write_to_string(f_adh: Path) -> None:
     sbgn = utils.read_from_file(f_adh)
     sbgn_str = utils.write_to_string(sbgn)
 

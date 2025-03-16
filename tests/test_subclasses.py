@@ -2,7 +2,7 @@
 Test Notes and Extensions.
 """
 
-import tempfile
+from pathlib import Path
 
 from libsbgnpy import Extension, Language, Notes, libsbgn, utils
 from libsbgnpy.examples import extension_example, notes_example
@@ -39,7 +39,7 @@ def test_create_notes():
     assert "<body" in notes_str
 
 
-def test_read_notes():
+def test_read_notes(tmpdir: Path) -> None:
     sbgn = libsbgn.sbgn()
     map = libsbgn.map()
     map.set_language(Language.PD)
@@ -54,12 +54,12 @@ def test_read_notes():
     map.set_notes(notes)
     assert map.get_notes() is not None
 
-    f = tempfile.NamedTemporaryFile(suffix=".sbgn")
-    utils.write_to_file(sbgn, f.name)
+    f_sbgn = tmpdir / "test.sbgn"
+    utils.write_to_file(sbgn, f_sbgn)
     del map, sbgn, notes
 
-    sbgn2 = utils.read_from_file(f.name)
-    print(utils.write_to_string(sbgn2))
+    sbgn2 = utils.read_from_file(f_sbgn)
+    _ = utils.write_to_string(sbgn2)
 
     map2 = sbgn2.get_map()
     notes2 = map2.get_notes()
@@ -69,10 +69,10 @@ def test_read_notes():
     # assert str(notes2) == text
 
 
-def test_notes_example():
-    f = tempfile.NamedTemporaryFile(suffix=".sbgn")
-    notes_example.write_glyph_notes(f.name)
-    notes_example.read_glyph_notes(f.name)
+def test_notes_example(tmpdir: Path) -> None:
+    f_sbgn = tmpdir / "test.sbgn"
+    notes_example.write_glyph_notes(f_sbgn)
+    notes_example.read_glyph_notes(f_sbgn)
 
 
 def test_create_extension():
@@ -142,7 +142,7 @@ def test_create_extension():
     assert "<linearGradient" in extension_str
 
 
-def test_read_extension():
+def test_read_extension(tmpdir: Path) -> None:
     sbgn = libsbgn.sbgn()
     map = libsbgn.map()
     map.set_language(Language.PD)
@@ -167,18 +167,19 @@ def test_read_extension():
     map.set_extension(extension)
     assert map.get_extension() is not None
 
-    f = tempfile.NamedTemporaryFile(suffix=".sbgn")
-    utils.write_to_file(sbgn, f.name)
+    f_sbgn = tmpdir / "test.sbgn"
+    utils.write_to_file(sbgn, f_sbgn)
     del map, sbgn, extension
 
-    sbgn = utils.read_from_file(f.name)
+    sbgn = utils.read_from_file(f_sbgn)
     map = sbgn.get_map()
     extension = map.get_extension()
     assert extension is not None
     assert "<colorDefinition" in str(extension)
 
 
-def test_extension_example():
-    f = tempfile.NamedTemporaryFile(suffix=".sbgn")
-    extension_example.write_map_extension(f.name)
-    extension_example.read_map_extension(f.name)
+def test_extension_example(tmpdir: Path) -> None:
+    """Test writing and reading of extension example."""
+    f_sbgn = tmpdir / "test.sbgn"
+    extension_example.write_map_extension(f_sbgn)
+    extension_example.read_map_extension(f_sbgn)

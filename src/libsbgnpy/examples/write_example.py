@@ -2,11 +2,12 @@
 Some examples for the creation of SBGN files from scratch.
 """
 
+from pathlib import Path
 import libsbgnpy.libsbgn as libsbgn
 from libsbgnpy.libsbgnTypes import ArcClass, GlyphClass, Language, Orientation
 
 
-def write_sbgn_01(f):
+def write_sbgn_01(f: Path) -> None:
     """Create SBGN and write to file.
 
     Macromolecule box with label.
@@ -39,7 +40,7 @@ def write_sbgn_01(f):
     sbgn.write_file(f)
 
 
-def write_sbgn_02(f):
+def write_sbgn_02(f: Path) -> None:
     """Create SBGN document and write to file.
 
     :param f:
@@ -162,7 +163,7 @@ def write_sbgn_02(f):
     sbgn.write_file(f)
 
 
-def write_sbgn_03(f):
+def write_sbgn_03(f: Path) -> None:
     """Create SBGN with annotation and write to file.
 
     :param f: file to write

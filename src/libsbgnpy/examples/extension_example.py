@@ -4,6 +4,8 @@ Write and read extension information.
 see https://github.com/sbgn/sbgn/wiki/SBGN-ML_Extensions
 """
 
+from pathlib import Path
+
 from libsbgnpy import Extension, Language, libsbgn, utils
 
 
@@ -73,11 +75,11 @@ def write_map_extension(f):
     )
     map.set_extension(extension)
 
-    print(utils.write_to_string(sbgn))
+    # print(utils.write_to_string(sbgn))
     utils.write_to_file(sbgn=sbgn, f=f)
 
 
-def read_map_extension(f):
+def read_map_extension(f: Path) -> None:
     """Read notes from glyphs.
 
     :param f: file input

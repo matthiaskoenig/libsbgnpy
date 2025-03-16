@@ -101,7 +101,6 @@ def test_glyph_ids(sbgn):
 
 def test_glyph_classes(sbgn):
     glyphs = sbgn.get_map().get_glyph()
-    print(glyphs[0].class_)
     assert glyphs[0].get_class() == GlyphClass.SIMPLE_CHEMICAL
     assert glyphs[1].get_class() == GlyphClass.PROCESS
 

@@ -3,21 +3,21 @@
 Display information from SBGN files.
 """
 
-import os
+from pathlib import Path
 
 import libsbgnpy.libsbgn as libsbgn  # import the bindings
 from libsbgnpy.utils import print_bbox  # some additional helpers
 
 
-def info_example():
+def info_example() -> None:
+    """Example demonstrating how to print information from SBGN."""
     print(libsbgn.__all__)
 
     # file to process
-    dir = os.path.dirname(os.path.realpath(__file__))
-    f_in = os.path.join(dir, "sbgn/adh.sbgn")
+    f_sgbn: Path = Path(__file__).parent / "sbgn/adh.sbgn"
 
     # sbgn and map
-    sbgn = libsbgn.parse(f_in)
+    sbgn = libsbgn.parse(f_sgbn)
     map = sbgn.get_map()
     print("Language:", map.get_language())
 

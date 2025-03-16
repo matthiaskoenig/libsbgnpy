@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 """
 Helper functions to work with SBGN.
 """
 
+import os
 import libsbgnpy.libsbgn as libsbgn
 
 
@@ -37,11 +37,14 @@ def write_to_string(sbgn):
     """
     import tempfile
 
-    f = tempfile.NamedTemporaryFile(suffix=".sbgn")
+    f = tempfile.NamedTemporaryFile(suffix=".sbgn", delete=False)
     write_to_file(sbgn, f.name)
     with open(f.name, "rt", encoding="utf-8") as fin:
         sbgn_str = fin.read()
         return sbgn_str
+
+    f.close()
+    os.unlink(f.name)
     return None
 
 
