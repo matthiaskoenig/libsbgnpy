@@ -16,6 +16,7 @@
 # Current working directory (os.getcwd()):
 #   schema
 
+from pathlib import Path
 import base64
 import datetime as datetime_
 import re as re_
@@ -781,7 +782,7 @@ class SBGNBase(GeneratedsSuper):
         else:
             return False
 
-    def write_file(self, outfile, namespace="sbgn"):
+    def write_file(self, outfile: Path, namespace="sbgn"):
         """Write SBGN to file.
 
         This also fixes the issues of the sbgn namespace prefix.

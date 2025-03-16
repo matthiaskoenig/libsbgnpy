@@ -2,6 +2,7 @@
 Test the example scripts in the examples folder.
 """
 
+import pytest
 from pathlib import Path
 
 from libsbgnpy.examples.info_example import info_example
@@ -11,17 +12,19 @@ from libsbgnpy.examples.write_example import write_sbgn_01, write_sbgn_02, write
 sbgn_dir: Path = Path(__file__).parent / "../src/libsbgnpy/examples/sbgn"
 
 
-def test_read_examples():
-    """Parse SBGN file test."""
-    names = [
+@pytest.mark.parametrize(
+    "filename",
+    [
         "adh.sbgn",
         "glycolysis.sbgn",
         "test-output-01.sbgn",
         "test-output-02.sbgn",
-    ]
-    for name in names:
-        sbgn = read_sbgn_01(sbgn_dir / name)
-        assert sbgn is not None
+    ],
+)
+def test_read_examples(filename: str) -> None:
+    """Parse SBGN file test."""
+    sbgn = read_sbgn_01(sbgn_dir / filename)
+    assert sbgn is not None
 
 
 def test_write_example_01():
