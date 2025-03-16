@@ -1,10 +1,9 @@
-import tempfile
-
+from pathlib import Path
 from libsbgnpy import libsbgn
 from libsbgnpy.libsbgnTypes import ArcClass, GlyphClass, Language
 
 
-def test_basestring_issue():
+def test_basestring_issue(tmpdir: Path) -> None:
     """
     This tests issue: https://github.com/matthiaskoenig/libsbgn-python/issues/4
     """
@@ -92,5 +91,4 @@ def test_basestring_issue():
     sbgn_map.add_glyph(g)
 
     # write everything to a file
-    f_tmp = tempfile.NamedTemporaryFile(suffix=".sbgn")
-    sbgn.write_file(f_tmp.name)
+    sbgn.write_file(tmpdir / "test.sbgn")

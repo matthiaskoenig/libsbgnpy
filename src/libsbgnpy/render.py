@@ -38,16 +38,17 @@ def render_sbgn(sbgn, image_file: Path, file_format: str = "png") -> None:
             "The filename must end in <.file_format>, e.g. for png it must end in <.png>."
         )
 
-    # Create temporary file
-    f_in = tempfile.NamedTemporaryFile(suffix=".sbgn")
-    utils.write_to_file(sbgn, f_in.name)
+    # Create temporary file for request
+    with tempfile.TemporaryDirectory() as tmpdir:
+        f_in: Path = Path(tmpdir) / "render.sbgn"
+        utils.write_to_file(sbgn, f_in)
 
-    # Call webservice for rendering
-    files = [
-        ("file", open(f_in.name, "rb")),
-    ]
+        # Call webservice for rendering
+        files = [
+            ("file", open(f_in, "rb")),
+        ]
+        r = requests.post("{}/GenerateImage".format(RENDER_URL), files=files)
 
-    r = requests.post("{}/GenerateImage".format(RENDER_URL), files=files)
     r.raise_for_status()
 
     with open(image_file, "wb") as fd:

@@ -2,7 +2,9 @@
 Helper functions to work with SBGN.
 """
 
-import os
+import tempfile
+from pathlib import Path
+
 import libsbgnpy.libsbgn as libsbgn
 
 
@@ -35,16 +37,14 @@ def write_to_string(sbgn):
     :param sbgn: sbgn object
     :return: SBGN xml string
     """
-    import tempfile
 
-    f = tempfile.NamedTemporaryFile(suffix=".sbgn", delete=False)
-    write_to_file(sbgn, f.name)
-    with open(f.name, "rt", encoding="utf-8") as fin:
-        sbgn_str = fin.read()
-        return sbgn_str
+    with tempfile.TemporaryDirectory() as tmpdir:
+        f_tmp: Path = Path(tmpdir) / "out.sbgn"
+        write_to_file(sbgn, f_tmp)
+        with open(f_tmp, "rt", encoding="utf-8") as fin:
+            sbgn_str = fin.read()
+            return sbgn_str
 
-    f.close()
-    os.unlink(f.name)
     return None
 
 
