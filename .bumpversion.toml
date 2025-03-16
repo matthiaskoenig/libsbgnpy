@@ -17,4 +17,6 @@ commit_args = ""
 
 [[tool.bumpversion.files]]
 filename = "./src/libsbgnpy/__init__.py"
-#filename = "./docs_builder/conf.py"
+
+[[tool.bumpversion.files]]
+filename = "./docs_builder/conf.py"
