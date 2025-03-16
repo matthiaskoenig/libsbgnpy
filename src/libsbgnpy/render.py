@@ -54,5 +54,6 @@ def render_sbgn(sbgn, image_file: Path, file_format: str = "png") -> None:
         with open(image_file, "wb") as fd:
             for chunk in r.iter_content(chunk_size=128):
                 fd.write(chunk)
+            fd.close()
 
     print("SBGN rendered:", image_file)
