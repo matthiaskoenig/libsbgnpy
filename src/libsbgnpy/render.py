@@ -47,11 +47,11 @@ def render_sbgn(sbgn, image_file: Path, file_format: str = "png") -> None:
         files = [
             ("file", open(f_in, "rb")),
         ]
-        r = requests.post("{}/GenerateImage".format(RENDER_URL), files=files)
+        r = requests.post(f"{RENDER_URL}/GenerateImage", files=files)
 
-    r.raise_for_status()
+        r.raise_for_status()
 
-    with open(image_file, "wb") as fd:
-        for chunk in r.iter_content(chunk_size=128):
-            fd.write(chunk)
+        with open(image_file, "wb") as fd:
+            for chunk in r.iter_content(chunk_size=128):
+                fd.write(chunk)
     print("SBGN rendered:", image_file)
