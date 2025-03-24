@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 This is an example that shows both low-level validation against the XSD Schema,
 and high-level validation using schematron.
