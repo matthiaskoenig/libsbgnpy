@@ -1,5 +1,4 @@
 from pathlib import Path
-from libsbgnpy.libsbgnTypes import ArcClass, GlyphClass, Language
 
 
 def test_basestring_issue(tmpdir: Path) -> None:

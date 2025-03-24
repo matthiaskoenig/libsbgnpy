@@ -5,7 +5,6 @@ Example tests.
 import pytest
 
 import libsbgnpy.sbgn as libsbgn
-from libsbgnpy.libsbgnTypes import ArcClass, GlyphClass, Language, Orientation
 
 
 @pytest.fixture
