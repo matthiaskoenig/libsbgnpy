@@ -19,5 +19,9 @@ build/
 
 .cache
 .tox
+
+# documentation
 docs_builder/_build/
 docs_builder/.ipynb_checkpoints
+_site
+site

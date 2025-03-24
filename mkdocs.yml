@@ -3,12 +3,15 @@ site_name: libsbgnpy
 theme:
   name: "material"
 
-plugins:
-  - mkdocstrings
-
 nav:
   - Home: index.md
   - Installation: installation.md
+  - Examples: notebooks/examples.ipynb
+  - API: api.md
   - Development: develop.md
 
-# - Release: release.md
+
+plugins:
+  - search
+  - mkdocstrings
+  - mkdocs-jupyter

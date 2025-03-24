@@ -48,8 +48,9 @@ dev = [
 ]
 docs = [
 	"mkdocs",
-	"mkdocstrings[python]",
+	"mkdocstrings-python",
 	"mkdocs-material",
+	"mkdocs-jupyter",
 ]
 test = [
     "tox>=4.14.2",
