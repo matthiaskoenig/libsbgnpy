@@ -1,0 +1,14 @@
+site_name: libsbgnpy
+
+theme:
+  name: "material"
+
+plugins:
+  - mkdocstrings
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Development: develop.md
+
+# - Release: release.md
