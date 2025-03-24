@@ -5,7 +5,7 @@ Display information from SBGN files.
 
 from pathlib import Path
 
-import libsbgnpy.libsbgn as libsbgn  # import the bindings
+import libsbgnpy.sbgn as libsbgn  # import the bindings
 from libsbgnpy.utils import print_bbox  # some additional helpers
 
 

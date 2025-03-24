@@ -4,7 +4,7 @@ Example tests.
 
 import pytest
 
-import libsbgnpy.libsbgn as libsbgn
+import libsbgnpy.sbgn as libsbgn
 from libsbgnpy.libsbgnTypes import ArcClass, GlyphClass, Language, Orientation
 
 

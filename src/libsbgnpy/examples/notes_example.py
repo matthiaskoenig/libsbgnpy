@@ -4,7 +4,7 @@ Write and read notes information.
 Notes must be XML elements in a <notes>Tag</notes>
 """
 
-from libsbgnpy import Language, Notes, libsbgn, utils
+from libsbgnpy import Language, Notes, utils
 
 
 def write_glyph_notes(f):
@@ -37,8 +37,8 @@ def write_glyph_notes(f):
     )
     g.set_notes(notes)
 
-    print(utils.write_to_string(sbgn))
-    utils.write_to_file(sbgn=sbgn, f=f)
+    print(utils.write_sbgn_to_string(sbgn))
+    utils.write_sbgn_to_file(sbgn=sbgn, f=f)
 
 
 def read_glyph_notes(f):
@@ -46,7 +46,7 @@ def read_glyph_notes(f):
 
     :return: None
     """
-    sbgn = utils.read_from_file(f=f)
+    sbgn = utils.read_sbgn_from_file(f=f)
 
     # map is a container for the glyphs and arcs
     map = sbgn.get_map()
@@ -60,7 +60,7 @@ def read_glyph_notes(f):
 
 
 if __name__ == "__main__":
-    f = "sbgn/notes.sbgn"
+    f = "sbgn/notes_new.sbgn"
     write_glyph_notes(f)
     print("_" * 80, "\n")
     read_glyph_notes(f)

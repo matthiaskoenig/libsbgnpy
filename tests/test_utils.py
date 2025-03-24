@@ -17,20 +17,20 @@ def f_adh() -> Path:
 
 
 def test_read_from_file(f_adh) -> None:
-    sbgn = utils.read_from_file(f_adh)
+    sbgn = utils.read_sbgn_from_file(f_adh)
     assert sbgn is not None
 
 
 def test_write_to_file(f_adh: Path, tmpdir: Path) -> None:
-    sbgn = utils.read_from_file(f_adh)
-    utils.write_to_file(sbgn, tmpdir / "test.sbgn")
-    sbgn2 = utils.read_from_file(tmpdir / "test.sbgn")
+    sbgn = utils.read_sbgn_from_file(f_adh)
+    utils.write_sbgn_to_file(sbgn, tmpdir / "test.sbgn")
+    sbgn2 = utils.read_sbgn_from_file(tmpdir / "test.sbgn")
     assert sbgn2 is not None
 
 
 def test_write_to_string(f_adh: Path) -> None:
-    sbgn = utils.read_from_file(f_adh)
-    sbgn_str = utils.write_to_string(sbgn)
+    sbgn = utils.read_sbgn_from_file(f_adh)
+    sbgn_str = utils.write_sbgn_to_string(sbgn)
 
     assert sbgn_str is not None
     assert "xml" in sbgn_str

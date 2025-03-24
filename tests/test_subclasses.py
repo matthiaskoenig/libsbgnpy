@@ -4,7 +4,7 @@ Test Notes and Extensions.
 
 from pathlib import Path
 
-from libsbgnpy import Extension, Language, Notes, libsbgn, utils
+from libsbgnpy import Extension, Language, Notes, utils
 from libsbgnpy.examples import extension_example, notes_example
 
 
@@ -55,11 +55,11 @@ def test_read_notes(tmpdir: Path) -> None:
     assert map.get_notes() is not None
 
     f_sbgn = tmpdir / "test.sbgn"
-    utils.write_to_file(sbgn, f_sbgn)
+    utils.write_sbgn_to_file(sbgn, f_sbgn)
     del map, sbgn, notes
 
-    sbgn2 = utils.read_from_file(f_sbgn)
-    _ = utils.write_to_string(sbgn2)
+    sbgn2 = utils.read_sbgn_from_file(f_sbgn)
+    _ = utils.write_sbgn_to_string(sbgn2)
 
     map2 = sbgn2.get_map()
     notes2 = map2.get_notes()
@@ -168,10 +168,10 @@ def test_read_extension(tmpdir: Path) -> None:
     assert map.get_extension() is not None
 
     f_sbgn = tmpdir / "test.sbgn"
-    utils.write_to_file(sbgn, f_sbgn)
+    utils.write_sbgn_to_file(sbgn, f_sbgn)
     del map, sbgn, extension
 
-    sbgn = utils.read_from_file(f_sbgn)
+    sbgn = utils.read_sbgn_from_file(f_sbgn)
     map = sbgn.get_map()
     extension = map.get_extension()
     assert extension is not None

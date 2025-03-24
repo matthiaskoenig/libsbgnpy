@@ -1,59 +1,341 @@
-"""
-Helper functions for rendering SBGN.
+from dataclasses import dataclass, field
+from typing import Optional
 
-Currently uses the webservice provided at "http://sysbioapps.dyndns.org/Layout/GenerateImage".
-For documentation see
-http://sysbioapps.dyndns.org/Home/Services
-"""
-
-import tempfile
-from pathlib import Path
-import requests
-
-from libsbgnpy import utils
+__NAMESPACE__ = "http://www.sbml.org/sbml/level3/version1/render/version1"
 
 
-RENDER_URL = "http://sysbioapps.spdns.org/Layout"
+@dataclass
+class ColorDefinition:
+    class Meta:
+        name = "colorDefinition"
+        namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
+
+    id: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            "required": True,
+        },
+    )
+    value: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            "required": True,
+        },
+    )
 
 
-def render_sbgn(sbgn, image_file: Path, file_format: str = "png") -> None:
-    """Render given sbgn object to image.
+@dataclass
+class G:
+    class Meta:
+        name = "g"
+        namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
 
-    Currently supports the following file_formats:
-    - "png"
-    The image file must end in .file_format, e.g. in '.png'
+    stroke: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    stroke_width: Optional[float] = field(
+        default=None,
+        metadata={
+            "name": "stroke-width",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    fill: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    fill_rule: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "fill-rule",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    font_family: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "font-family",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    font_weight: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "font-weight",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    font_style: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "font-style",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    text_anchor: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "text-anchor",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    vtext_anchor: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "vtext-anchor",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    font_size: Optional[int] = field(
+        default=None,
+        metadata={
+            "name": "font-size",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
 
-    Performs a request analogue to:
-    curl -X POST -F file=@".\BorisEJB.xml" http://sysbioapps.spdns.org/Layout/GenerateImage -o out.png
 
-    :param sbgn: sbgn object
-    :param image_file: image to create
-    :return: None
-    """
-    if file_format != "png":
-        raise ValueError("Only png rendering supported.")
+@dataclass
+class LinearGradient:
+    class Meta:
+        name = "linearGradient"
+        namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
 
-    if not str(image_file).endswith(f".{file_format}"):
-        raise ValueError(
-            "The filename must end in <.file_format>, e.g. for png it must end in <.png>."
+    stop: list["LinearGradient.Stop"] = field(
+        default_factory=list,
+        metadata={
+            "type": "Element",
+            "min_occurs": 1,
+        },
+    )
+    id: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            "required": True,
+        },
+    )
+    x1: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    x2: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    y1: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    y2: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+
+    @dataclass
+    class Stop:
+        offset: Optional[str] = field(
+            default=None,
+            metadata={
+                "type": "Attribute",
+                "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+                "required": True,
+            },
+        )
+        stop_color: Optional[str] = field(
+            default=None,
+            metadata={
+                "name": "stop-color",
+                "type": "Attribute",
+                "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+                "required": True,
+            },
         )
 
-    # Create temporary file for request
-    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_dir:
-        f_in: Path = Path(tmp_dir) / "render.sbgn"
-        utils.write_to_file(sbgn, f_in)
 
-        # Call webservice for rendering
-        files = [
-            ("file", open(f_in, "rb")),
-        ]
-        r = requests.post(f"{RENDER_URL}/GenerateImage", files=files)
+@dataclass
+class ListOfColorDefinitions:
+    class Meta:
+        name = "listOfColorDefinitions"
+        namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
 
-        r.raise_for_status()
+    color_definition: list[ColorDefinition] = field(
+        default_factory=list,
+        metadata={
+            "name": "colorDefinition",
+            "type": "Element",
+            "min_occurs": 1,
+        },
+    )
 
-        with open(image_file, "wb") as fd:
-            for chunk in r.iter_content(chunk_size=128):
-                fd.write(chunk)
-            fd.close()
 
-        print("SBGN rendered:", image_file)
+@dataclass
+class ListOfGradientDefinitions:
+    class Meta:
+        name = "listOfGradientDefinitions"
+        namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
+
+    linear_gradient: list[LinearGradient] = field(
+        default_factory=list,
+        metadata={
+            "name": "linearGradient",
+            "type": "Element",
+            "min_occurs": 1,
+        },
+    )
+
+
+@dataclass
+class Style:
+    class Meta:
+        name = "style"
+        namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
+
+    g: Optional[G] = field(
+        default=None,
+        metadata={
+            "type": "Element",
+            "required": True,
+        },
+    )
+    id_list: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "idList",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    role_list: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "roleList",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    type_list: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "typeList",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+
+
+@dataclass
+class ListOfStyles:
+    class Meta:
+        name = "listOfStyles"
+        namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
+
+    style: list[Style] = field(
+        default_factory=list,
+        metadata={
+            "type": "Element",
+            "min_occurs": 1,
+        },
+    )
+
+
+@dataclass
+class RenderInformation:
+    class Meta:
+        name = "renderInformation"
+        namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
+
+    list_of_color_definitions: Optional[ListOfColorDefinitions] = field(
+        default=None,
+        metadata={
+            "name": "listOfColorDefinitions",
+            "type": "Element",
+            "required": True,
+        },
+    )
+    list_of_gradient_definitions: Optional[ListOfGradientDefinitions] = field(
+        default=None,
+        metadata={
+            "name": "listOfGradientDefinitions",
+            "type": "Element",
+            "required": True,
+        },
+    )
+    list_of_styles: Optional[ListOfStyles] = field(
+        default=None,
+        metadata={
+            "name": "listOfStyles",
+            "type": "Element",
+            "required": True,
+        },
+    )
+    id: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    name: Optional[str] = field(
+        default=None,
+        metadata={
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    program_name: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "programName",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    program_version: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "programVersion",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )
+    background_color: Optional[str] = field(
+        default=None,
+        metadata={
+            "name": "backgroundColor",
+            "type": "Attribute",
+            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        },
+    )

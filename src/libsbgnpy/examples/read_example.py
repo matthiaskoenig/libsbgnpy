@@ -1,35 +1,40 @@
-import libsbgnpy.libsbgn as libsbgn
+"""Example for reading and displaying SBGN content."""
+
+from pathlib import Path
+
+from libsbgnpy import *
+from libsbgnpy.console import console
+from libsbgnpy.utils import read_sbgn_from_file
 
 
-def read_sbgn_01(f):
-    """Read example file and display content.
+def read_sbgn_01(f: Path) -> Sbgn:
+    """Read example file and display content."""
 
-    :param f: SBGN file to read
-    :return: sbgn
-    """
-    sbgn = libsbgn.parse(f)
+    # Map
+    sbgn: Sbgn = read_sbgn_from_file(f)
+    map = sbgn.map[0]
 
-    # map is a container for the glyphs and arcs
-    map = sbgn.get_map()
+    # Glyphs
+    for g in map.glyph:
+        console.print(
+            f"Glyph '{g.id}' of class '{g.class_value}' and label '{g.label}'."
+        )
 
-    # we can get a list of glyphs (nodes) in this map with getGlyph()
-    for g in map.get_glyph():
-        # print the sbgn class of this glyph
-        print(" Glyph with class", g.get_id())
-
-        # if there is a label, print it as well
-        if g.get_label():
-            print(", and label ", g.get_label().get_text())
-        else:
-            print(", without label")
-
-    # we can get a list of arcs (edges) in this map with getArc()
-    for a in map.get_arc():
-        # print the class of this arc
-        print(" Arc with class ", a.get_class())
+    # Arcs
+    for a in map.arc:
+        console.print(f"Arc '{a.id}' with class '{a.class_value}'.")
 
     return sbgn
 
 
 if __name__ == "__main__":
-    read_sbgn_01("sbgn/adh.sbgn")
+    sbgn_dir = Path(__file__).parent / "sbgn"
+    for fname in [
+        "test-output-01.sbgn",
+        "test-output-02.sbgn",
+        "test-output-03.sbgn",
+        "adh.sbgn",
+        "adh_0.3.sbgn",
+    ]:
+        console.rule(fname)
+        sbgn = read_sbgn_01(sbgn_dir / fname)

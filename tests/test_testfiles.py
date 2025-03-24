@@ -5,7 +5,7 @@ Read all test files.
 import pytest
 from pathlib import Path
 from typing import List
-import libsbgnpy.libsbgn as libsbgn
+import libsbgnpy.sbgn as libsbgn
 
 
 def find_sbgn_files(directory: Path) -> List[Path]:

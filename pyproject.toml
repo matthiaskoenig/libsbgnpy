@@ -36,6 +36,8 @@ keywords = [
 dependencies = [
     "requests",
 	"lxml>=5.3",
+	"xsdata",
+	"rich",
 ]
 
 [project.optional-dependencies]

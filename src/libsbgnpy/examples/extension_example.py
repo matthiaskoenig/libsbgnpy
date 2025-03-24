@@ -6,7 +6,7 @@ see https://github.com/sbgn/sbgn/wiki/SBGN-ML_Extensions
 
 from pathlib import Path
 
-from libsbgnpy import Extension, Language, libsbgn, utils
+from libsbgnpy import Extension, Language, utils
 
 
 def write_map_extension(f):
@@ -76,7 +76,7 @@ def write_map_extension(f):
     map.set_extension(extension)
 
     # print(utils.write_to_string(sbgn))
-    utils.write_to_file(sbgn=sbgn, f=f)
+    utils.write_sbgn_to_file(sbgn=sbgn, f=f)
 
 
 def read_map_extension(f: Path) -> None:
@@ -85,7 +85,7 @@ def read_map_extension(f: Path) -> None:
     :param f: file input
     :return: None
     """
-    sbgn = utils.read_from_file(f=f)
+    sbgn = utils.read_sbgn_from_file(f=f)
 
     # map is a container for the glyphs and arcs
     map = sbgn.get_map()

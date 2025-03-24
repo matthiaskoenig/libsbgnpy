@@ -2,13 +2,17 @@
 Helper functions to work with SBGN.
 """
 
-import tempfile
 from pathlib import Path
+from xsdata.formats.dataclass.parsers import XmlParser
+from xsdata.formats.dataclass.context import XmlContext
+from xsdata.formats.dataclass.serializers import XmlSerializer
+from xsdata.formats.dataclass.serializers.config import SerializerConfig
 
-import libsbgnpy.libsbgn as libsbgn
+from libsbgnpy import Sbgn, MapLanguage
+import libsbgnpy.sbgn as libsbgn
 
 
-def read_from_file(f, silence=True):
+def read_sbgn_from_file(f: Path) -> Sbgn:
     """Read an sbgn file (without validating against the schema).
 
     :param silence: display no information
@@ -16,39 +20,49 @@ def read_from_file(f, silence=True):
     :return: parsed SBGN
     :rtype:
     """
-    sbgn = libsbgn.parse(f, silence=silence)
+    with open(f, "r") as f_in:
+        xml_str = f_in.read()
+        # upconverting for fixing reading
+        xml_str = xml_str.replace(
+            "http://sbgn.org/libsbgn/0.1", "http://sbgn.org/libsbgn/0.3"
+        )
+        xml_str = xml_str.replace(
+            "http://sbgn.org/libsbgn/0.2", "http://sbgn.org/libsbgn/0.3"
+        )
+
+    parser = XmlParser()
+    sbgn = parser.from_string(xml_str, Sbgn)
+    # sbgn = parser.parse(f, Sbgn)
     return sbgn
 
 
-def write_to_file(sbgn, f):
+def write_sbgn_to_file(sbgn: Sbgn, f: Path) -> None:
     """Write sbgn object to file.
 
-    :param sbgn:
-    :param f:
-    :return:
+    :param sbgn: SBGN object
+    :param f: file to write
+    :return: None
     """
-    sbgn.write_file(f)
+    config = SerializerConfig(indent="  ", pretty_print=True)
+    context = XmlContext()
+    serializer = XmlSerializer(context=context, config=config)
+    with open(f, "w") as f:
+        serializer.write(f, sbgn, ns_map={None: "http://sbgn.org/libsbgn/0.3"})
 
 
-def write_to_string(sbgn):
+def write_sbgn_to_string(sbgn: Sbgn) -> str:
     """Write SBGN to string.
-    Returns None if problems.
 
     :param sbgn: sbgn object
     :return: SBGN xml string
     """
-
-    with tempfile.TemporaryDirectory() as tmpdir:
-        f_tmp: Path = Path(tmpdir) / "out.sbgn"
-        write_to_file(sbgn, f_tmp)
-        with open(f_tmp, "rt", encoding="utf-8") as fin:
-            sbgn_str = fin.read()
-            return sbgn_str
-
-    return None
+    config = SerializerConfig(indent="  ", pretty_print=True)
+    context = XmlContext()
+    serializer = XmlSerializer(context=context, config=config)
+    return serializer.render(sbgn, ns_map={None: "http://sbgn.org/libsbgn/0.3"})
 
 
-def get_version(f):
+def get_version(f: Path) -> int:
     """SBGN version.
 
     1: xmlns="http://sbgn.org/libsbgn/0.1
@@ -70,19 +84,20 @@ def get_version(f):
     return int(tokens[-1])
 
 
-def get_language(f):
+def get_language(f: Path) -> str:
     """SBGN language of the map.
     Returns a Language value.
 
     :param f:
     :return:
     """
-    sbgn = read_from_file(f)
-    map = sbgn.get_map()
-    return map.get_language()
+    sbgn: Sbgn = read_sbgn_from_file(f)
+    map: list[libsbgn.Map] = sbgn.map
+    language: MapLanguage = map[0].language
+    return language.value
 
 
-def print_bbox(b):
+def print_bbox(b: libsbgn.Bbox) -> None:
     """Print bounding box representation.
 
     :param b:
@@ -90,4 +105,4 @@ def print_bbox(b):
     :return:
     :rtype:
     """
-    print("x, y, w, h : ", b.get_x(), b.get_y(), b.get_w(), b.get_h())
+    print("x, y, w, h : ", b.x, b.y, b.w, b.h)

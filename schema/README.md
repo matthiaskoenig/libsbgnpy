@@ -11,5 +11,12 @@ pip install xsdata[cli,lxml,soap]
 
 ## Generate models
 ```bash
-xsdata generate SBGN.xsd --package sbgn
+cd schema
+xsdata generate SBGN.xsd --package libsbgn
 ```
+
+## Updates
+## Copy files
+- copy files to libsbgnpy folder
+- copy the init content to the __init__
+- rename classes: "sbgn" -> SBGN; "Sbgnbase" -> SBGNBase

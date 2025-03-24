@@ -8,8 +8,8 @@ except ImportError:
     from xml.etree import ElementTree as etree_
 
 
-import libsbgnpy.libsbgn as supermod
-from libsbgnpy.libsbgn import showIndent
+import libsbgnpy.sbgn as supermod
+from libsbgnpy.sbgn import showIndent
 
 
 def _process_xml_input(input):
