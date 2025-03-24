@@ -13,5 +13,9 @@ nav:
 
 plugins:
   - search
-  - mkdocstrings
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [src]
   - mkdocs-jupyter
