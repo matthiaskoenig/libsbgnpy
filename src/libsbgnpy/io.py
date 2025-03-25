@@ -42,7 +42,7 @@ def write_sbgn_to_file(sbgn: Sbgn, f: Path) -> None:
     :param f: file to write
     :return: None
     """
-    config = SerializerConfig(indent="  ", pretty_print=True)
+    config = SerializerConfig(indent="  ")
     context = XmlContext()
     serializer = XmlSerializer(context=context, config=config)
     with open(f, "w") as f:
@@ -55,7 +55,7 @@ def write_sbgn_to_string(sbgn: Sbgn) -> str:
     :param sbgn: sbgn object
     :return: SBGN xml string
     """
-    config = SerializerConfig(indent="  ", pretty_print=True)
+    config = SerializerConfig(indent="  ")
     context = XmlContext()
     serializer = XmlSerializer(context=context, config=config)
     return serializer.render(sbgn, ns_map={None: "http://sbgn.org/libsbgn/0.3"})
@@ -63,7 +63,7 @@ def write_sbgn_to_string(sbgn: Sbgn) -> str:
 
 def write_render_to_string(render_info: RenderInformation) -> str:
     """Write RenderInformation to string."""
-    config = SerializerConfig(indent="  ", pretty_print=True)
+    config = SerializerConfig(indent="  ")
     context = XmlContext()
     serializer = XmlSerializer(context=context, config=config)
     return serializer.render(

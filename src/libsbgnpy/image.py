@@ -24,7 +24,7 @@ def render_sbgn(sbgn: libsbgn.Sbgn, image_file: Path, file_format: str = "png") 
     The image file must end in .file_format, e.g. in '.png'
 
     Performs a request analogue to:
-    curl -X POST -F file=@".\BorisEJB.xml" http://sysbioapps.spdns.org/Layout/GenerateImage -o out.png
+    curl -X POST -F file=@"BorisEJB.xml" http://sysbioapps.spdns.org/Layout/GenerateImage -o out.png
 
     :param sbgn: sbgn object
     :param image_file: image to create
