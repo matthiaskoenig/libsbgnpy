@@ -1,14 +1,11 @@
-"""
-Read all test files.
-"""
+"""Read all test files."""
 
 import pytest
 from pathlib import Path
-from typing import List
-import libsbgnpy.sbgn as libsbgn
+from libsbgnpy.io import read_sbgn_from_file, write_sbgn_to_file
 
 
-def find_sbgn_files(directory: Path) -> List[Path]:
+def find_sbgn_files(directory: Path) -> list[Path]:
     """Find SBGN files in directory."""
 
     return sorted([f for f in directory.glob("**/*.sbgn")])
@@ -22,8 +19,8 @@ def find_sbgn_files(directory: Path) -> List[Path]:
 def test_read_examples(filename: str, tmpdir: Path) -> None:
     """Parse SBGN file test."""
 
-    sbgn = libsbgn.parse(filename)
+    sbgn = read_sbgn_from_file(filename)
     assert sbgn is not None
 
     # write everything to tempfile
-    sbgn.write_file(tmpdir / "test.sbgn")
+    write_sbgn_to_file(sbgn=sbgn, f=tmpdir/"test.sbgn")

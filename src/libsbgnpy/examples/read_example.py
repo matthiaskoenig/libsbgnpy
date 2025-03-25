@@ -4,7 +4,7 @@ from pathlib import Path
 
 from libsbgnpy import *
 from libsbgnpy.console import console
-from libsbgnpy.utils import read_sbgn_from_file
+from libsbgnpy.io import read_sbgn_from_file
 
 
 def read_sbgn_01(f: Path) -> Sbgn:

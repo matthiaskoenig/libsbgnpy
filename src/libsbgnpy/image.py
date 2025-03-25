@@ -10,7 +10,7 @@ import tempfile
 from pathlib import Path
 import requests
 
-from libsbgnpy import utils
+from libsbgnpy import io
 import libsbgnpy.sbgn as libsbgn
 
 
@@ -20,8 +20,7 @@ RENDER_URL = "http://sysbioapps.spdns.org/Layout"
 def render_sbgn(sbgn: libsbgn.Sbgn, image_file: Path, file_format: str = "png") -> None:
     """Render given sbgn object to image.
 
-    Currently supports the following file_formats:
-    - "png"
+    Supports the following file_formats: "png"
     The image file must end in .file_format, e.g. in '.png'
 
     Performs a request analogue to:
@@ -42,7 +41,7 @@ def render_sbgn(sbgn: libsbgn.Sbgn, image_file: Path, file_format: str = "png") 
     # Create temporary file for request
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_dir:
         f_in: Path = Path(tmp_dir) / "render.sbgn"
-        utils.write_sbgn_to_file(sbgn, f_in)
+        io.write_sbgn_to_file(sbgn, f_in)
 
         # Call webservice for rendering
         files = [

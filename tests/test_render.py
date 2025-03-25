@@ -1,12 +1,12 @@
-"""
-Tests the SBGN render functions.
-"""
+"""Tests the SBGN render functions."""
 
 from pathlib import Path
-from libsbgnpy import utils, sbgn_examples_dir
+from libsbgnpy import io, sbgn_examples_dir
+from libsbgnpy.examples import render_example
 
 
-def test_render_sbgn(tmpdir: Path):
-    """Test rendering SBGN to PNG."""
-    sbgn = utils.read_sbgn_from_file(sbgn_examples_dir / "adh.sbgn")
-    render.render_sbgn(sbgn, image_file=tmpdir / "test.png", file_format="png")
+
+def test_render_example(tmpdir: Path) -> None:
+    f_sbgn = tmpdir / "test.sbgn"
+    render_example.write_map_render(f_sbgn)
+    render_example.read_map_render(f_sbgn)

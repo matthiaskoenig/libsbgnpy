@@ -1,26 +1,21 @@
-# -*- coding: utf-8 -*-
 """
-Write and read extension information.
+Write and read SBGN extension information.
+
 see https://github.com/sbgn/sbgn/wiki/SBGN-ML_Extensions
 """
 
 from pathlib import Path
+from libsbgnpy import *
 
-from libsbgnpy import Extension, Language, utils
 
+def write_map_extension(f: Path) -> None:
+    """Write extension information on map."""
+    sbgn = Sbgn()
+    map = Map(language=MapLanguage.PROCESS_DESCRIPTION)
+    sbgn.map.append(map)
 
-def write_map_extension(f):
-    """Write extension information on map.
-
-    :param f: file input
-    :return: None
-    """
-    sbgn = libsbgn.sbgn()
-    map = libsbgn.map()
-    map.set_language(Language.PD)
-    sbgn.set_map(map)
-
-    extension = Extension(
+    extension = Sbgnbase.Extension()
+    extension.any_element.append(
         """<renderInformation id="example" programName="SBML Layout" programVersion="3.0"
      xmlns="http://projects.eml.org/bcb/sbml/render/level2">
         <listOfColorDefinitions>
@@ -73,31 +68,28 @@ def write_map_extension(f):
         </listOfStyles>
     </renderInformation>"""
     )
-    map.set_extension(extension)
+    map.extension = extension
 
     # print(utils.write_to_string(sbgn))
-    utils.write_sbgn_to_file(sbgn=sbgn, f=f)
+    write_sbgn_to_file(sbgn=sbgn, f=f)
 
 
 def read_map_extension(f: Path) -> None:
-    """Read notes from glyphs.
-
-    :param f: file input
-    :return: None
-    """
-    sbgn = utils.read_sbgn_from_file(f=f)
+    """Read extension from map."""
+    sbgn: Sbgn = read_sbgn_from_file(f=f)
 
     # map is a container for the glyphs and arcs
-    map = sbgn.get_map()
+    map: Map = sbgn.map[0]
 
-    extension = map.get_extension()
+    extension: Sbgnbase.Extension = map.extension
     if extension:
-        print(extension)
-        print(str(extension))
+        console.print(extension)
+        console.print(str(extension))
 
 
 if __name__ == "__main__":
-    f = "sbgn/notes.sbgn"
+    from libsbgnpy import sbgn_examples_dir
+    f: Path = sbgn_examples_dir / "extension.sbgn"
     write_map_extension(f)
-    print("_" * 80, "\n")
+    console.rule()
     read_map_extension(f)

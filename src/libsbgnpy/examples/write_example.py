@@ -4,7 +4,7 @@ Examples for the creation of SBGN files from scratch.
 
 from pathlib import Path
 from libsbgnpy import *
-from libsbgnpy.utils import write_sbgn_to_file
+from libsbgnpy.io import write_sbgn_to_file
 
 
 def write_sbgn_01(f: Path) -> None:

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbgn xmlns="http://sbgn.org/libsbgn/0.3">
+  <map language="process description">
+    <extension>&lt;renderInformation id="example" programName="SBML Layout" programVersion="3.0"
+     xmlns="http://projects.eml.org/bcb/sbml/render/level2"&gt;
+        &lt;listOfColorDefinitions&gt;
+        &lt;colorDefinition id="yelloComp" value="#ffffccff" /&gt;
+        &lt;colorDefinition id="grayComp" value="#e0e0e0ff" /&gt;
+        &lt;colorDefinition id="orange" value="#fa9e2fff" /&gt;
+        &lt;colorDefinition id="blue" value="#2958acff" /&gt;
+        &lt;colorDefinition id="green" value="#378f5cff" /&gt;
+        &lt;colorDefinition id="Color_0" value="#969696" /&gt;
+        &lt;colorDefinition id="Color_1" value="#ff9900" /&gt;
+        &lt;colorDefinition id="Color_2" value="#000000" /&gt;
+        &lt;/listOfColorDefinitions&gt;
+        &lt;listOfGradientDefinitions&gt;
+        &lt;linearGradient x1="0%" y1="0%" z1="0%" x2="100%" y2="0%" z2="100%" id="LinearGradient_0" spreadMethod="reflect"&gt;
+            &lt;stop offset="0%" stop-color="#ccffff" /&gt;
+            &lt;stop offset="100%" stop-color="#ffffff" /&gt;
+        &lt;/linearGradient&gt;
+        &lt;linearGradient x1="0%" y1="0%" z1="0%" x2="100%" y2="0%" z2="100%" id="OrangeGradient_0" spreadMethod="reflect"&gt;
+            &lt;stop offset="0%" stop-color="#ffffff" /&gt;
+            &lt;stop offset="100%" stop-color="#fa9e2fff" /&gt;
+        &lt;/linearGradient&gt;
+        &lt;linearGradient x1="0%" y1="0%" z1="0%" x2="100%" y2="0%" z2="100%" id="BlueGradient_0" spreadMethod="reflect"&gt;
+            &lt;stop offset="0%" stop-color="#ffffff" /&gt;
+            &lt;stop offset="100%" stop-color="#2958acff" /&gt;
+        &lt;/linearGradient&gt;
+        &lt;linearGradient x1="0%" y1="0%" z1="0%" x2="100%" y2="0%" z2="100%" id="GreenGradient_0" spreadMethod="reflect"&gt;
+            &lt;stop offset="0%" stop-color="#ffffff" /&gt;
+            &lt;stop offset="100%" stop-color="#378f5cff" /&gt;
+        &lt;/linearGradient&gt;
+        &lt;/listOfGradientDefinitions&gt;
+        &lt;listOfStyles&gt;
+        &lt;style idList="glyph0 glyph2 glyph14 glyph34 "&gt;
+            &lt;g stroke="Color_2" stroke-width="5" fill="yelloComp" /&gt;
+        &lt;/style&gt;
+        &lt;style idList="glyph1"&gt;
+            &lt;g stroke="Color_2" stroke-width="5" fill="grayComp" /&gt;
+        &lt;/style&gt;
+        &lt;style idList="glyph8 glyph23 glyph5 glyph12 glyph21 glyph13 glyph4 glyph6 glyph7 glyph20 glyph22"&gt;
+            &lt;g stroke="orange" stroke-width="2" fill="OrangeGradient_0" /&gt;
+        &lt;/style&gt;
+        &lt;style idList="glyph3 glyph47 glyph10 glyph11"&gt;
+            &lt;g stroke="blue" stroke-width="2" fill="BlueGradient_0" /&gt;
+        &lt;/style&gt;
+        &lt;style idList="glyph32 glyph37 glyph37a glyph31 glyph39 glyph40 glyph36 glyph28 glyph35 glyph27 glyph25 glyph26 glyph9 glyph38 glyph38a glyph29 glyph30 glyph46 glyph33"&gt;
+            &lt;g stroke="green" stroke-width="2" fill="GreenGradient_0" /&gt;
+        &lt;/style&gt;
+        &lt;style idList="a38"&gt;
+            &lt;g stroke="blue" stroke-width="2"  /&gt;
+        &lt;/style&gt;
+        &lt;/listOfStyles&gt;
+    &lt;/renderInformation&gt;</extension>
+  </map>
+</sbgn>

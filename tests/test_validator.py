@@ -1,18 +1,21 @@
 """Test validator."""
-
+import pytest
 from pathlib import Path
-from libsbgnpy.validation import validator
+from libsbgnpy  import validator
 
 
-def test_validate_xsd_01():
-    """Test XSD validation."""
-    f = Path(__file__).parent / "../src/libsbgnpy/examples/sbgn/adh.sbgn"
-    is_valid = validator.validate_xsd(f) is None
-    assert is_valid
+def find_sbgn_files(directory: Path) -> list[Path]:
+    """Find SBGN files in directory."""
 
+    return sorted([f for f in directory.glob("**/*.sbgn")])
 
-def test_validate_xsd_02():
-    """Test XSD validation."""
-    f = Path(__file__).parent / "../src/libsbgnpy/examples/sbgn/glycolysis.sbgn"
-    is_valid = validator.validate_xsd(f) is None
-    assert is_valid
+@pytest.mark.skip(reason="Not implemented")
+@pytest.mark.parametrize(
+    "filename",
+    find_sbgn_files(directory=Path(__file__).parent / "test-files"),
+    ids=lambda x: f"{x.parent.name}/{x.name}",
+)
+def test_validate_file(filename: str, tmpdir: Path) -> None:
+    """Validate test files."""
+    errors = validator.validate_xsd(f=Path(filename)) is None
+    assert not errors

@@ -1,8 +1,13 @@
 __version__ = "0.3.3"
+__author__ = "Matthias König"
 
 from pathlib import Path
 
 sbgn_examples_dir = Path(__file__).parent / "examples" / "sbgn"
+
+from .console import (
+    console
+)
 
 from .render import (
     ColorDefinition,
@@ -34,6 +39,18 @@ from .sbgn import (
     Sbgnbase,
 )
 
+from .io import (
+    read_sbgn_from_file,
+    write_sbgn_to_file,
+    write_sbgn_to_string,
+    read_render_from_string,
+    write_render_to_string,
+)
+
+from .image import (
+    render_sbgn,
+)
+
 __all__ = [
     "ColorDefinition",
     "G",
@@ -60,13 +77,13 @@ __all__ = [
     "Point",
     "Port",
     "Sbgn",
+
+    "read_sbgn_from_file",
+    "write_sbgn_to_string",
+    "write_sbgn_to_file",
+    "read_render_from_string",
+    "write_render_to_string",
+    "console",
+
     "sbgn_examples_dir",
 ]
-
-
-# __all__ = [
-#     "Notes",
-#     "Extension",
-#     "Language",
-#     "sbgn_examples_dir",
-# ]
