@@ -1,13 +1,15 @@
 """Test validator."""
+
 import pytest
 from pathlib import Path
-from libsbgnpy  import validator
+from libsbgnpy import validator
 
 
 def find_sbgn_files(directory: Path) -> list[Path]:
     """Find SBGN files in directory."""
 
     return sorted([f for f in directory.glob("**/*.sbgn")])
+
 
 @pytest.mark.skip(reason="Not implemented")
 @pytest.mark.parametrize(

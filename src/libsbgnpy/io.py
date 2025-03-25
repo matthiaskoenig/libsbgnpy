@@ -66,13 +66,15 @@ def write_render_to_string(render_info: RenderInformation) -> str:
     config = SerializerConfig(indent="  ", pretty_print=True)
     context = XmlContext()
     serializer = XmlSerializer(context=context, config=config)
-    return serializer.render(render_info, ns_map={
-        # None: "http://www.sbml.org/sbml/level3/version1/render/version1"
-    })
+    return serializer.render(
+        render_info,
+        ns_map={
+            # None: "http://www.sbml.org/sbml/level3/version1/render/version1"
+        },
+    )
 
 
 def read_render_from_string(xml_str: str) -> RenderInformation:
     """Read RenderInformation from string."""
     parser = XmlParser()
     return parser.from_string(xml_str, RenderInformation)
-

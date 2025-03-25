@@ -50,4 +50,3 @@ def test_notes_example(tmpdir: Path) -> None:
     f_sbgn = tmpdir / "test.sbgn"
     notes_example.write_glyph_notes(f_sbgn)
     notes_example.read_glyph_notes(f_sbgn)
-

@@ -2,12 +2,7 @@ __version__ = "0.3.3"
 __author__ = "Matthias König"
 
 from pathlib import Path
-
-sbgn_examples_dir = Path(__file__).parent / "examples" / "sbgn"
-
-from .console import (
-    console
-)
+from .console import console
 
 from .render import (
     ColorDefinition,
@@ -50,6 +45,9 @@ from .io import (
 from .image import (
     render_sbgn,
 )
+from .validator import validate_xsd
+
+sbgn_examples_dir = Path(__file__).parent / "examples" / "sbgn"
 
 __all__ = [
     "ColorDefinition",
@@ -77,13 +75,13 @@ __all__ = [
     "Point",
     "Port",
     "Sbgn",
-
     "read_sbgn_from_file",
     "write_sbgn_to_string",
     "write_sbgn_to_file",
     "read_render_from_string",
     "write_render_to_string",
+    "render_sbgn",
+    "validate_xsd",
     "console",
-
     "sbgn_examples_dir",
 ]

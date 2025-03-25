@@ -31,6 +31,7 @@ def test_write_sbgn_to_string(f_adh: Path) -> None:
     assert sbgn_str is not None
     assert "xml" in sbgn_str
 
+
 def test_read_write_render(f_adh) -> None:
     xml_str = """
     <renderInformation id="example" programName="libsbgnpy" programVersion="1.0.0"
@@ -39,14 +40,14 @@ def test_read_write_render(f_adh) -> None:
         <colorDefinition id="color0" value="#969696" />
         <colorDefinition id="color1" value="#ff9900" />
         </listOfColorDefinitions>
-        
+
         <listOfGradientDefinitions>
             <linearGradient x1="0%" y1="0%" x2="100%" y2="0%" id="gradient0">
                 <stop offset="0%" stop-color="#ccffff" />
                 <stop offset="100%" stop-color="#ffffff" />
             </linearGradient>
         </listOfGradientDefinitions>
-        
+
         <listOfStyles>
         <style idList="glyph1 glyph2">
             <g stroke="color0" stroke-width="5" fill="color1" />

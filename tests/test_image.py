@@ -1,8 +1,10 @@
 """Test image rendering"""
+
 from pathlib import Path
 
 from libsbgnpy import *
 from libsbgnpy.image import render_sbgn
+
 
 def test_image_render_sbgn(tmpdir: Path) -> None:
     """Test rendering SBGN to PNG."""

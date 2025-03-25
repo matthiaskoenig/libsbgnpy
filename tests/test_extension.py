@@ -8,8 +8,9 @@ from libsbgnpy.examples import extension_example
 
 def test_create_extension():
     map = Map(language=MapLanguage.PROCESS_DESCRIPTION)
-    map.extension = Sbgnbase.Extension(any_element=[
-        """<renderInformation id="example" programName="SBML Layout" programVersion="3.0"
+    map.extension = Sbgnbase.Extension(
+        any_element=[
+            """<renderInformation id="example" programName="SBML Layout" programVersion="3.0"
         xmlns="http://projects.eml.org/bcb/sbml/render/level2">
            <listOfColorDefinitions>
            <colorDefinition id="yelloComp" value="#ffffccff" />
@@ -59,7 +60,8 @@ def test_create_extension():
                <g stroke="blue" stroke-width="2"  />
            </style>
            </listOfStyles>
-       </renderInformation>"""]
+       </renderInformation>"""
+        ]
     )
 
     assert map.extension is not None
@@ -72,8 +74,9 @@ def test_read_extension(tmpdir: Path) -> None:
     map = Map(language=MapLanguage.PROCESS_DESCRIPTION)
     sbgn = Sbgn(map=[map])
 
-    map.extension = Sbgnbase.Extension(any_element=[
-        """<renderInformation id="example" programName="SBML Layout" programVersion="3.0"
+    map.extension = Sbgnbase.Extension(
+        any_element=[
+            """<renderInformation id="example" programName="SBML Layout" programVersion="3.0"
         xmlns="http://projects.eml.org/bcb/sbml/render/level2">
            <listOfColorDefinitions>
            <colorDefinition id="yelloComp" value="#ffffccff" />
@@ -85,7 +88,8 @@ def test_read_extension(tmpdir: Path) -> None:
            <colorDefinition id="Color_1" value="#ff9900" />
            <colorDefinition id="Color_2" value="#000000" />
            </listOfColorDefinitions>
-       </renderInformation>"""]
+       </renderInformation>"""
+        ]
     )
 
     assert map.extension is not None

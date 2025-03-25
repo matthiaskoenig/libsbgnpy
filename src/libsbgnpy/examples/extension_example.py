@@ -89,6 +89,7 @@ def read_map_extension(f: Path) -> None:
 
 if __name__ == "__main__":
     from libsbgnpy import sbgn_examples_dir
+
     f: Path = sbgn_examples_dir / "extension.sbgn"
     write_map_extension(f)
     console.rule()

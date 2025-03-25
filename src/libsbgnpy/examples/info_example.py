@@ -42,7 +42,6 @@ def info_example() -> None:
             bbox = g.bbox
             console.print(f"x={bbox.x}, y={bbox.y}, w={bbox.w}, h={bbox.h}")
 
-
     # arcs
     console.rule("Arcs", align="left", style="white")
     """

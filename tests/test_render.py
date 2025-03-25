@@ -1,9 +1,7 @@
 """Tests the SBGN render functions."""
 
 from pathlib import Path
-from libsbgnpy import io, sbgn_examples_dir
 from libsbgnpy.examples import render_example
-
 
 
 def test_render_example(tmpdir: Path) -> None:

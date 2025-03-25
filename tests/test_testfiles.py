@@ -23,4 +23,4 @@ def test_read_examples(filename: str, tmpdir: Path) -> None:
     assert sbgn is not None
 
     # write everything to tempfile
-    write_sbgn_to_file(sbgn=sbgn, f=tmpdir/"test.sbgn")
+    write_sbgn_to_file(sbgn=sbgn, f=tmpdir / "test.sbgn")

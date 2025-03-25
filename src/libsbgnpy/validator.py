@@ -6,8 +6,6 @@ from enum import Enum
 from typing import Any
 
 from lxml import etree
-import tempfile
-from libsbgnpy.io import read_sbgn_from_file, write_sbgn_to_file
 
 
 XSD_SCHEMA = Path(__file__).parent / "schema" / "SBGN.xsd"
@@ -89,7 +87,6 @@ class Issue(object):
 
 if __name__ == "__main__":
     from libsbgnpy import sbgn_examples_dir
+
     f = sbgn_examples_dir / "adh_0.3.sbgn"
     xsd_valid = validate_xsd(f)
-
-

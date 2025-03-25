@@ -11,7 +11,7 @@ extend-exclude = ["*.ipynb"]
 # McCabe complexity (`C901`) by default.
 select = ["E4", "E7", "E9", "F"]
 # Ignore undefined-local-with-import-star-usage
-ignore = ["F405"]
+ignore = ["F403", "F405"]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]

@@ -25,5 +25,5 @@ xsdata generate SBGN.xsd --package libsbgn
 - [ ] fix tests;
 - [ ] handling XML extension correctly. This should be proper XML and easy to handle
 - [ ] handle notes correctly, should also be HTML
-- [ ] automatic fixing of the documentation; namespaces 
+- [ ] automatic fixing of the documentation; namespaces
 - [ ] fixing plurals; maps; glyphs; arcs; etc

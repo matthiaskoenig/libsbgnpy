@@ -34,8 +34,8 @@ def sbgn() -> Sbgn:
             port=[
                 Port(x=136, y=180, id="pn1.1"),
                 Port(x=184, y=180, id="pn1.2"),
-            ]
-        )
+            ],
+        ),
     ]
 
     # arcs
@@ -43,7 +43,9 @@ def sbgn() -> Sbgn:
     map.arc = [
         Arc(
             class_value=ArcClass.CONSUMPTION,
-            source="glyph1", target="pn1.1", id="a01",
+            source="glyph1",
+            target="pn1.1",
+            id="a01",
             start=Arc.Start(x=98, y=160),
             end=Arc.End(x=136, y=180),
         )
