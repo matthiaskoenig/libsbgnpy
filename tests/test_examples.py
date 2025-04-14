@@ -8,6 +8,7 @@ from libsbgnpy import sbgn_examples_dir
 from libsbgnpy.examples.info_example import info_example
 from libsbgnpy.examples.read_example import read_sbgn_01
 from libsbgnpy.examples.write_example import write_sbgn_01, write_sbgn_02, write_sbgn_03
+from libsbgnpy.examples.special_character_example import special_character_example
 
 
 @pytest.mark.parametrize(
@@ -60,3 +61,9 @@ def test_write_read_example_03(tmpdir: Path) -> None:
 
 def test_info_example() -> None:
     info_example()
+
+
+def test_special_characters() -> None:
+    xml_str = special_character_example()
+    assert "α/β" in xml_str
+    assert "5′-3′" in xml_str
