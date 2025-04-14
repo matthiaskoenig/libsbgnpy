@@ -48,6 +48,15 @@ To build the documentation use
 mkdocs build -d _site
 ```
 
+### Jupyter notebooks
+Part of the documentation are jupyter notebooks
+To be able to run these the kernel must be installed for jupyter lab
+pip install jupyterlab ipykernel
+
+```bash
+python -m ipykernel install --user --name=libsbgnpy --display-name="libsbgnpy"
+```
+
 ## Release
 Steps to create a new release:
 

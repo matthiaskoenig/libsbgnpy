@@ -79,21 +79,19 @@ def write_sbgn_02(f: Path) -> None:
                 label=Label(text="NADH"),
                 bbox=Bbox(x=300, y=150, w=60, h=60),
             ),
+            # glyph with ports (process)
+            Glyph(
+                class_value=GlyphClass.PROCESS,
+                id="pn1",
+                orientation=GlyphOrientation.HORIZONTAL,
+                bbox=Bbox(x=148, y=168, w=24, h=24),
+                port=[
+                    Port(x=136, y=180, id="pn1.1"),
+                    Port(x=184, y=180, id="pn1.2"),
+                ],
+            ),
         ]
     )
-
-    # glyph with ports (process)
-    g = Glyph(
-        class_value=GlyphClass.PROCESS,
-        id="pn1",
-        orientation=GlyphOrientation.HORIZONTAL,
-        bbox=Bbox(x=148, y=168, w=24, h=24),
-        port=[
-            Port(x=136, y=180, id="pn1.1"),
-            Port(x=184, y=180, id="pn1.2"),
-        ],
-    )
-    map.glyph.append(g)
 
     # arcs
     # create arcs and set the start and end points

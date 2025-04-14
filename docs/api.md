@@ -1,22 +1,26 @@
 # API
 Here the API is documented.
 
-## `libsbgnpy.libsbgn`
-::: libsbgnpy.libsbgn
+## `libsbgnpy`
+::: libsbgnpy
     handler: python
 
-## `libsbgnpy.libsbgnTypes`
-::: libsbgnpy.libsbgnTypes
+## `libsbgnpy.sbgn`
+::: libsbgnpy.sbgn
+    handler: python
+
+## `libsbgnpy.image`
+::: libsbgnpy.image
     handler: python
 
 ## `libsbgnpy.render`
 ::: libsbgnpy.render
     handler: python
 
-## `libsbgnpy.utils`
-::: libsbgnpy.utils
+## `libsbgnpy.io`
+::: libsbgnpy.io
     handler: python
 
-## `libsbgnpy.validation.validator`
-::: libsbgnpy.validation.validator
+## `libsbgnpy.validator`
+::: libsbgnpy.validator
     handler: python
