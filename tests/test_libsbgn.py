@@ -3,7 +3,6 @@
 import pytest
 
 from libsbgnpy import *
-from libsbgnpy.deprecated.libsbgnTypes import Orientation
 
 
 @pytest.fixture
@@ -29,7 +28,7 @@ def sbgn() -> Sbgn:
         Glyph(
             class_value=GlyphClass.PROCESS,
             id="pn1",
-            orientation=Orientation.HORIZONTAL,
+            orientation=GlyphOrientation.HORIZONTAL,
             bbox=Bbox(x=148, y=168, w=24, h=24),
             port=[
                 Port(x=136, y=180, id="pn1.1"),
