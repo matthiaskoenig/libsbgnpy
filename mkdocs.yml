@@ -1,4 +1,5 @@
 site_name: libsbgnpy
+site_author: Matthias König
 
 theme:
   name: "material"
@@ -18,4 +19,5 @@ plugins:
       handlers:
         python:
           paths: [src]
-  - mkdocs-jupyter
+  - mkdocs-jupyter:
+      include_source: True
