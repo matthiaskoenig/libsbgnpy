@@ -38,9 +38,9 @@ def read_sbgn_from_file(f: Path) -> Sbgn:
     try:
         sbgn = parser.from_string(xml_str, Sbgn)
     except xsdata.exceptions.ParserError as err:
-        logger.error("Could not parse SBGN file: {path}")
+        logger.error(f"Could not parse SBGN file: {f}")
         logger.error(err)
-        logger.info(xml_str)
+        logger.warning(xml_str)
 
     # sbgn = parser.parse(f, Sbgn)
     return sbgn
