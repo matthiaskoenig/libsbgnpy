@@ -15,6 +15,8 @@ The initial library was generated using [xsdata](https://github.com/tefra/xsdata
 
 Documentation with examples is available at https://matthiaskoenig.github.io/libsbgnpy/.
 
+![libsbgnpy screenshot](./docs/images/libsbgnpy_screenshot.png)
+
 # How to cite
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.597155.svg)](https://doi.org/10.5281/zenodo.597155)
 
