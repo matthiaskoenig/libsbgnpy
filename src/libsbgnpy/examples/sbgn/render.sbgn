@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbgn xmlns="http://sbgn.org/libsbgn/0.3">
+  <map language="process description">
+    <extension>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;ns0:renderInformation xmlns:ns0="http://www.sbml.org/sbml/level3/version1/render/version1" ns0:id="example" ns0:programName="libsbgnpy" ns0:programVersion="1.0.0"&gt;
+  &lt;ns0:listOfColorDefinitions&gt;
+    &lt;ns0:colorDefinition ns0:id="color0" ns0:value="#969696"/&gt;
+    &lt;ns0:colorDefinition ns0:id="color1" ns0:value="#ff9900"/&gt;
+  &lt;/ns0:listOfColorDefinitions&gt;
+  &lt;ns0:listOfGradientDefinitions&gt;
+    &lt;ns0:linearGradient ns0:id="gradient0" ns0:x1="0%" ns0:x2="100%" ns0:y1="0%" ns0:y2="0%"&gt;
+      &lt;ns0:stop ns0:offset="0%" ns0:stop-color="#ccffff"/&gt;
+      &lt;ns0:stop ns0:offset="100%" ns0:stop-color="#ffffff"/&gt;
+    &lt;/ns0:linearGradient&gt;
+  &lt;/ns0:listOfGradientDefinitions&gt;
+  &lt;ns0:listOfStyles&gt;
+    &lt;ns0:style ns0:idList="glyph1 glyph2"&gt;
+      &lt;ns0:g ns0:stroke="color0" ns0:stroke-width="5" ns0:fill="color1"/&gt;
+    &lt;/ns0:style&gt;
+    &lt;ns0:style ns0:idList="glyph3"&gt;
+      &lt;ns0:g ns0:stroke="color1" ns0:stroke-width="2" ns0:fill="gradient0"/&gt;
+    &lt;/ns0:style&gt;
+  &lt;/ns0:listOfStyles&gt;
+&lt;/ns0:renderInformation&gt;
+</extension>
+    <glyph class="macromolecule" orientation="horizontal" id="glyph1">
+      <label text="INSR"/>
+      <bbox x="100" y="100" w="80" h="40"/>
+    </glyph>
+    <glyph class="simple chemical" orientation="horizontal" id="glyph2">
+      <label text="ATP"/>
+      <bbox x="200" y="100" w="80" h="40"/>
+    </glyph>
+    <glyph class="simple chemical" orientation="horizontal" id="glyph3">
+      <label text="glucose"/>
+      <bbox x="300" y="100" w="80" h="40"/>
+    </glyph>
+  </map>
+</sbgn>
