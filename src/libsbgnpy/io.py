@@ -2,13 +2,18 @@
 Helper functions to work with SBGN.
 """
 
+import logging
 from pathlib import Path
+
+import xsdata.exceptions
 from xsdata.formats.dataclass.parsers import XmlParser
 from xsdata.formats.dataclass.context import XmlContext
 from xsdata.formats.dataclass.serializers import XmlSerializer
 from xsdata.formats.dataclass.serializers.config import SerializerConfig
 
 from libsbgnpy import Sbgn, RenderInformation
+
+logger = logging.getLogger(__name__)
 
 
 def read_sbgn_from_file(f: Path) -> Sbgn:
@@ -30,7 +35,13 @@ def read_sbgn_from_file(f: Path) -> Sbgn:
         )
 
     parser = XmlParser()
-    sbgn = parser.from_string(xml_str, Sbgn)
+    try:
+        sbgn = parser.from_string(xml_str, Sbgn)
+    except xsdata.exceptions.ParserError as err:
+        logger.error("Could not parse SBGN file: {path}")
+        logger.error(err)
+        logger.info(xml_str)
+
     # sbgn = parser.parse(f, Sbgn)
     return sbgn
 
