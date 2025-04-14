@@ -56,7 +56,7 @@ def write_sbgn_to_file(sbgn: Sbgn, f: Path) -> None:
     config = SerializerConfig(indent="  ")
     context = XmlContext()
     serializer = XmlSerializer(context=context, config=config)
-    with open(f, "w") as f:
+    with open(f, "w", encoding="utf-8") as f:
         serializer.write(f, sbgn, ns_map={None: "http://sbgn.org/libsbgn/0.3"})
 
 
