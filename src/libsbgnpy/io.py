@@ -77,12 +77,16 @@ def write_render_to_string(render_info: RenderInformation) -> str:
     config = SerializerConfig(indent="  ")
     context = XmlContext()
     serializer = XmlSerializer(context=context, config=config)
-    return serializer.render(
+    xml_str = serializer.render(
         render_info,
         ns_map={
             # None: "http://www.sbml.org/sbml/level3/version1/render/version1"
         },
     )
+    # FIXME: there must be a better solution to get rid of the namespaces
+    xml_str = xml_str.replace("ns0:", "")
+    xml_str = xml_str.replace(":ns0", "")
+    return xml_str
 
 
 def read_render_from_string(xml_str: str) -> RenderInformation:
