@@ -24,7 +24,7 @@ def read_sbgn_from_file(f: Path) -> Sbgn:
     :return: parsed SBGN
     :rtype:
     """
-    with open(f, "r") as f_in:
+    with open(f, "r", encoding="utf-8") as f_in:
         xml_str = f_in.read()
         # upconverting for fixing reading
         xml_str = xml_str.replace(
@@ -38,9 +38,9 @@ def read_sbgn_from_file(f: Path) -> Sbgn:
     try:
         sbgn = parser.from_string(xml_str, Sbgn)
     except xsdata.exceptions.ParserError as err:
-        logger.error(f"Could not parse SBGN file: {f}")
+        logger.error(f"Could not parse SBGN file: '{f}'")
         logger.error(err)
-        logger.warning(xml_str)
+        logger.error(f"\n{xml_str}")
 
     # sbgn = parser.parse(f, Sbgn)
     return sbgn
