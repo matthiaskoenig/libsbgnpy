@@ -7,6 +7,8 @@ The initial library was generated using [xsdata](https://github.com/tefra/xsdata
 
 The source code is available from the [https://github.com/matthiaskoenig/libsbgnpy](https://github.com/matthiaskoenig/libsbgnpy). To report bugs, request features, or ask questions, please file an [issue](https://github.com/matthiaskoenig/libsbgnpy/issues). Documentation with examples is available at https://matthiaskoenig.github.io/libsbgnpy/.
 
+A presentation introducing libsbgnpy can be found here: [HARMONY2025 libsbgnpy](https://livermetabolism.com/presentations/HARMONY2025/libsbgnpy.html).
+
 ## How to cite
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.597155.svg)](https://doi.org/10.5281/zenodo.597155)
 

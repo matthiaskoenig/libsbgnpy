@@ -17,6 +17,8 @@ Documentation with examples is available at https://matthiaskoenig.github.io/lib
 
 ![libsbgnpy screenshot](./docs/images/libsbgnpy_screenshot.png)
 
+A presentation introducing libsbgnpy can be found here: [HARMONY2025 libsbgnpy](https://livermetabolism.com/presentations/HARMONY2025/libsbgnpy.html).
+
 # How to cite
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.597155.svg)](https://doi.org/10.5281/zenodo.597155)
 
