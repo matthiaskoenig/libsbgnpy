@@ -53,11 +53,14 @@ def write_sbgn_to_file(sbgn: Sbgn, f: Path) -> None:
     :param f: file to write
     :return: None
     """
-    config = SerializerConfig(indent="  ")
-    context = XmlContext()
-    serializer = XmlSerializer(context=context, config=config)
+    # config = SerializerConfig(indent="  ")
+    # context = XmlContext()
+    # serializer = XmlSerializer(context=context, config=config)
+    xml_str: str = write_sbgn_to_string(sbgn)
+
     with open(f, "w", encoding="utf-8") as f:
-        serializer.write(f, sbgn, ns_map={None: "http://sbgn.org/libsbgn/0.3"})
+        f.write(xml_str)
+        # serializer.write(f, sbgn, ns_map={None: "http://sbgn.org/libsbgn/0.3"})
 
 
 def write_sbgn_to_string(sbgn: Sbgn) -> str:
@@ -69,12 +72,21 @@ def write_sbgn_to_string(sbgn: Sbgn) -> str:
     config = SerializerConfig(indent="  ")
     context = XmlContext()
     serializer = XmlSerializer(context=context, config=config)
-    return serializer.render(sbgn, ns_map={None: "http://sbgn.org/libsbgn/0.3"})
+
+    # bugfix for handling escapes in extensions
+    xml_str = serializer.render(sbgn, ns_map={None: "http://sbgn.org/libsbgn/0.3"})
+    xml_str = xml_str.replace("&lt;", "<")
+    xml_str = xml_str.replace("&gt;", ">")
+
+    return xml_str
 
 
 def write_render_to_string(render_info: RenderInformation) -> str:
     """Write RenderInformation to string."""
-    config = SerializerConfig(indent="  ")
+    config = SerializerConfig(
+        indent="  ",
+        xml_declaration=False,
+    )
     context = XmlContext()
     serializer = XmlSerializer(context=context, config=config)
     xml_str = serializer.render(
@@ -86,6 +98,8 @@ def write_render_to_string(render_info: RenderInformation) -> str:
     # FIXME: there must be a better solution to get rid of the namespaces
     xml_str = xml_str.replace("ns0:", "")
     xml_str = xml_str.replace(":ns0", "")
+    # remove the xml header
+    # xml_str = xml_str.replace('<?xml version="1.0" encoding="UTF-8"?>\n', "")
     return xml_str
 
 

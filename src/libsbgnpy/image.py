@@ -1,7 +1,7 @@
 """
 Helper functions for rendering SBGN images.
 
-Currently uses the webservice provided by Frank Bergmann
+Uses the webservice provided by Frank Bergmann
 at "http://sysbioapps.dyndns.org/Layout/GenerateImage".
 For documentation see http://sysbioapps.spdns.org/Layout
 """

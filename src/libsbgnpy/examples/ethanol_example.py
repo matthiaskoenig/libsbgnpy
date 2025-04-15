@@ -1,7 +1,7 @@
 from libsbgnpy import *
 
 
-def ethanol_example() -> Sbgn:
+def ethanol_example(prefix: str) -> Sbgn:
     """Create ethanol example."""
     # create new map
     map = Map(
@@ -66,6 +66,8 @@ def ethanol_example() -> Sbgn:
             ),
         ]
     )
+    write_sbgn_to_file(sbgn, f"{prefix}_glyphs.sbgn")
+    render_sbgn(sbgn, f"{prefix}_glyphs.png")
 
     # arcs
     # create arcs and set the start and end points
@@ -121,6 +123,8 @@ def ethanol_example() -> Sbgn:
             ),
         ]
     )
+    write_sbgn_to_file(sbgn, f"{prefix}_arcs.sbgn")
+    render_sbgn(sbgn, f"{prefix}_arcs.png")
 
     render_info = RenderInformation(
         id="ethanol_render_info",
@@ -128,10 +132,10 @@ def ethanol_example() -> Sbgn:
         program_version="0.4.0",
         list_of_color_definitions=ListOfColorDefinitions(
             color_definition=[
-                ColorDefinition(id="blue", value="#1f77b4"),
-                ColorDefinition(id="orange", value="#ff7f0e"),
+                ColorDefinition(id="blue", value="#1f77b4bb"),
+                ColorDefinition(id="orange", value="#ff7f0ebb"),
                 ColorDefinition(id="white", value="#000000"),
-                ColorDefinition(id="grey", value="#cccccc"),
+                ColorDefinition(id="grey", value="#cccccccc"),
                 ColorDefinition(id="black", value="#ffffff"),
             ]
         ),
@@ -162,10 +166,11 @@ def ethanol_example() -> Sbgn:
     console.rule()
     map.extension = Sbgn.Extension([xml_str])
 
-    console.print(write_sbgn_to_string(sbgn))
+    write_sbgn_to_file(sbgn, f"{prefix}_render.sbgn")
+    render_sbgn(sbgn, f"{prefix}_glyphs_render.png")
+    # console.print(write_sbgn_to_string(sbgn))
     return sbgn
 
 
 if __name__ == "__main__":
-    sbgn = ethanol_example()
-    render_sbgn(sbgn, "ethanol_example.png")
+    sbgn = ethanol_example(prefix="ethanol_example")

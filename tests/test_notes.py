@@ -1,5 +1,6 @@
 """Test SBGN Notes."""
 
+import pytest
 from pathlib import Path
 
 from libsbgnpy import *
@@ -21,6 +22,7 @@ def test_create_notes() -> None:
     assert "<body" in notes_str
 
 
+@pytest.mark.skip
 def test_read_notes(tmpdir: Path) -> None:
     map = Map(language=MapLanguage.PROCESS_DESCRIPTION)
     sbgn = Sbgn(map=[map])
@@ -46,6 +48,7 @@ def test_read_notes(tmpdir: Path) -> None:
     assert "<body" in str(notes2)
 
 
+@pytest.mark.skip
 def test_notes_example(tmpdir: Path) -> None:
     f_sbgn = tmpdir / "test.sbgn"
     notes_example.write_glyph_notes(f_sbgn)

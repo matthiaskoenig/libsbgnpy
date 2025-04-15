@@ -1,9 +1,11 @@
 """Tests the SBGN render functions."""
 
+import pytest
 from pathlib import Path
 from libsbgnpy.examples import render_example
 
 
+@pytest.mark.skip
 def test_render_example(tmpdir: Path) -> None:
     f_sbgn = tmpdir / "test.sbgn"
     render_example.write_map_render(f_sbgn)

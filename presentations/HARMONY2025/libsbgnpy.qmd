@@ -62,61 +62,59 @@ format:
 ## 1. Create map {auto-animate="true"}
 
 ```python
-"""Glucokinase example."""
+"""Ethanol example."""
+# create new map
 map = Map(
     language=MapLanguage.PROCESS_DESCRIPTION,
     bbox=Bbox(x=0, y=0, w=363, h=253),
 )
+# add map to new sbgn
 sbgn = Sbgn(map=[map])
 ```
 
-## 2. Add glyphs {auto-animate="true"}
+## 2. Add glyphs
 
 ```python
-"""Glucokinase example."""
-map = Map(
-    language=MapLanguage.PROCESS_DESCRIPTION,
-    bbox=Bbox(x=0, y=0, w=363, h=253),
-)
-sbgn = Sbgn(map=[map])
-
-# Add glyphs
+"""Ethanol example."""
 map.glyph.extend([
     Glyph(
         class_value=GlyphClass.SIMPLE_CHEMICAL,
-        id="glyph1",
+        id="ethanol",
         label=Label(text="Ethanol"),
         bbox=Bbox(x=40, y=120, w=60, h=60),
     ),
     Glyph(
         class_value=GlyphClass.SIMPLE_CHEMICAL,
-        id="glyph_ethanal",
+        id="ethanal",
         label=Label(text="Ethanal"),
         bbox=Bbox(x=220, y=110, w=60, h=60),
     ),
     Glyph(
         class_value=GlyphClass.MACROMOLECULE,
-        id="glyph_adh1",
+        id="adh1",
         label=Label(text="ADH1"),
         bbox=Bbox(x=106, y=20, w=108, h=60),
     ),
     Glyph(
         class_value=GlyphClass.SIMPLE_CHEMICAL,
-        id="glyph_h",
+        id="h",
         label=Label(text="H+"),
         bbox=Bbox(x=220, y=190, w=60, h=60),
+        clone=Glyph.Clone(),
     ),
     Glyph(
         class_value=GlyphClass.SIMPLE_CHEMICAL,
-        id="glyph_nad",
+        id="nad",
         label=Label(text="NAD+"),
         bbox=Bbox(x=40, y=190, w=60, h=60),
+        clone=Glyph.Clone(),
     ),
     Glyph(
         class_value=GlyphClass.SIMPLE_CHEMICAL,
         id="glyph_nadh",
         label=Label(text="NADH"),
         bbox=Bbox(x=300, y=150, w=60, h=60),
+        clone=Glyph.Clone(),
     ),
     # glyph with ports (process)
     Glyph(
@@ -132,78 +130,88 @@ map.glyph.extend([
 ])
 ```
 
+## 2. Add glyphs
+
+![](./images/ethanol_example_glyphs.png){width=50%}
+
 ## 3. Add arcs
 ```python
+"""Ethanol example."""
 # create arcs and set the start and end points
-map.arc.extend([
-    Arc(
-        class_value=ArcClass.CONSUMPTION,
-        source="glyph1",
-        target="pn1.1",
-        id="a01",
-        start=Arc.Start(x=98, y=160),
-        end=Arc.End(x=136, y=180),
-    ),
-    Arc(
-        class_value=ArcClass.PRODUCTION,
-        source="pn1.2",
-        target="glyph_nadh",
-        id="a02",
-        start=Arc.Start(x=184, y=180),
-        end=Arc.End(x=300, y=180),
-    ),
-    Arc(
-        class_value=ArcClass.CATALYSIS,
-        source="glyph_adh1",
-        target="pn1",
-        id="a03",
-        start=Arc.Start(x=160, y=80),
-        end=Arc.End(x=160, y=168),
-    ),
-    Arc(
-        class_value=ArcClass.PRODUCTION,
-        source="pn1.2",
-        target="glyph_h",
-        id="a04",
-        start=Arc.Start(x=184, y=180),
-        end=Arc.End(x=224, y=202),
-    ),
-    Arc(
-        class_value=ArcClass.PRODUCTION,
-        source="pn1.2",
-        target="glyph_ethanal",
-        id="a05",
-        start=Arc.Start(x=184, y=180),
-        end=Arc.End(x=224, y=154),
-    ),
-    Arc(
-        class_value=ArcClass.CONSUMPTION,
-        source="glyph_nad",
-        target="pn1.1",
-        id="a06",
-        start=Arc.Start(x=95, y=202),
-        end=Arc.End(x=136, y=180),
-    ),
-])
+map.arc.extend(
+    [
+        Arc(
+            id="a01",
+            class_value=ArcClass.CONSUMPTION,
+            source="ethanol",
+            target="pn1.1",
+            start=Arc.Start(x=98, y=160),
+            end=Arc.End(x=136, y=180),
+        ),
+        Arc(
+            id="a02",
+            class_value=ArcClass.PRODUCTION,
+            source="pn1.2",
+            target="nadh",
+            start=Arc.Start(x=184, y=180),
+            end=Arc.End(x=300, y=180),
+        ),
+        Arc(
+            id="a03",
+            class_value=ArcClass.CATALYSIS,
+            source="adh1",
+            target="pn1",
+            start=Arc.Start(x=160, y=80),
+            end=Arc.End(x=160, y=168),
+        ),
+        Arc(
+            id="a04",
+            class_value=ArcClass.PRODUCTION,
+            source="pn1.2",
+            target="h",
+            start=Arc.Start(x=184, y=180),
+            end=Arc.End(x=224, y=202),
+        ),
+        Arc(
+            id="a05",
+            class_value=ArcClass.PRODUCTION,
+            source="pn1.2",
+            target="ethanal",
+            start=Arc.Start(x=184, y=180),
+            end=Arc.End(x=224, y=154),
+        ),
+        Arc(
+            id="a06",
+            class_value=ArcClass.CONSUMPTION,
+            source="nad",
+            target="pn1.1",
+            start=Arc.Start(x=95, y=202),
+            end=Arc.End(x=136, y=180),
+        ),
+    ]
+)
 ```
+
+## 3. Add arcs
+
+![](./images/ethanol_example_arcs.png){width=50%}
 
 ## 4. Add render information
 ```python
- render_info = RenderInformation(
+render_info = RenderInformation(
     id="ethanol_render_info",
     program_name="libsbgnpy",
     program_version="0.4.0",
     list_of_color_definitions=ListOfColorDefinitions(
         color_definition=[
-            ColorDefinition(id="blue", value="#1f77b4"),
-            ColorDefinition(id="orange", value="#ff7f0e"),
+            ColorDefinition(id="blue", value="#1f77b4bb"),
+            ColorDefinition(id="orange", value="#ff7f0ebb"),
             ColorDefinition(id="white", value="#000000"),
-            ColorDefinition(id="grey", value="#cccccc"),
+            ColorDefinition(id="grey", value="#cccccccc"),
             ColorDefinition(id="black", value="#ffffff"),
         ]
     ),
-    list_of_gradient_definitions=ListOfGradientDefinitions(
-    ),
+    list_of_gradient_definitions=ListOfGradientDefinitions(),
     list_of_styles=ListOfStyles(
         [
             Style(
@@ -223,12 +231,11 @@ map.arc.extend([
 )
 ```
 
-
 ## 5. Save and render
 
 :::: {.rows}
 
-::: {.row height="50%"}
+::: {.row height="60%"}
 ```python
 # serialize to string
 xml_str: str =  write_sbgn_to_string(sbgn)
@@ -241,8 +248,8 @@ render_sbgn(sbgn, "ethanol_example.png")
 ```
 :::
 
-::: {.row height="50%"}
-![](./images/ethanol_all.png){width=40%}
+::: {.row height="40%"}
+![](./images/ethanol_example_render.png){width=40%}
 :::
 
 ::::

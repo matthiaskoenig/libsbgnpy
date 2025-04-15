@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbgn xmlns="http://sbgn.org/libsbgn/0.3">
+  <map language="process description">
+    <extension><renderInformation xmlns="http://www.sbml.org/sbml/level3/version1/render/version1" id="ethanol_render_info" programName="libsbgnpy" programVersion="0.4.0">
+  <listOfColorDefinitions>
+    <colorDefinition id="blue" value="#1f77b4bb"/>
+    <colorDefinition id="orange" value="#ff7f0ebb"/>
+    <colorDefinition id="white" value="#000000"/>
+    <colorDefinition id="grey" value="#cccccccc"/>
+    <colorDefinition id="black" value="#ffffff"/>
+  </listOfColorDefinitions>
+  <listOfGradientDefinitions/>
+  <listOfStyles>
+    <style idList="ethanol ethanal">
+      <g stroke="black" stroke-width="2" fill="blue"/>
+    </style>
+    <style idList="adh1">
+      <g stroke="black" stroke-width="2" fill="orange"/>
+    </style>
+    <style idList="nad nadh h">
+      <g stroke="black" stroke-width="1" fill="grey"/>
+    </style>
+  </listOfStyles>
+</renderInformation>
+</extension>
+    <bbox x="0" y="0" w="363" h="253"/>
+    <glyph class="simple chemical" orientation="horizontal" id="ethanol">
+      <label text="Ethanol"/>
+      <bbox x="40" y="120" w="60" h="60"/>
+    </glyph>
+    <glyph class="simple chemical" orientation="horizontal" id="ethanal">
+      <label text="Ethanal"/>
+      <bbox x="220" y="110" w="60" h="60"/>
+    </glyph>
+    <glyph class="macromolecule" orientation="horizontal" id="adh1">
+      <label text="ADH1"/>
+      <bbox x="106" y="20" w="108" h="60"/>
+    </glyph>
+    <glyph class="simple chemical" orientation="horizontal" id="h">
+      <label text="H+"/>
+      <clone/>
+      <bbox x="220" y="190" w="60" h="60"/>
+    </glyph>
+    <glyph class="simple chemical" orientation="horizontal" id="nad">
+      <label text="NAD+"/>
+      <clone/>
+      <bbox x="40" y="190" w="60" h="60"/>
+    </glyph>
+    <glyph class="simple chemical" orientation="horizontal" id="glyph_nadh">
+      <label text="NADH"/>
+      <clone/>
+      <bbox x="300" y="150" w="60" h="60"/>
+    </glyph>
+    <glyph class="process" orientation="horizontal" id="pn1">
+      <bbox x="148" y="168" w="24" h="24"/>
+      <port x="136" y="180" id="pn1.1"/>
+      <port x="184" y="180" id="pn1.2"/>
+    </glyph>
+    <arc class="consumption" id="a01" source="ethanol" target="pn1.1">
+      <start x="98" y="160"/>
+      <end x="136" y="180"/>
+    </arc>
+    <arc class="production" id="a02" source="pn1.2" target="nadh">
+      <start x="184" y="180"/>
+      <end x="300" y="180"/>
+    </arc>
+    <arc class="catalysis" id="a03" source="adh1" target="pn1">
+      <start x="160" y="80"/>
+      <end x="160" y="168"/>
+    </arc>
+    <arc class="production" id="a04" source="pn1.2" target="h">
+      <start x="184" y="180"/>
+      <end x="224" y="202"/>
+    </arc>
+    <arc class="production" id="a05" source="pn1.2" target="ethanal">
+      <start x="184" y="180"/>
+      <end x="224" y="154"/>
+    </arc>
+    <arc class="consumption" id="a06" source="nad" target="pn1.1">
+      <start x="95" y="202"/>
+      <end x="136" y="180"/>
+    </arc>
+  </map>
+</sbgn>

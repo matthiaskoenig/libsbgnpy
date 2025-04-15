@@ -104,6 +104,7 @@ def write_map_render(f: Path) -> None:
     xml_str = write_render_to_string(render_info=render_info)
     console.print(xml_str)
     map.extension = Sbgn.Extension([xml_str])
+    console.print(map.extension)
 
     # console.print(write_sbgn_to_string(sbgn))
     write_sbgn_to_file(sbgn=sbgn, f=f)

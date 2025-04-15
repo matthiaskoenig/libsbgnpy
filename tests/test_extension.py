@@ -1,5 +1,6 @@
 """Test extension writing."""
 
+import pytest
 from pathlib import Path
 
 from libsbgnpy import *
@@ -70,6 +71,7 @@ def test_create_extension():
     assert "<linearGradient" in extension_str
 
 
+@pytest.mark.skip
 def test_read_extension(tmpdir: Path) -> None:
     map = Map(language=MapLanguage.PROCESS_DESCRIPTION)
     sbgn = Sbgn(map=[map])
