@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sbgn xmlns="http://sbgn.org/libsbgn/0.3">
-  <map language="process description">
+  <map language="process description" id="ethanol_example">
     <extension><renderInformation xmlns="http://www.sbml.org/sbml/level3/version1/render/version1" id="ethanol_render_info" programName="libsbgnpy" programVersion="0.4.0">
   <listOfColorDefinitions>
     <colorDefinition id="blue" value="#1f77b4bb"/>

@@ -142,7 +142,7 @@ def ethanol_example(prefix: str) -> Sbgn:
         ),
         list_of_gradient_definitions=ListOfGradientDefinitions(),
         list_of_styles=ListOfStyles(
-            [
+            style=[
                 Style(
                     id_list="ethanol ethanal",
                     g=G(stroke="black", stroke_width=2, fill="blue"),
@@ -165,7 +165,7 @@ def ethanol_example(prefix: str) -> Sbgn:
     console.rule()
     console.print(xml_str)
     console.rule()
-    map.extension = Sbgn.Extension([xml_str])
+    map.extension = Sbgn.Extension(any_element=[xml_str])
 
     write_sbgn_to_file(sbgn, f"{prefix}_render.sbgn")
     render_sbgn(sbgn, f"{prefix}_glyphs_render.png")

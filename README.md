@@ -15,9 +15,57 @@ The initial library was generated using [xsdata](https://github.com/tefra/xsdata
 
 Documentation with examples is available at https://matthiaskoenig.github.io/libsbgnpy/.
 
-![libsbgnpy screenshot](./docs/images/libsbgnpy_screenshot.png)
+```python
+    map = Map(
+        id="ethanol_example",
+        language=MapLanguage.PROCESS_DESCRIPTION,
+        bbox=Bbox(x=0, y=0, w=363, h=253),
+    )
+    # add map to new sbgn
+    sbgn = Sbgn(map=[map])
 
-A presentation introducing libsbgnpy can be found here: [HARMONY2025 libsbgnpy](https://livermetabolism.com/presentations/HARMONY2025/libsbgnpy.html).
+    # create glyphs and add to map
+    map.glyph.extend(
+        [
+            Glyph(
+                class_value=GlyphClass.SIMPLE_CHEMICAL,
+                id="ethanol",
+                label=Label(text="Ethanol"),
+                bbox=Bbox(x=40, y=120, w=60, h=60),
+            ),
+            Glyph(
+                class_value=GlyphClass.SIMPLE_CHEMICAL,
+                id="ethanal",
+                label=Label(text="Ethanal"),
+                bbox=Bbox(x=220, y=110, w=60, h=60),
+            ),
+            Glyph(
+                class_value=GlyphClass.MACROMOLECULE,
+                id="adh1",
+                label=Label(text="ADH1"),
+                bbox=Bbox(x=106, y=20, w=108, h=60),
+            ),
+
+            ...
+
+            # glyph with ports (process)
+            Glyph(
+                class_value=GlyphClass.PROCESS,
+                id="pn1",
+                orientation=GlyphOrientation.HORIZONTAL,
+                bbox=Bbox(x=148, y=168, w=24, h=24),
+                port=[
+                    Port(x=136, y=180, id="pn1.1"),
+                    Port(x=184, y=180, id="pn1.2"),
+                ],
+            ),
+        ]
+    )
+    write_sbgn_to_file(sbgn, f"{prefix}_glyphs.sbgn")
+    render_sbgn(sbgn, f"{prefix}_glyphs.png")
+```
+
+![Example](./docs/images/ethanol_example.png)
 
 # How to cite
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.597155.svg)](https://doi.org/10.5281/zenodo.597155)

@@ -14,7 +14,7 @@ from libsbgnpy import io
 import libsbgnpy.sbgn as libsbgn
 
 
-RENDER_URL = "http://sysbioapps.spdns.org/Layout"
+RENDER_URL = "https://sbml.bioquant.uni-heidelberg.de/layout"
 
 
 def render_sbgn(sbgn: libsbgn.Sbgn, image_file: Path, file_format: str = "png") -> None:
@@ -40,7 +40,7 @@ def render_sbgn_sysbioapps(
     The image file must end in .file_format, e.g. in '.png'
 
     Performs a request analogue to:
-    curl -X POST -F file=@"BorisEJB.xml" http://sysbioapps.spdns.org/Layout/GenerateImage -o out.png
+    curl -X POST -F file=@"BorisEJB.xml" https://sbml.bioquant.uni-heidelberg.de/layout -o out.png
 
     :param sbgn: sbgn object
     :param image_file: image to create
@@ -63,7 +63,7 @@ def render_sbgn_sysbioapps(
         files = [
             ("file", open(f_in, "rb")),
         ]
-        r = requests.post(f"{RENDER_URL}/GenerateImage", files=files)
+        r = requests.post(f"{RENDER_URL}", files=files)
 
         r.raise_for_status()
 
