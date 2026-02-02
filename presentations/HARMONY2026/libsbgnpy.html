@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.8.27">
 
   <meta name="author" content="Matthias König">
-  <meta name="dcterms.date" content="2025-04-15">
-  <title>quarto-input2471a636c3458868</title>
+  <meta name="dcterms.date" content="2026-02-02">
+  <title>quarto-input2c9730fd10e67de7</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -95,8 +95,28 @@
     code span.va { color: #111111; } /* Variable */
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
-  </style>
-  <link rel="stylesheet" href="libsbgnpy_files/libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="libsbgnpy_files/libs/revealjs/dist/theme/quarto-5ae9c59b2727fcd5357d4f034d95f9e0.css">
   <link rel="stylesheet" href="styles.css">
   <link href="libsbgnpy_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="libsbgnpy_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -193,58 +213,62 @@
   </style>
 </head>
 <body class="quarto-light">
+<script src="mathjax-config.js"></script>
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
+<section id="title-slide" data-notes="Some speaker notes" class="quarto-title-block center">
   <h1 class="title"><img data-src="images/libsbgnpy_large.png" style="width:70.0%"></h1>
   <p class="subtitle">Python library for SBGN</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Matthias König
+Matthias König <a href="https://orcid.org/0000-0003-1725-179X" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a>
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:konigmatt@gmail.com<br /> https://livermetabolism.com">konigmatt@gmail.com<br> https://livermetabolism.com</a>
 </div>
         <p class="quarto-title-affiliation">
-            Humboldt-University Berlin, Faculty of Life Science, Systems Medicine of Liver<br><a href="https://livermetabolism.com">https://livermetabolism.com</a>
+            Humboldt-Universität zu Berlin, Faculty of Life Science, Institute of Biology, ITB <br>University of Stuttgart, Institute of Structural Mechanics and Dynamics in Aerospace Engineering
           </p>
     </div>
 </div>
 
-  <p class="date">2025-04-15</p>
+  <p class="date">February 2, 2026</p>
 </section>
 <section id="sbgn" class="slide level2 smaller">
 <h2>SBGN</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li><strong>Systems Biology Graphical Notation</strong></li>
+<li><strong>Systems Biology Graphical Notation</strong><sup>1</sup></li>
 <li>Standardise graphical notation used in maps of biological processes</li>
-<li><strong>Process Description (PD)</strong>: temporal courses of biochemical interactions in a network</li>
-<li><strong>Entity Relationship (ER)</strong>: all relationships between participates, regardless of the temporal aspects</li>
-<li><strong>Activity Flow (AF)</strong>: flow of information between biochemical entities in a network</li>
+<li><strong>Process Description (PD)</strong><sup>2</sup>: temporal courses of biochemical interactions in a network</li>
+<li><strong>Entity Relationship (ER)</strong><sup>3</sup>: all relationships between participates, regardless of the temporal aspects</li>
+<li><strong>Activity Flow (AF)</strong><sup>4</sup>: flow of information between biochemical entities in a network</li>
 </ul>
+<!-- ![](./images/sbgn_logo.png){width: 50%} -->
 </div><div class="column" style="width:50%;">
 <p><img data-src="./images/toure_drosophila.png"></p>
 </div></div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn1"><p><span class="citation" data-cites="LeNovere2009">Le Novère et al. (<a href="#/want-to-know-more" role="doc-biblioref" onclick="">2009</a>)</span>, <span class="citation" data-cites="Bergmann2020">Bergmann et al. (<a href="#/want-to-know-more" role="doc-biblioref" onclick="">2020</a>)</span>, <span class="citation" data-cites="vanIersel2012">van Iersel et al. (<a href="#/want-to-know-more" role="doc-biblioref" onclick="">2012</a>)</span></p></li><li id="fn2"><p><span class="citation" data-cites="Rougny2019">Rougny et al. (<a href="#/want-to-know-more" role="doc-biblioref" onclick="">2019</a>)</span></p></li><li id="fn3"><p><span class="citation" data-cites="Sorokin2015">Sorokin et al. (<a href="#/want-to-know-more" role="doc-biblioref" onclick="">2015</a>)</span></p></li><li id="fn4"><p><span class="citation" data-cites="Mi2015">Mi et al. (<a href="#/want-to-know-more" role="doc-biblioref" onclick="">2015</a>)</span></p></li></ol></aside></section>
 <section id="libsbgnpy" class="slide level2 smaller">
 <h2>libsbgnpy</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li>Python library for SBGN</li>
+<li>Python library for SBGN<sup>1</sup></li>
 <li>Supports AF, PD, ER</li>
 <li>Supports libsbgn/0.3</li>
-<li><strong>new</strong>: support for render extension</li>
-<li><strong>new</strong>: python dataclasses with type annotations</li>
-<li><strong>new</strong>: py3.12, py3.13 support</li>
-<li><strong>new</strong>: more and better documentation: <a href="https://matthiaskoenig.github.io/libsbgnpy/" class="uri">https://matthiaskoenig.github.io/libsbgnpy/</a></li>
+<li><strong>new</strong>: xsdata v26.1 dataclasses (stricter validation)</li>
+<li><strong>new</strong>: py3.10 - py3.14 support</li>
+<li><strong>new</strong>: better documentation: <a href="https://matthiaskoenig.github.io/libsbgnpy/" class="uri">https://matthiaskoenig.github.io/libsbgnpy/</a></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <p><img data-src="./images/github_screenshot.png"></p>
 </div></div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn5"><p><span class="citation" data-cites="libsbgnpy-v0.5.2">König (<a href="#/want-to-know-more" role="doc-biblioref" onclick="">2026</a>)</span></p></li></ol></aside></section>
 <section id="create-map" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">1. Create map</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode python hljs"><span id="cb1-1" class="hljs-ln-code"><a href=""></a><span class="co">"""Ethanol example."""</span></span>
@@ -429,21 +453,53 @@ Matthias König
 </div>
 </div>
 </section>
-<section id="want-to-know-more" class="slide level2">
+<section id="want-to-know-more" class="slide level2 smaller scrollable">
 <h2>Want to know more</h2>
-<div style="text-align: center; margin-top: 1em">
-<p><img data-src="images/libsbgnpy_large.png" style="width:70.0%"></p>
+<div style="text-align: center; margin-top: 0.5em">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><a href="https://matthiaskoenig.github.io/libsbgnpy"><img data-src="images/libsbgnpy_large.png" class="fixed-img"></a></p>
+</div><div class="column" style="width:25%;">
+<p><a href="https://livermetabolism.com"><img data-src="images/qr_livermetabolism.png" class="fixed-img"></a></p>
+</div><div class="column" style="width:25%;">
+<p><img data-src="images/headshot.png" class="fixed-img"></p>
+</div></div>
 </div>
-<div style="text-align: center; margin-top: 1em">
+<div style="text-align: center; margin-top: 0.5em">
 <p><a href="https://matthiaskoenig.github.io/libsbgnpy/" data-preview-link="true" style="text-align: center">libsbgnpy documentation</a></p>
+</div>
+<!-- # References-->
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Bergmann2020" class="csl-entry" role="listitem">
+Bergmann, Frank T., Tobias Czauderna, Ugur Dogrusoz, Adrien Rougny, Andreas Dräger, Vasundra Touré, Alexander Mazein, Michael L. Blinov, and Augustin Luna. 2020. <span>“Systems Biology Graphical Notation Markup Language (<span>SBGNML</span>) Version 0.3.”</span> <em>Journal of Integrative Bioinformatics</em> 17 (2-3): 20200016. <a href="https://doi.org/10.1515/jib-2020-0016">https://doi.org/10.1515/jib-2020-0016</a>.
+</div>
+<div id="ref-libsbgnpy-v0.5.2" class="csl-entry" role="listitem">
+König, Matthias. 2026. <span>“Libsbgnpy: <span>Python</span> Library for <span>SBGN</span>.”</span> Zenodo. <a href="https://doi.org/10.5281/zenodo.18455396">https://doi.org/10.5281/zenodo.18455396</a>.
+</div>
+<div id="ref-LeNovere2009" class="csl-entry" role="listitem">
+Le Novère, Nicolas, Michael Hucka, Huaiyu Mi, Stuart Moodie, Falk Schreiber, Anatoly Sorokin, Emek Demir, et al. 2009. <span>“The <span>Systems Biology Graphical Notation</span>.”</span> <em>Nature Biotechnology</em> 27 (8): 735–41. <a href="https://doi.org/10.1038/nbt.1558">https://doi.org/10.1038/nbt.1558</a>.
+</div>
+<div id="ref-Mi2015" class="csl-entry" role="listitem">
+Mi, Huaiyu, Falk Schreiber, Stuart Moodie, Tobias Czauderna, Emek Demir, Robin Haw, Augustin Luna, Nicolas Le Novère, Anatoly Sorokin, and Alice Villéger. 2015. <span>“Systems <span>Biology Graphical Notation</span>: <span>Activity Flow</span> Language <span>Level</span> 1 <span>Version</span> 1.2.”</span> <em>Journal of Integrative Bioinformatics</em> 12 (2): 265. <a href="https://doi.org/10.2390/biecoll-jib-2015-265">https://doi.org/10.2390/biecoll-jib-2015-265</a>.
+</div>
+<div id="ref-Rougny2019" class="csl-entry" role="listitem">
+Rougny, Adrien, Vasundra Touré, Stuart Moodie, Irina Balaur, Tobias Czauderna, Hanna Borlinghaus, Ugur Dogrusoz, et al. 2019. <span>“Systems <span>Biology Graphical Notation</span>: <span>Process Description</span> Language <span>Level</span> 1 <span>Version</span> 2.0.”</span> <em>Journal of Integrative Bioinformatics</em> 16 (2): 20190022. <a href="https://doi.org/10.1515/jib-2019-0022">https://doi.org/10.1515/jib-2019-0022</a>.
+</div>
+<div id="ref-Sorokin2015" class="csl-entry" role="listitem">
+Sorokin, Anatoly, Nicolas Le Novère, Augustin Luna, Tobias Czauderna, Emek Demir, Robin Haw, Huaiyu Mi, Stuart Moodie, Falk Schreiber, and Alice Villéger. 2015. <span>“Systems <span>Biology Graphical Notation</span>: <span>Entity Relationship</span> Language <span>Level</span> 1 <span>Version</span> 2.”</span> <em>Journal of Integrative Bioinformatics</em> 12 (2): 264. <a href="https://doi.org/10.2390/biecoll-jib-2015-264">https://doi.org/10.2390/biecoll-jib-2015-264</a>.
+</div>
+<div id="ref-vanIersel2012" class="csl-entry" role="listitem">
+van Iersel, Martijn P., Alice C. Villéger, Tobias Czauderna, Sarah E. Boyd, Frank T. Bergmann, Augustin Luna, Emek Demir, et al. 2012. <span>“Software Support for <span>SBGN</span> Maps: <span>SBGN-ML</span> and <span>LibSBGN</span>.”</span> <em>Bioinformatics</em> 28 (15): 2016–21. <a href="https://doi.org/10.1093/bioinformatics/bts270">https://doi.org/10.1093/bioinformatics/bts270</a>.
+</div>
 </div>
 
 </section>
+
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="images/libsbgnpy.png" class="slide-logo"></p>
 <div class="footer footer-default">
-<p><a href="https://github.com/matthiaskoenig/libsbgnpy.git">https://github.com/matthiaskoenig/libsbgnpy.git</a></p>
+
 </div>
 </div></div>
 
@@ -625,13 +681,13 @@ Matthias König
         // specified using percentage units.
         width: 1050,
 
-        height: 650,
+        height: 700,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],

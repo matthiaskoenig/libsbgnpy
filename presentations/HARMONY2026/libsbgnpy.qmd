@@ -1,36 +1,48 @@
 ---
 title: "![](images/libsbgnpy_large.png){width=70%}"
 subtitle: "Python library for SBGN"
-date: 2025-04-15
-author: "Matthias König"
-institute: "Humboldt-University Berlin, Faculty of Life Science, Systems Medicine of Liver<br/>[https://livermetabolism.com](https://livermetabolism.com)"
-format:
-  revealjs:
-    with: 1050
-    height: 650
-    margin: 0.1
-    theme: default
-    # toc-title: Outline
-    # toc: true
-    slide-number: true
-    chalkboard:
-      buttons: false
-    preview-links: auto
-    logo: images/libsbgnpy.png
-    css: styles.css
-    footer: '[https://github.com/matthiaskoenig/libsbgnpy.git](https://github.com/matthiaskoenig/libsbgnpy.git)'
+format: clean-revealjs
+author:
+  - name: Matthias König
+    orcid: 0000-0003-1725-179X
+    email: konigmatt@gmail.com<br /> https://livermetabolism.com
+    affiliations: Humboldt-Universität zu Berlin, Faculty of Life Science, Institute of Biology, ITB <br />University of Stuttgart, Institute of Structural Mechanics and Dynamics in Aerospace Engineering
+date: 2026-02-02
+title-slide-attributes:
+  data-notes: Some speaker notes
+bibliography: libsbgnpy.bib
+
+transition-speed: default
+width: 1050
+height: 700
+margin: 0.1
+# toc-title: Outline
+# toc: true
+slide-number: true
+chalkboard:
+    buttons: false
+preview-links: auto
+logo: images/libsbgnpy.png
+css: styles.css
+citation-location: document
+# footer: "Systems Medicine of Liver, https://livermetabolism.com"
 ---
+
+
 
 ## SBGN {.smaller}
 
 :::: {.columns}
 
 ::: {.column width="50%"}
-- **Systems Biology Graphical Notation**
+- **Systems Biology Graphical Notation**^[@LeNovere2009, @Bergmann2020, @vanIersel2012]
 - Standardise graphical notation used in maps of biological processes
-- **Process Description (PD)**: temporal courses of biochemical interactions in a network
-- **Entity Relationship (ER)**: all relationships between participates, regardless of the temporal aspects
-- **Activity Flow (AF)**: flow of information between biochemical entities in a network
+- **Process Description (PD)**^[@Rougny2019]: temporal courses of biochemical interactions in a network
+- **Entity Relationship (ER)**^[@Sorokin2015]: all relationships between participates, regardless of the temporal aspects
+- **Activity Flow (AF)**^[@Mi2015]: flow of information between biochemical entities in a network
+
+<!-- ![](./images/sbgn_logo.png){width: 50%} -->
+
 :::
 
 ::: {.column width="50%"}
@@ -44,13 +56,14 @@ format:
 :::: {.columns}
 
 ::: {.column width="50%"}
-- Python library for SBGN
+- Python library for SBGN^[@libsbgnpy-v0.5.2]
 - Supports AF, PD, ER
 - Supports libsbgn/0.3
-- **new**: support for render extension
-- **new**: python dataclasses with type annotations
-- **new**: py3.12, py3.13 support
-- **new**: more and better documentation: <https://matthiaskoenig.github.io/libsbgnpy/>
+- **new**: xsdata v26.1 dataclasses (stricter validation)
+- **new**: py3.10 - py3.14 support
+- **new**: better documentation: <https://matthiaskoenig.github.io/libsbgnpy/>
+
+
 :::
 
 ::: {.column width="50%"}
@@ -255,10 +268,26 @@ render_sbgn(sbgn, "ethanol_example.png")
 ::::
 
 ## Want to know more
-::: {style="text-align: center; margin-top: 1em"}
-![](images/libsbgnpy_large.png){width=70%}
+::: {style="text-align: center; margin-top: 0.5em"}
+::: {.columns}
+::: {.column width="50%"}
+[![](images/libsbgnpy_large.png){.fixed-img}](https://matthiaskoenig.github.io/libsbgnpy)
 :::
 
-::: {style="text-align: center; margin-top: 1em"}
+::: {.column width="25%"}
+[![](images/qr_livermetabolism.png){.fixed-img}](https://livermetabolism.com)
+:::
+::: {.column width="25%"}
+![](images/headshot.png){.fixed-img}
+:::
+
+:::
+:::
+
+::: {style="text-align: center; margin-top: 0.5em"}
 [libsbgnpy documentation](https://matthiaskoenig.github.io/libsbgnpy/){preview-link="true" style="text-align: center"}
+:::
+
+<!-- # References-->
+::: {#refs}
 :::
