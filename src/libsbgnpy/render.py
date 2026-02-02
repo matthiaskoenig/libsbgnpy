@@ -1,191 +1,187 @@
+from __future__ import annotations
+
 from dataclasses import dataclass, field
-from typing import Optional
 
 __NAMESPACE__ = "http://www.sbml.org/sbml/level3/version1/render/version1"
 
 
-@dataclass
+@dataclass(kw_only=True)
 class ColorDefinition:
     class Meta:
         name = "colorDefinition"
         namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
 
-    id: Optional[str] = field(
-        default=None,
+    id: str = field(
         metadata={
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
             "required": True,
-        },
+        }
     )
-    value: Optional[str] = field(
-        default=None,
+    value: str = field(
         metadata={
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
             "required": True,
-        },
+        }
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class G:
     class Meta:
         name = "g"
         namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
 
-    stroke: Optional[str] = field(
+    stroke: None | str = field(
         default=None,
         metadata={
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    stroke_width: Optional[float] = field(
+    stroke_width: None | float = field(
         default=None,
         metadata={
             "name": "stroke-width",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    fill: Optional[str] = field(
+    fill: None | str = field(
         default=None,
         metadata={
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    fill_rule: Optional[str] = field(
+    fill_rule: None | str = field(
         default=None,
         metadata={
             "name": "fill-rule",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    font_family: Optional[str] = field(
+    font_family: None | str = field(
         default=None,
         metadata={
             "name": "font-family",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    font_weight: Optional[str] = field(
+    font_weight: None | str = field(
         default=None,
         metadata={
             "name": "font-weight",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    font_style: Optional[str] = field(
+    font_style: None | str = field(
         default=None,
         metadata={
             "name": "font-style",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    text_anchor: Optional[str] = field(
+    text_anchor: None | str = field(
         default=None,
         metadata={
             "name": "text-anchor",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    vtext_anchor: Optional[str] = field(
+    vtext_anchor: None | str = field(
         default=None,
         metadata={
             "name": "vtext-anchor",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    font_size: Optional[int] = field(
+    font_size: None | int = field(
         default=None,
         metadata={
             "name": "font-size",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class LinearGradient:
     class Meta:
         name = "linearGradient"
         namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
 
-    stop: list["LinearGradient.Stop"] = field(
+    stop: list[LinearGradient.Stop] = field(
         default_factory=list,
         metadata={
             "type": "Element",
             "min_occurs": 1,
         },
     )
-    id: Optional[str] = field(
-        default=None,
+    id: str = field(
         metadata={
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
             "required": True,
-        },
+        }
     )
-    x1: Optional[str] = field(
+    x1: None | str = field(
         default=None,
         metadata={
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    x2: Optional[str] = field(
+    x2: None | str = field(
         default=None,
         metadata={
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    y1: Optional[str] = field(
+    y1: None | str = field(
         default=None,
         metadata={
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    y2: Optional[str] = field(
+    y2: None | str = field(
         default=None,
         metadata={
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
 
-    @dataclass
+    @dataclass(kw_only=True)
     class Stop:
-        offset: Optional[str] = field(
-            default=None,
+        offset: str = field(
             metadata={
                 "type": "Attribute",
-                "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+                # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
                 "required": True,
-            },
+            }
         )
-        stop_color: Optional[str] = field(
-            default=None,
+        stop_color: str = field(
             metadata={
                 "name": "stop-color",
                 "type": "Attribute",
-                "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+                # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
                 "required": True,
-            },
+            }
         )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class ListOfColorDefinitions:
     class Meta:
         name = "listOfColorDefinitions"
@@ -201,7 +197,7 @@ class ListOfColorDefinitions:
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class ListOfGradientDefinitions:
     class Meta:
         name = "listOfGradientDefinitions"
@@ -217,46 +213,45 @@ class ListOfGradientDefinitions:
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Style:
     class Meta:
         name = "style"
         namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
 
-    g: Optional[G] = field(
-        default=None,
+    g: G = field(
         metadata={
             "type": "Element",
             "required": True,
-        },
+        }
     )
-    id_list: Optional[str] = field(
+    id_list: None | str = field(
         default=None,
         metadata={
             "name": "idList",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    role_list: Optional[str] = field(
+    role_list: None | str = field(
         default=None,
         metadata={
             "name": "roleList",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    type_list: Optional[str] = field(
+    type_list: None | str = field(
         default=None,
         metadata={
             "name": "typeList",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class ListOfStyles:
     class Meta:
         name = "listOfStyles"
@@ -271,71 +266,68 @@ class ListOfStyles:
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class RenderInformation:
     class Meta:
         name = "renderInformation"
         namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
 
-    list_of_color_definitions: Optional[ListOfColorDefinitions] = field(
-        default=None,
+    list_of_color_definitions: ListOfColorDefinitions = field(
         metadata={
             "name": "listOfColorDefinitions",
             "type": "Element",
             "required": True,
-        },
+        }
     )
-    list_of_gradient_definitions: Optional[ListOfGradientDefinitions] = field(
-        default=None,
+    list_of_gradient_definitions: ListOfGradientDefinitions = field(
         metadata={
             "name": "listOfGradientDefinitions",
             "type": "Element",
             "required": True,
-        },
+        }
     )
-    list_of_styles: Optional[ListOfStyles] = field(
-        default=None,
+    list_of_styles: ListOfStyles = field(
         metadata={
             "name": "listOfStyles",
             "type": "Element",
             "required": True,
-        },
+        }
     )
-    id: Optional[str] = field(
+    id: None | str = field(
         default=None,
         metadata={
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    name: Optional[str] = field(
+    name: None | str = field(
         default=None,
         metadata={
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    program_name: Optional[str] = field(
+    program_name: None | str = field(
         default=None,
         metadata={
             "name": "programName",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    program_version: Optional[str] = field(
+    program_version: None | str = field(
         default=None,
         metadata={
             "name": "programVersion",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    background_color: Optional[str] = field(
+    background_color: None | str = field(
         default=None,
         metadata={
             "name": "backgroundColor",
             "type": "Attribute",
-            "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+            # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )

@@ -23,6 +23,7 @@ classifiers = [
 	"Programming Language :: Python :: 3.11",
 	"Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 	"Programming Language :: Python :: Implementation :: CPython",
 	"Topic :: Scientific/Engineering",
 	"Topic :: Scientific/Engineering :: Bio-Informatics",
@@ -35,18 +36,18 @@ keywords = [
 ]
 dependencies = [
     "requests",
-	"lxml>=5.3",
-	"xsdata",
-	"rich",
+	"lxml>=6.0.2",
+	"xsdata>=26.1",
+	"rich>=14.3.2",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "bump-my-version>=0.29.0",
-	"ruff>=0.8.6",
-	"pre-commit>=4.0.1",
-	"mypy>=1.9.0",
-	"pytest>=8.1.1",
+    "bump-my-version>=1.2.6",
+	"ruff>=0.14.14",
+	"pre-commit>=4.5.1",
+	"mypy>=1.19.1",
+	"pytest>=9.0.2",
 ]
 docs = [
 	"mkdocs",

@@ -21,6 +21,22 @@ def render_sbgn(sbgn: libsbgn.Sbgn, image_file: Path, file_format: str = "png") 
     """Render given sbgn object to image.
 
     Supports the following file_formats: "png"
+
+    :param sbgn: sbgn object
+    :param image_file: image to create
+    :return: None
+    """
+    return render_sbgn_sysbioapps(
+        sbgn=sbgn, image_file=image_file, file_format=file_format
+    )
+
+
+def render_sbgn_sysbioapps(
+    sbgn: libsbgn.Sbgn, image_file: Path, file_format: str = "png"
+) -> None:
+    """Render given sbgn object to image.
+
+    Supports the following file_formats: "png"
     The image file must end in .file_format, e.g. in '.png'
 
     Performs a request analogue to:

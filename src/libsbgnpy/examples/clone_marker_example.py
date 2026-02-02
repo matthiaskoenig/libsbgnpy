@@ -5,6 +5,7 @@ def clone_marker_example() -> Sbgn:
     """Clone marker example."""
     # create new map
     map = Map(
+        id="clone_marker_example",
         language=MapLanguage.PROCESS_DESCRIPTION,
         bbox=Bbox(x=0, y=0, w=363, h=253),
     )

@@ -10,6 +10,7 @@ def sbgn() -> Sbgn:
     """Fixture provides sbgn test data via sbgn argument."""
     # create map with bounding box
     map = Map(
+        id="map_test",
         language=MapLanguage.PROCESS_DESCRIPTION,
         bbox=Bbox(x=0, y=0, w=363, h=253),
     )
@@ -160,11 +161,17 @@ def test_arc_end(sbgn: Sbgn) -> None:
 
 
 def test_glyph_class(sbgn: Sbgn) -> None:
-    g1 = Glyph(class_value=GlyphClass.SIMPLE_CHEMICAL, id="glyph1")
+    g1 = Glyph(
+        class_value=GlyphClass.SIMPLE_CHEMICAL,
+        id="glyph1",
+        bbox=Bbox(x=0, y=0, w=100, h=30),
+    )
     assert g1.id == "glyph1"
     assert g1.class_value == GlyphClass.SIMPLE_CHEMICAL
 
-    g2 = Glyph(id="glyph1")
-    g2.class_value = GlyphClass.SIMPLE_CHEMICAL
+    g2 = Glyph(
+        id="glyph1", bbox=Bbox(x=0, y=0, w=100, h=30), class_value=GlyphClass.PROCESS
+    )
     assert g2.id == "glyph1"
-    assert g2.class_value == GlyphClass.SIMPLE_CHEMICAL
+    assert g2.id == "glyph1"
+    assert g2.class_value == GlyphClass.PROCESS

@@ -10,7 +10,7 @@ from libsbgnpy import *
 
 def write_glyph_notes(f: Path) -> None:
     """Example for writing Notes on a glyph."""
-    map = Map(language=MapLanguage.PROCESS_DESCRIPTION)
+    map = Map(id="notes_example", language=MapLanguage.PROCESS_DESCRIPTION)
     sbgn = Sbgn(map=[map])
 
     # create glyph

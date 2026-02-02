@@ -11,7 +11,7 @@ from libsbgnpy import *
 def write_map_extension(f: Path) -> None:
     """Write extension information on map."""
     sbgn = Sbgn()
-    map = Map(language=MapLanguage.PROCESS_DESCRIPTION)
+    map = Map(id="extension_example", language=MapLanguage.PROCESS_DESCRIPTION)
     sbgn.map.append(map)
 
     extension = Sbgnbase.Extension()

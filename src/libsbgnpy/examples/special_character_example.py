@@ -10,6 +10,7 @@ def special_character_example() -> str:
     """Example demonstrating how to encode special characters in SBGN files."""
 
     map = Map(
+        id="character_example",
         language=MapLanguage.PROCESS_DESCRIPTION,
         bbox=Bbox(x=0, y=0, w=600, h=200),
     )

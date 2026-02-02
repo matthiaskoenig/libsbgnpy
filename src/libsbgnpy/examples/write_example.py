@@ -13,7 +13,7 @@ def write_sbgn_01(f: Path) -> None:
     Macromolecule box with label.
     """
     sbgn = Sbgn()
-    map = Map(language=MapLanguage.PROCESS_DESCRIPTION)
+    map = Map(id="test-output-01", language=MapLanguage.PROCESS_DESCRIPTION)
     sbgn.map.append(map)
 
     # create glyph and add to map
@@ -34,6 +34,7 @@ def write_sbgn_02(f: Path) -> None:
     """Create SBGN document and write to file."""
     # create new map
     map = Map(
+        id="test-output-02",
         language=MapLanguage.PROCESS_DESCRIPTION,
         bbox=Bbox(x=0, y=0, w=363, h=253),
     )
@@ -156,6 +157,7 @@ def write_sbgn_02(f: Path) -> None:
 def write_sbgn_03(f: Path) -> None:
     """Create SBGN with annotation and write to file."""
     map = Map(
+        id="test-output-03",
         language=MapLanguage.PROCESS_DESCRIPTION,
     )
     sbgn = Sbgn(map=[map])

@@ -8,11 +8,7 @@ In this section information for developers are provided.
 uv sync
 # install dev dependencies
 uv pip install -r pyproject.toml --extra dev
-```
-
-## Pre-commit hook
-For developing please setup the pre-commit hook
-```bash
+# pre-commit hook
 uv pip install pre-commit
 uv run pre-commit install
 uv run pre-commit run

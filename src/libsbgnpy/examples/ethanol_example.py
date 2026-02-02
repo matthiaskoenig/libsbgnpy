@@ -5,6 +5,7 @@ def ethanol_example(prefix: str) -> Sbgn:
     """Create ethanol example."""
     # create new map
     map = Map(
+        id="ethanol_example",
         language=MapLanguage.PROCESS_DESCRIPTION,
         bbox=Bbox(x=0, y=0, w=363, h=253),
     )
