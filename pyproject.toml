@@ -55,6 +55,7 @@ docs = [
 	"mkdocstrings-python",
 	"mkdocs-material",
 	"mkdocs-jupyter",
+    "mkdocs-test",
 	"ipython",
 ]
 test = [
