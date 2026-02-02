@@ -60,11 +60,11 @@ Steps to create a new release:
 * make sure all tests run (`tox -p`)
 * check formating and linting (`ruff check`)
 * test bump version (`uvx bump-my-version bump [major|minor|patch] --dry-run -vv`)
-* bump version (`uvx bump-my-version bump [major|minor|patch] --python 3.13`)
+* bump version (`uvx bump-my-version bump [major|minor|patch]`)
 * `git push --tags` (triggers release)
 * `git push`
 * test installation in virtualenv from pypi
 ```bash
-uv venv --python 3.13
+uv venv --python 3.14
 uv pip install libsbgnpy
 ```
