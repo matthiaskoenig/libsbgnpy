@@ -6,12 +6,12 @@
 <script src="libsbgnpy_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="libsbgnpy_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="libsbgnpy_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="libsbgnpy_files/libs/quarto-html/quarto-syntax-highlighting-b2bd955b7378b94aa8c2ba4fafa553c9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.21">
+<link href="libsbgnpy_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.27">
 
   <meta name="author" content="Matthias König">
   <meta name="dcterms.date" content="2025-04-15">
-  <title>quarto-input8368ea498c05089e</title>
+  <title>quarto-input2471a636c3458868</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -96,7 +96,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="libsbgnpy_files/libs/revealjs/dist/theme/quarto-00ac2f6af1389919a18f42df5b7c0002.css">
+  <link rel="stylesheet" href="libsbgnpy_files/libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
   <link rel="stylesheet" href="styles.css">
   <link href="libsbgnpy_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="libsbgnpy_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -247,18 +247,18 @@ Matthias König
 </section>
 <section id="create-map" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">1. Create map</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode python hljs"><span id="cb1-1" class="hljs-ln-code"><a href=""></a><span class="co">"""Ethanol example."""</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode python hljs"><span id="cb1-1" class="hljs-ln-code"><a href=""></a><span class="co">"""Ethanol example."""</span></span>
 <span id="cb1-2" class="hljs-ln-code"><a href=""></a><span class="co"># create new map</span></span>
 <span id="cb1-3" class="hljs-ln-code"><a href=""></a><span class="bu">map</span> <span class="op">=</span> Map(</span>
 <span id="cb1-4" class="hljs-ln-code"><a href=""></a>    language<span class="op">=</span>MapLanguage.PROCESS_DESCRIPTION,</span>
 <span id="cb1-5" class="hljs-ln-code"><a href=""></a>    bbox<span class="op">=</span>Bbox(x<span class="op">=</span><span class="dv">0</span>, y<span class="op">=</span><span class="dv">0</span>, w<span class="op">=</span><span class="dv">363</span>, h<span class="op">=</span><span class="dv">253</span>),</span>
 <span id="cb1-6" class="hljs-ln-code"><a href=""></a>)</span>
 <span id="cb1-7" class="hljs-ln-code"><a href=""></a><span class="co"># add map to new sbgn</span></span>
-<span id="cb1-8" class="hljs-ln-code"><a href=""></a>sbgn <span class="op">=</span> Sbgn(<span class="bu">map</span><span class="op">=</span>[<span class="bu">map</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8" class="hljs-ln-code"><a href=""></a>sbgn <span class="op">=</span> Sbgn(<span class="bu">map</span><span class="op">=</span>[<span class="bu">map</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="add-glyphs" class="slide level2">
 <h2>2. Add glyphs</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="co">"""Ethanol example."""</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="co">"""Ethanol example."""</span></span>
 <span id="cb2-2"><a href=""></a><span class="bu">map</span>.glyph.extend([</span>
 <span id="cb2-3"><a href=""></a>    Glyph(</span>
 <span id="cb2-4"><a href=""></a>        class_value<span class="op">=</span>GlyphClass.SIMPLE_CHEMICAL,</span>
@@ -310,7 +310,7 @@ Matthias König
 <span id="cb2-50"><a href=""></a>            Port(x<span class="op">=</span><span class="dv">184</span>, y<span class="op">=</span><span class="dv">180</span>, <span class="bu">id</span><span class="op">=</span><span class="st">"pn1.2"</span>),</span>
 <span id="cb2-51"><a href=""></a>        ],</span>
 <span id="cb2-52"><a href=""></a>    ),</span>
-<span id="cb2-53"><a href=""></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-53"><a href=""></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="add-glyphs-1" class="slide level2">
 <h2>2. Add glyphs</h2>
@@ -318,7 +318,7 @@ Matthias König
 <img data-src="./images/ethanol_example_glyphs.png" style="width:50.0%" class="r-stretch"></section>
 <section id="add-arcs" class="slide level2">
 <h2>3. Add arcs</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="co">"""Ethanol example."""</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="co">"""Ethanol example."""</span></span>
 <span id="cb3-2"><a href=""></a><span class="co"># create arcs and set the start and end points</span></span>
 <span id="cb3-3"><a href=""></a><span class="bu">map</span>.arc.extend(</span>
 <span id="cb3-4"><a href=""></a>    [</span>
@@ -371,7 +371,7 @@ Matthias König
 <span id="cb3-51"><a href=""></a>            end<span class="op">=</span>Arc.End(x<span class="op">=</span><span class="dv">136</span>, y<span class="op">=</span><span class="dv">180</span>),</span>
 <span id="cb3-52"><a href=""></a>        ),</span>
 <span id="cb3-53"><a href=""></a>    ]</span>
-<span id="cb3-54"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-54"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="add-arcs-1" class="slide level2">
 <h2>3. Add arcs</h2>
@@ -379,7 +379,7 @@ Matthias König
 <img data-src="./images/ethanol_example_arcs.png" style="width:50.0%" class="r-stretch"></section>
 <section id="add-render-information" class="slide level2">
 <h2>4. Add render information</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>render_info <span class="op">=</span> RenderInformation(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>render_info <span class="op">=</span> RenderInformation(</span>
 <span id="cb4-2"><a href=""></a>    <span class="bu">id</span><span class="op">=</span><span class="st">"ethanol_render_info"</span>,</span>
 <span id="cb4-3"><a href=""></a>    program_name<span class="op">=</span><span class="st">"libsbgnpy"</span>,</span>
 <span id="cb4-4"><a href=""></a>    program_version<span class="op">=</span><span class="st">"0.4.0"</span>,</span>
@@ -409,20 +409,20 @@ Matthias König
 <span id="cb4-28"><a href=""></a>            ),</span>
 <span id="cb4-29"><a href=""></a>        ]</span>
 <span id="cb4-30"><a href=""></a>    ),</span>
-<span id="cb4-31"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-31"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="save-and-render" class="slide level2">
 <h2>5. Save and render</h2>
 <div class="rows">
 <div class="row" height="60%">
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="co"># serialize to string</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="co"># serialize to string</span></span>
 <span id="cb5-2"><a href=""></a>xml_str: <span class="bu">str</span> <span class="op">=</span>  write_sbgn_to_string(sbgn)</span>
 <span id="cb5-3"><a href=""></a></span>
 <span id="cb5-4"><a href=""></a><span class="co"># serialize to file</span></span>
 <span id="cb5-5"><a href=""></a>write_sbgn_to_file(sbgn, <span class="st">"ethanol_example.sbgn"</span>)</span>
 <span id="cb5-6"><a href=""></a></span>
 <span id="cb5-7"><a href=""></a><span class="co"># render SBGN</span></span>
-<span id="cb5-8"><a href=""></a>render_sbgn(sbgn, <span class="st">"ethanol_example.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-8"><a href=""></a>render_sbgn(sbgn, <span class="st">"ethanol_example.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="row" height="40%">
 <p><img data-src="./images/ethanol_example_render.png" style="width:40.0%"></p>
@@ -631,7 +631,7 @@ Matthias König
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -705,13 +705,14 @@ Matthias König
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
