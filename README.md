@@ -15,6 +15,8 @@ The initial library was generated using [xsdata](https://github.com/tefra/xsdata
 
 Documentation with examples is available at https://matthiaskoenig.github.io/libsbgnpy/.
 
+A presentation from HARMONY2026 is available [here](https://matthiaskoenig.github.io/libsbgnpy/presentations/HARMONY2026/libsbgnpy.html).
+
 ```python
     map = Map(
         id="ethanol_example",
