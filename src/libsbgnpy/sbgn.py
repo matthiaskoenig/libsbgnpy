@@ -1,29 +1,32 @@
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Optional
 
 __NAMESPACE__ = "http://sbgn.org/libsbgn/0.3"
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Sbgnbase:
-    """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The SBGNBase type is the base type of all main components in SBGN.
-    It supports attaching notes and extensions to components, with
-    metadata and annotations encoded in the extension element.
-    </ns1:p>"""
+    """
+    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The SBGNBase type is
+    the base type of all main components in SBGN.
+
+    It supports attaching notes and extensions to components, with metadata
+    and annotations encoded in the extension element. </ns1:p>.
+    """
 
     class Meta:
         name = "SBGNBase"
 
-    notes: Optional["Sbgnbase.Notes"] = field(
+    notes: None | Sbgnbase.Notes = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://sbgn.org/libsbgn/0.3",
         },
     )
-    extension: Optional["Sbgnbase.Extension"] = field(
+    extension: None | Sbgnbase.Extension = field(
         default=None,
         metadata={
             "type": "Element",
@@ -31,11 +34,12 @@ class Sbgnbase:
         },
     )
 
-    @dataclass
+    @dataclass(kw_only=True)
     class Notes:
-        """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-        The notes element stores notes.
-        </ns1:p>"""
+        """
+        <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The notes element
+        stores notes. </ns1:p>.
+        """
 
         w3_org_1999_xhtml_element: list[object] = field(
             default_factory=list,
@@ -46,12 +50,13 @@ class Sbgnbase:
             },
         )
 
-    @dataclass
+    @dataclass(kw_only=True)
     class Extension:
-        """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-        The extension element stores extension information like
-        render information, metadata or annotations.
-        </ns1:p>"""
+        """
+        <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The extension
+        element stores extension information like render information,
+        metadata or annotations. </ns1:p>.
+        """
 
         any_element: list[object] = field(
             default_factory=list,
@@ -196,121 +201,105 @@ class MapVersion(Enum):
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Bbox(Sbgnbase):
-    """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The bbox element describes a rectangle. This rectangle is defined by:
-    <ns1:ul>
-    <ns1:li>
-    PointAttributes corresponding to the 2D coordinates of the top left
-    corner,
-    </ns1:li>
-    <ns1:li>width and height attributes.</ns1:li>
-    </ns1:ul>
-    </ns1:p>
-    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The rectangle corresponds to the outer bounding box of a shape.
-    The shape itself can be irregular
-    (for instance in the case of some compartments).
-    </ns1:p>
-    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    In the case of process nodes,
+    """
+    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The bbox element
+    describes a rectangle.
+
+    This rectangle is defined by: <ns1:ul> <ns1:li> PointAttributes
+    corresponding to the 2D coordinates of the top left corner, </ns1:li>
+    <ns1:li>width and height attributes.</ns1:li> </ns1:ul> </ns1:p> <ns1:p
+    xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The rectangle corresponds to
+    the outer bounding box of a shape. The shape itself can be irregular
+    (for instance in the case of some compartments). </ns1:p> <ns1:p
+    xmlns:ns1="http://sbgn.org/libsbgn/0.3"> In the case of process nodes,
     the bounding box only concerns the central glyph (square, or circle),
-    the input/output ports are not included, and neither are the lines connecting
-    them to the central glyph.
-    </ns1:p>
-    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    A bbox is required for all glyphs, and is optional for labels.
-    </ns1:p>"""
+    the input/output ports are not included, and neither are the lines
+    connecting them to the central glyph. </ns1:p> <ns1:p
+    xmlns:ns1="http://sbgn.org/libsbgn/0.3"> A bbox is required for all
+    glyphs, and is optional for labels. </ns1:p>.
+    """
 
     class Meta:
         name = "bbox"
         namespace = "http://sbgn.org/libsbgn/0.3"
 
-    x: Optional[float] = field(
-        default=None,
+    x: float = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
-    y: Optional[float] = field(
-        default=None,
+    y: float = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
-    w: Optional[float] = field(
-        default=None,
+    w: float = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
-    h: Optional[float] = field(
-        default=None,
+    h: float = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Point(Sbgnbase):
-    """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The point element is characterized by PointAttributes,
-    which describe absolute 2D cartesian coordinates. Namely:
-    <ns1:ul>
-    <ns1:li>x (horizontal, from left to right),</ns1:li>
-    <ns1:li>y (vertical, from top to bottom).</ns1:li>
-    </ns1:ul>
-    </ns1:p>
-    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The origin is located in the top-left corner of the map.
-    There is no unit:
-    proportions must be preserved, but the maps can be drawn at any scale.
-    In the test files examples, to obtain a drawing similar to the reference
-    *.png file, values in the corresponding *.sbgn file should be read as pixels.
-    </ns1:p>"""
+    """
+    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The point element is
+    characterized by PointAttributes, which describe absolute 2D cartesian
+    coordinates.
+
+    Namely: <ns1:ul> <ns1:li>x (horizontal, from left to right),</ns1:li>
+    <ns1:li>y (vertical, from top to bottom).</ns1:li> </ns1:ul> </ns1:p>
+    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The origin is located
+    in the top-left corner of the map. There is no unit: proportions must
+    be preserved, but the maps can be drawn at any scale. In the test files
+    examples, to obtain a drawing similar to the reference *.png file,
+    values in the corresponding *.sbgn file should be read as pixels.
+    </ns1:p>.
+    """
 
     class Meta:
         name = "point"
         namespace = "http://sbgn.org/libsbgn/0.3"
 
-    x: Optional[float] = field(
-        default=None,
+    x: float = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
-    y: Optional[float] = field(
-        default=None,
+    y: float = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Port(Sbgnbase):
-    """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The port element describes an anchor point to which arcs can refer
-    as a source or target. It consists of:
-    <ns1:ul>
-    <ns1:li>absolute 2D cartesian coordinates (PointAttribute),</ns1:li>
-    <ns1:li>a unique id attribute.</ns1:li>
-    </ns1:ul>
-    </ns1:p>
-    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    Two port elements are required for process nodes. They represent
-    the extremity of the two "arms" which protrude on both sides of the
-    core of the glyph (= square or circle shape).
-    Other glyphs don't need ports (but can use them if desired).
-    </ns1:p>
+    """
+    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The port element
+    describes an anchor point to which arcs can refer as a source or
+    target.
+
+    It consists of: <ns1:ul> <ns1:li>absolute 2D cartesian coordinates
+    (PointAttribute),</ns1:li> <ns1:li>a unique id attribute.</ns1:li>
+    </ns1:ul> </ns1:p> <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> Two
+    port elements are required for process nodes. They represent the
+    extremity of the two "arms" which protrude on both sides of the core of
+    the glyph (= square or circle shape). Other glyphs don't need ports
+    (but can use them if desired). </ns1:p>.
 
     :ivar x:
     :ivar y:
@@ -326,37 +315,35 @@ class Port(Sbgnbase):
         name = "port"
         namespace = "http://sbgn.org/libsbgn/0.3"
 
-    x: Optional[float] = field(
-        default=None,
+    x: float = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
-    y: Optional[float] = field(
-        default=None,
+    y: float = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
-    id: Optional[str] = field(
-        default=None,
+    id: str = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Label(Sbgnbase):
-    """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The label element describes the text accompanying a glyph.
-    The text attribute is mandatory.
-    Its position can be specified by a bbox (optional).
-    Tools are free to display the text in any style (font, font-size, etc.)
-    </ns1:p>
+    """
+    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The label element
+    describes the text accompanying a glyph.
+
+    The text attribute is mandatory. Its position can be specified by a
+    bbox (optional). Tools are free to display the text in any style (font,
+    font-size, etc.) </ns1:p>.
 
     :ivar bbox:
     :ivar text: <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> Multi-
@@ -368,38 +355,31 @@ class Label(Sbgnbase):
         name = "label"
         namespace = "http://sbgn.org/libsbgn/0.3"
 
-    bbox: Optional[Bbox] = field(
+    bbox: None | Bbox = field(
         default=None,
         metadata={
             "type": "Element",
         },
     )
-    text: Optional[str] = field(
-        default=None,
+    text: str = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Glyph(Sbgnbase):
-    """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The glyph element is:
-    <ns1:ul>
-    <ns1:li>either a stand-alone, high-level SBGN glyph
-    (EPN, PN, compartment, etc),
-    </ns1:li>
-    <ns1:li>or a sub-glyph
-    (state variable, unit of information, inside of a complex, ...)
-    </ns1:li>
-    </ns1:ul>
-    </ns1:p>
-    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    In the first case, it appears directly in the glyph list of the map.
-    In the second case, it is a child of another glyph element.
-    </ns1:p>
+    """
+    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The glyph element is:
+    <ns1:ul> <ns1:li>either a stand-alone, high-level SBGN glyph (EPN, PN,
+    compartment, etc), </ns1:li> <ns1:li>or a sub-glyph (state variable,
+    unit of information, inside of a complex, ...) </ns1:li> </ns1:ul>
+    </ns1:p> <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> In the first
+    case, it appears directly in the glyph list of the map.
+
+    In the second case, it is a child of another glyph element. </ns1:p>.
 
     :ivar label:
     :ivar state: <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The
@@ -515,44 +495,43 @@ class Glyph(Sbgnbase):
         name = "glyph"
         namespace = "http://sbgn.org/libsbgn/0.3"
 
-    label: Optional[Label] = field(
+    label: None | Label = field(
         default=None,
         metadata={
             "type": "Element",
         },
     )
-    state: Optional["Glyph.State"] = field(
+    state: None | Glyph.State = field(
         default=None,
         metadata={
             "type": "Element",
         },
     )
-    clone: Optional["Glyph.Clone"] = field(
+    clone: None | Glyph.Clone = field(
         default=None,
         metadata={
             "type": "Element",
         },
     )
-    callout: Optional["Glyph.Callout"] = field(
+    callout: None | Glyph.Callout = field(
         default=None,
         metadata={
             "type": "Element",
         },
     )
-    entity: Optional["Glyph.Entity"] = field(
+    entity: None | Glyph.Entity = field(
         default=None,
         metadata={
             "type": "Element",
         },
     )
-    bbox: Optional[Bbox] = field(
-        default=None,
+    bbox: Bbox = field(
         metadata={
             "type": "Element",
             "required": True,
-        },
+        }
     )
-    glyph: list["Glyph"] = field(
+    glyph: list[Glyph] = field(
         default_factory=list,
         metadata={
             "type": "Element",
@@ -564,13 +543,12 @@ class Glyph(Sbgnbase):
             "type": "Element",
         },
     )
-    class_value: Optional[GlyphClass] = field(
-        default=None,
+    class_value: GlyphClass = field(
         metadata={
             "name": "class",
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
     orientation: GlyphOrientation = field(
         default=GlyphOrientation.HORIZONTAL,
@@ -578,35 +556,34 @@ class Glyph(Sbgnbase):
             "type": "Attribute",
         },
     )
-    id: Optional[str] = field(
-        default=None,
+    id: str = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
-    compartment_ref: Optional[str] = field(
+    compartment_ref: None | str = field(
         default=None,
         metadata={
             "name": "compartmentRef",
             "type": "Attribute",
         },
     )
-    compartment_order: Optional[float] = field(
+    compartment_order: None | float = field(
         default=None,
         metadata={
             "name": "compartmentOrder",
             "type": "Attribute",
         },
     )
-    map_ref: Optional[str] = field(
+    map_ref: None | str = field(
         default=None,
         metadata={
             "name": "mapRef",
             "type": "Attribute",
         },
     )
-    tag_ref: Optional[str] = field(
+    tag_ref: None | str = field(
         default=None,
         metadata={
             "name": "tagRef",
@@ -614,42 +591,40 @@ class Glyph(Sbgnbase):
         },
     )
 
-    @dataclass
+    @dataclass(kw_only=True)
     class Clone:
-        label: Optional[Label] = field(
+        label: None | Label = field(
             default=None,
             metadata={
                 "type": "Element",
             },
         )
 
-    @dataclass
+    @dataclass(kw_only=True)
     class Callout:
-        point: Optional[Point] = field(
-            default=None,
+        point: Point = field(
             metadata={
                 "type": "Element",
                 "required": True,
-            },
+            }
         )
-        target: Optional[str] = field(
+        target: None | str = field(
             default=None,
             metadata={
                 "type": "Attribute",
             },
         )
 
-    @dataclass
+    @dataclass(kw_only=True)
     class Entity:
-        name: Optional[EntityName] = field(
-            default=None,
+        name: EntityName = field(
             metadata={
                 "type": "Attribute",
                 "required": True,
-            },
+            }
         )
 
-    @dataclass
+    @dataclass(kw_only=True)
     class State:
         """
         :ivar value: <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The
@@ -667,13 +642,13 @@ class Glyph(Sbgnbase):
             </ns1:li> </ns1:ul> </ns1:p>
         """
 
-        value: Optional[str] = field(
+        value: None | str = field(
             default=None,
             metadata={
                 "type": "Attribute",
             },
         )
-        variable: Optional[str] = field(
+        variable: None | str = field(
             default=None,
             metadata={
                 "type": "Attribute",
@@ -681,23 +656,19 @@ class Glyph(Sbgnbase):
         )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Arc(Sbgnbase):
-    """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The arc element describes an SBGN arc between two SBGN nodes. It contains:
-    <ns1:ul>
-    <ns1:li>For PD: an optional stoichiometry marker,</ns1:li>
-    <ns1:li>For ER: an optional cardinality marker,
-    zero or more ports (influence targets), and zero or more outcomes,
-    </ns1:li>
+    """
+    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The arc element
+    describes an SBGN arc between two SBGN nodes.
+
+    It contains: <ns1:ul> <ns1:li>For PD: an optional stoichiometry
+    marker,</ns1:li> <ns1:li>For ER: an optional cardinality marker, zero
+    or more ports (influence targets), and zero or more outcomes, </ns1:li>
     <ns1:li>a mandatory source and target (glyph or port),</ns1:li>
-    <ns1:li>a geometric description of its whole path, from start to end.</ns1:li>
-    </ns1:ul>
-    <ns1:p>
-    </ns1:p>
-    This path can involve any number of straight lines or quadratic/cubic Bezier
-    curves.
-    </ns1:p>
+    <ns1:li>a geometric description of its whole path, from start to
+    end.</ns1:li> </ns1:ul> <ns1:p> </ns1:p> This path can involve any
+    number of straight lines or quadratic/cubic Bezier curves. </ns1:p>.
 
     :ivar glyph: <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> In PD,
         an arc can contain a single optional sub-glyph. This glyph must
@@ -768,74 +739,66 @@ class Arc(Sbgnbase):
             "type": "Element",
         },
     )
-    start: Optional["Arc.Start"] = field(
-        default=None,
+    start: Arc.Start = field(
         metadata={
             "type": "Element",
             "required": True,
-        },
+        }
     )
-    next: list["Arc.Next"] = field(
+    next: list[Arc.Next] = field(
         default_factory=list,
         metadata={
             "type": "Element",
         },
     )
-    end: Optional["Arc.End"] = field(
-        default=None,
+    end: Arc.End = field(
         metadata={
             "type": "Element",
             "required": True,
-        },
+        }
     )
-    class_value: Optional[ArcClass] = field(
-        default=None,
+    class_value: ArcClass = field(
         metadata={
             "name": "class",
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
-    id: Optional[str] = field(
-        default=None,
+    id: str = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
-    source: Optional[str] = field(
-        default=None,
+    source: str = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
-    target: Optional[str] = field(
-        default=None,
+    target: str = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
 
-    @dataclass
+    @dataclass(kw_only=True)
     class Start:
-        x: Optional[float] = field(
-            default=None,
+        x: float = field(
             metadata={
                 "type": "Attribute",
                 "required": True,
-            },
+            }
         )
-        y: Optional[float] = field(
-            default=None,
+        y: float = field(
             metadata={
                 "type": "Attribute",
                 "required": True,
-            },
+            }
         )
 
-    @dataclass
+    @dataclass(kw_only=True)
     class Next:
         point: list[Point] = field(
             default_factory=list,
@@ -844,22 +807,20 @@ class Arc(Sbgnbase):
                 "max_occurs": 2,
             },
         )
-        x: Optional[float] = field(
-            default=None,
+        x: float = field(
             metadata={
                 "type": "Attribute",
                 "required": True,
-            },
+            }
         )
-        y: Optional[float] = field(
-            default=None,
+        y: float = field(
             metadata={
                 "type": "Attribute",
                 "required": True,
-            },
+            }
         )
 
-    @dataclass
+    @dataclass(kw_only=True)
     class End:
         point: list[Point] = field(
             default_factory=list,
@@ -868,33 +829,30 @@ class Arc(Sbgnbase):
                 "max_occurs": 2,
             },
         )
-        x: Optional[float] = field(
-            default=None,
+        x: float = field(
             metadata={
                 "type": "Attribute",
                 "required": True,
-            },
+            }
         )
-        y: Optional[float] = field(
-            default=None,
+        y: float = field(
             metadata={
                 "type": "Attribute",
                 "required": True,
-            },
+            }
         )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Arcgroup(Sbgnbase):
-    """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The arc group describes a set of arcs and glyphs that together have a relation.
-    For example
-    <ns1:ul>
-    <ns1:li>For ER: interaction arcs around an interaction glyph,</ns1:li>
-    <ns1:li>...</ns1:li>
-    </ns1:ul>
-    Note that, in spite of the name, an arcgroup contains both arcs and glyphs.
-    </ns1:p>
+    """
+    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The arc group describes
+    a set of arcs and glyphs that together have a relation.
+
+    For example <ns1:ul> <ns1:li>For ER: interaction arcs around an
+    interaction glyph,</ns1:li> <ns1:li>...</ns1:li> </ns1:ul> Note that,
+    in spite of the name, an arcgroup contains both arcs and glyphs.
+    </ns1:p>.
 
     :ivar glyph: <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> An
         arcgroup can contain glyphs. For example, in an interaction
@@ -923,23 +881,23 @@ class Arcgroup(Sbgnbase):
             "type": "Element",
         },
     )
-    class_value: Optional[ArcgroupClass] = field(
-        default=None,
+    class_value: ArcgroupClass = field(
         metadata={
             "name": "class",
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Map(Sbgnbase):
-    """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The map element describes a single SBGN PD map.
-    It contains a list of glyph elements and a list of arc elements.
-    These lists can be of any size (possibly empty).
-    </ns1:p>
+    """
+    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The map element
+    describes a single SBGN PD map.
+
+    It contains a list of glyph elements and a list of arc elements. These
+    lists can be of any size (possibly empty). </ns1:p>.
 
     :ivar bbox: <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The bbox
         element on a map is not mandatory, it allows the application to
@@ -972,7 +930,7 @@ class Map(Sbgnbase):
         name = "map"
         namespace = "http://sbgn.org/libsbgn/0.3"
 
-    bbox: Optional[Bbox] = field(
+    bbox: None | Bbox = field(
         default=None,
         metadata={
             "type": "Element",
@@ -996,33 +954,34 @@ class Map(Sbgnbase):
             "type": "Element",
         },
     )
-    version: Optional[MapVersion] = field(
+    version: None | MapVersion = field(
         default=None,
         metadata={
             "type": "Attribute",
         },
     )
-    language: Optional[MapLanguage] = field(
+    language: None | MapLanguage = field(
         default=None,
         metadata={
             "type": "Attribute",
         },
     )
-    id: Optional[str] = field(
-        default=None,
+    id: str = field(
         metadata={
             "type": "Attribute",
             "required": True,
-        },
+        }
     )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Sbgn(Sbgnbase):
-    """<ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3">
-    The sbgn element is the root of any SBGNML document.
-    Currently each document must contain exactly one map element.
-    </ns1:p>"""
+    """
+    <ns1:p xmlns:ns1="http://sbgn.org/libsbgn/0.3"> The sbgn element is the
+    root of any SBGNML document.
+
+    Currently each document must contain exactly one map element. </ns1:p>.
+    """
 
     class Meta:
         name = "sbgn"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sbgn xmlns="http://sbgn.org/libsbgn/0.3">
-  <map language="process description">
+  <map language="process description" id="ethanol_example">
     <bbox x="0" y="0" w="363" h="253"/>
     <glyph class="simple chemical" orientation="horizontal" id="ethanol">
       <label text="Ethanol"/>

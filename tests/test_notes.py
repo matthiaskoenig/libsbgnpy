@@ -8,12 +8,18 @@ from libsbgnpy.examples import notes_example
 
 
 def test_create_notes() -> None:
-    g = Glyph(id="g1")
+    g = Glyph(
+        id="g1",
+        class_value=GlyphClass.SIMPLE_CHEMICAL,
+        bbox=Bbox(x=0, y=0, w=100, h=50),
+    )
     notes = Sbgnbase.Notes(
-        """
+        w3_org_1999_xhtml_element=[
+            """
        <body xmlns="http://www.w3.org/1999/xhtml">
            This is an example note describing the INSR glyph.
        </body>"""
+        ]
     )
     g.notes = notes
     assert g.notes is not None

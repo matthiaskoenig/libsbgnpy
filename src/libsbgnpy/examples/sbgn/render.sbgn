@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sbgn xmlns="http://sbgn.org/libsbgn/0.3">
-  <map language="process description">
-    <extension>&lt;renderInformation xmlns="http://www.sbml.org/sbml/level3/version1/render/version1" id="example" programName="libsbgnpy" programVersion="1.0.0"&gt;
-  &lt;listOfColorDefinitions&gt;
-    &lt;colorDefinition id="color0" value="#969696"/&gt;
-    &lt;colorDefinition id="color1" value="#ff9900"/&gt;
-  &lt;/listOfColorDefinitions&gt;
-  &lt;listOfGradientDefinitions&gt;
-    &lt;linearGradient id="gradient0" x1="0%" x2="100%" y1="0%" y2="0%"&gt;
-      &lt;stop offset="0%" stop-color="#ccffff"/&gt;
-      &lt;stop offset="100%" stop-color="#ffffff"/&gt;
-    &lt;/linearGradient&gt;
-  &lt;/listOfGradientDefinitions&gt;
-  &lt;listOfStyles&gt;
-    &lt;style idList="glyph1 glyph2"&gt;
-      &lt;g stroke="color0" stroke-width="5" fill="color1"/&gt;
-    &lt;/style&gt;
-    &lt;style idList="glyph3"&gt;
-      &lt;g stroke="color1" stroke-width="2" fill="gradient0"/&gt;
-    &lt;/style&gt;
-  &lt;/listOfStyles&gt;
-&lt;/renderInformation&gt;
-</extension>
+  <map language="process description" id="render_example">
+    <extension>
+      <ns1:renderInformation xmlns:ns1="http://www.sbml.org/sbml/level3/version1/render/version1" id="example" programName="libsbgnpy" programVersion="1.0.0">
+        <ns1:listOfColorDefinitions>
+          <ns1:colorDefinition id="color0" value="#969696"/>
+          <ns1:colorDefinition id="color1" value="#ff9900"/>
+        </ns1:listOfColorDefinitions>
+        <ns1:listOfGradientDefinitions>
+          <ns1:linearGradient id="gradient0" x1="0%" x2="100%" y1="0%" y2="0%">
+            <ns1:stop offset="0%" stop-color="#ccffff"/>
+            <ns1:stop offset="100%" stop-color="#ffffff"/>
+          </ns1:linearGradient>
+        </ns1:listOfGradientDefinitions>
+        <ns1:listOfStyles>
+          <ns1:style idList="glyph1 glyph2">
+            <ns1:g stroke="color0" stroke-width="5" fill="color1"/>
+          </ns1:style>
+          <ns1:style idList="glyph3">
+            <ns1:g stroke="color1" stroke-width="2" fill="gradient0"/>
+          </ns1:style>
+        </ns1:listOfStyles>
+      </ns1:renderInformation>
+    </extension>
     <glyph class="macromolecule" orientation="horizontal" id="glyph1">
       <label text="INSR"/>
       <bbox x="100" y="100" w="80" h="40"/>

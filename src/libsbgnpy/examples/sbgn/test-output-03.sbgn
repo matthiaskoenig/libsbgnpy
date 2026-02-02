@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sbgn xmlns="http://sbgn.org/libsbgn/0.3">
-  <map language="process description">
+  <map language="process description" id="test-output-03">
     <glyph class="macromolecule" orientation="horizontal" id="g1">
       <label text="LABEL"/>
       <bbox x="90" y="160" w="380" h="210"/>

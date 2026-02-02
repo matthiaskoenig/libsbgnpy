@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sbgn xmlns="http://sbgn.org/libsbgn/0.3">
-  <map language="process description">
+  <map language="process description" id="notes_example">
     <glyph class="macromolecule" orientation="horizontal" id="g1">
-      <notes>&lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+      <notes><body xmlns="http://www.w3.org/1999/xhtml">
     This is an example note describing the INSR glyph.
-&lt;/body&gt;</notes>&lt;body xmlns="http://www.w3.org/1999/xhtml"&gt;
+</body></notes><body xmlns="http://www.w3.org/1999/xhtml">
     A second note with more information
-&lt;/body&gt;<label text="INSR"/>
+</body><label text="INSR"/>
       <bbox x="100" y="100" w="80" h="40"/>
     </glyph>
   </map>

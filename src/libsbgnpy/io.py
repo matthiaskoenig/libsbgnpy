@@ -10,6 +10,7 @@ from xsdata.formats.dataclass.parsers import XmlParser
 from xsdata.formats.dataclass.context import XmlContext
 from xsdata.formats.dataclass.serializers import XmlSerializer
 from xsdata.formats.dataclass.serializers.config import SerializerConfig
+from xsdata.formats.dataclass.parsers.config import ParserConfig
 
 from libsbgnpy import Sbgn, RenderInformation
 
@@ -105,5 +106,12 @@ def write_render_to_string(render_info: RenderInformation) -> str:
 
 def read_render_from_string(xml_str: str) -> RenderInformation:
     """Read RenderInformation from string."""
-    parser = XmlParser()
+    config = ParserConfig(
+        fail_on_converter_warnings=False,
+        fail_on_unknown_attributes=True,
+        fail_on_unknown_properties=True,
+    )
+    context = XmlContext()
+    parser = XmlParser(context=context, config=config)
+
     return parser.from_string(xml_str, RenderInformation)

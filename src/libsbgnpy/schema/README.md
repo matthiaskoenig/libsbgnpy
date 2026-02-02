@@ -6,8 +6,9 @@ The latest schema files are available from https://github.com/sbgn/libsbgn
 in the folder resources.
 
 ## Install all dependencies
-pip install xsdata[cli,lxml,soap]
-
+```bash
+uv pip install xsdata[cli,lxml,soap]
+```
 
 ## Generate models
 ```bash
@@ -20,6 +21,22 @@ xsdata generate SBGN.xsd --package libsbgn
 - copy files to libsbgnpy folder
 - copy the init content to the __init__
 
+## Fixes
+In render uncomment:
+
+`# "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",`
+
+for the render attributes in metadata
+
+```python
+id: str = field(
+    metadata={
+        "type": "Attribute",
+        # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+        "required": True,
+    }
+)
+```
 
 ## TODO
 - [ ] fix tests;

@@ -4,12 +4,19 @@ Example on writing and reading Render information.
 
 from pathlib import Path
 
+from xsdata.formats.dataclass.models.generics import AnyElement
+from xsdata.formats.dataclass.serializers import XmlSerializer
+from xsdata.formats.dataclass.serializers.config import SerializerConfig
+
 from libsbgnpy import *
 
 
 def write_map_render(f: Path) -> None:
     """Example for writing render information on a map."""
-    map = Map(language=MapLanguage.PROCESS_DESCRIPTION)
+    map = Map(
+        id="render_example",
+        language=MapLanguage.PROCESS_DESCRIPTION,
+    )
     sbgn = Sbgn(map=[map])
 
     # create glyph
@@ -38,8 +45,8 @@ def write_map_render(f: Path) -> None:
     <renderInformation id="example" programName="libsbgnpy" programVersion="1.0.0"
      xmlns="http://www.sbml.org/sbml/level3/version1/render/version1">
         <listOfColorDefinitions>
-        <colorDefinition id="color0" value="#969696" />
-        <colorDefinition id="color1" value="#ff9900" />
+            <colorDefinition id="color0" value="#969696" />
+            <colorDefinition id="color1" value="#ff9900" />
         </listOfColorDefinitions>
 
         <listOfGradientDefinitions>
@@ -86,7 +93,7 @@ def write_map_render(f: Path) -> None:
             ]
         ),
         list_of_styles=ListOfStyles(
-            [
+            style=[
                 Style(
                     id_list="glyph1 glyph2",
                     g=G(stroke="color0", stroke_width=5, fill="color1"),
@@ -101,9 +108,11 @@ def write_map_render(f: Path) -> None:
     # console.print(render_info)
 
     # set extension
-    xml_str = write_render_to_string(render_info=render_info)
-    console.print(xml_str)
-    map.extension = Sbgn.Extension([xml_str])
+    # xml_str = write_render_to_string(render_info=render_info)
+    # console.print(xml_str)
+    # map.extension = Sbgn.Extension(any_element=[xml_str])
+
+    map.extension = Sbgn.Extension(any_element=[render_info])
     console.print(map.extension)
 
     # console.print(write_sbgn_to_string(sbgn))
@@ -114,7 +123,23 @@ def read_map_render(f: Path) -> None:
     """Read notes from glyphs example."""
     sbgn = read_sbgn_from_file(f=f)
     map: Map = sbgn.map[0]
-    xml_str = str(map.extension.any_element[0])
+
+    any_element: AnyElement = map.extension.any_element[0]
+    console.print(type(any_element))
+
+    # FIXME: get this back into RenderInformation.
+
+    config = SerializerConfig(
+        pretty_print=True,
+        # xml_declaration=False,
+    )
+    serializer = XmlSerializer(config=config)
+    xml_str = serializer.render(
+        any_element,
+        ns_map={"": "http://www.sbml.org/sbml/level3/version1/render/version1"},
+    )
+    console.print(xml_str)
+
     render_info = read_render_from_string(xml_str=xml_str)
     console.print(render_info)
 

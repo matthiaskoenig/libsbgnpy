@@ -26,7 +26,9 @@ def render_sbgn(sbgn: libsbgn.Sbgn, image_file: Path, file_format: str = "png") 
     :param image_file: image to create
     :return: None
     """
-    return render_sbgn(sbgn=sbgn, image_file=image_file, file_format=file_format)
+    return render_sbgn_sysbioapps(
+        sbgn=sbgn, image_file=image_file, file_format=file_format
+    )
 
 
 def render_sbgn_sysbioapps(

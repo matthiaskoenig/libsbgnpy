@@ -8,7 +8,10 @@ from libsbgnpy.examples import extension_example
 
 
 def test_create_extension():
-    map = Map(language=MapLanguage.PROCESS_DESCRIPTION)
+    map = Map(
+        id="map_extension",
+        language=MapLanguage.PROCESS_DESCRIPTION,
+    )
     map.extension = Sbgnbase.Extension(
         any_element=[
             """<renderInformation id="example" programName="SBML Layout" programVersion="3.0"
