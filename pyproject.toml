@@ -35,10 +35,11 @@ keywords = [
 	"SBGN",
 ]
 dependencies = [
-    "requests",
+    "requests>=2.32.5",
 	"lxml>=6.0.2",
 	"xsdata>=26.1",
 	"rich>=14.3.2",
+    "urllib3>=2.6.3"
 ]
 
 [project.optional-dependencies]
