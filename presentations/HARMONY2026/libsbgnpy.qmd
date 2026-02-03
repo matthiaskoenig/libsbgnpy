@@ -1,5 +1,5 @@
 ---
-title: "![](images/libsbgnpy_large.png){width=70%}"
+title: "libsbgnpy"
 subtitle: "Python library for SBGN"
 format: clean-revealjs
 author:
