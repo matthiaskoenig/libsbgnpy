@@ -13,10 +13,6 @@ writing and validation of SBGN files.
 
 The initial library was generated using [xsdata](https://github.com/tefra/xsdata). Additional utility functions for reading, writing, and rendering SBGN documents are provided.
 
-Documentation with examples is available at https://matthiaskoenig.github.io/libsbgnpy/.
-
-A presentation from HARMONY2026 is available [here](https://matthiaskoenig.github.io/libsbgnpy/presentations/HARMONY2026/libsbgnpy.html).
-
 ```python
     map = Map(
         id="ethanol_example",
@@ -68,6 +64,13 @@ A presentation from HARMONY2026 is available [here](https://matthiaskoenig.githu
 ```
 
 ![Example](./docs/images/ethanol_example.png)
+
+# Documentation
+Documentation with examples is available at https://matthiaskoenig.github.io/libsbgnpy/.
+
+A presentation from HARMONY2026 is available [here](https://matthiaskoenig.github.io/libsbgnpy/presentations/HARMONY2026/libsbgnpy.html).
+[![](./docs/images/HARMONY2026_slides.png)](https://matthiaskoenig.github.io/libsbgnpy/presentations/HARMONY2026/libsbgnpy.html)
+
 
 # How to cite
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.597155.svg)](https://doi.org/10.5281/zenodo.597155)
