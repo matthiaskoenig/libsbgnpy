@@ -1,46 +1,44 @@
-# Generate python bindings with xdata
+# Generating the python bindings with xsdata
 
-The python language bindings were created from the XML schema using
-[xsdata](https://github.com/tefra/xsdata).
-The latest schema files are available from https://github.com/sbgn/libsbgn
-in the folder resources.
+`libsbgnpy.sbgn` and `libsbgnpy.render` are generated from the XML schemas in
+this folder with [xsdata](https://github.com/tefra/xsdata) and should not be
+edited by hand. The current schemas are published with
+[sbgn/libsbgn](https://github.com/sbgn/libsbgn) in the `resources` folder.
 
-## Install all dependencies
+## Generate
+
 ```bash
-uv pip install xsdata[cli,lxml,soap]
+uvx --with "xsdata[cli,lxml,soap]" xsdata generate SBGN.xsd --package libsbgn
 ```
 
-## Generate models
-```bash
-cd schema
-xsdata generate SBGN.xsd --package libsbgn
-```
+Copy the generated modules to `src/libsbgnpy/` and merge the content of the
+generated `__init__` into `src/libsbgnpy/__init__.py`.
 
-## Updates
-## Copy files
-- copy files to libsbgnpy folder
-- copy the init content to the __init__
+## Manual fixes
 
-## Fixes
-In render uncomment:
+The following changes are applied to the generated code, they are lost when the
+modules are regenerated:
 
-`# "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",`
+- the module docstrings at the top of `sbgn.py` and `render.py`
+- in `render.py` the namespace of the attributes is commented out, they are
+  written without a namespace:
 
-for the render attributes in metadata
+  ```python
+  id: str = field(
+      metadata={
+          "type": "Attribute",
+          # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
+          "required": True,
+      }
+  )
+  ```
 
-```python
-id: str = field(
-    metadata={
-        "type": "Attribute",
-        # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
-        "required": True,
-    }
-)
-```
+Run `ruff format` and `ruff check --fix` afterwards, the generated modules are
+neither formatted nor on current python syntax.
 
-## TODO
-- [ ] fix tests;
-- [ ] handling XML extension correctly. This should be proper XML and easy to handle
-- [ ] handle notes correctly, should also be HTML
-- [ ] automatic fixing of the documentation; namespaces
-- [ ] fixing plurals; maps; glyphs; arcs; etc
+## Open points
+
+- [ ] the documentation of the schema is copied into the docstrings with its
+      namespace prefixes, e.g., `<ns1:p xmlns:ns1="...">`
+- [ ] the plurals of the list attributes: `map`, `glyph`, `arc` instead of
+      `maps`, `glyphs`, `arcs`

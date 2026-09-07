@@ -1,3 +1,15 @@
+"""Python bindings of the render extension used by SBGN-ML.
+
+Generated from `libsbgnpy/schema/render.xsd` with
+[xsdata](https://github.com/tefra/xsdata), see `libsbgnpy/schema/README.md`;
+do not edit by hand.
+
+Render information colours a map. It is not part of the SBGN-ML schema: a
+`RenderInformation` document is stored as an extension of the map, using the
+vocabulary of the
+[SBML render extension](https://sbml.org/documents/specifications/level-3/version-1/render/).
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field

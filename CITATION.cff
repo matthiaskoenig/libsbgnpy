@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use libsbgnpy, please cite it as below."
+title: "libsbgnpy: python library for SBGN"
+abstract: "libsbgnpy is a python library to work with the Systems Biology Graphical Notation (SBGN). It provides the python bindings of the SBGN-ML schema and reads, writes, validates and renders SBGN documents."
+type: software
+authors:
+  - family-names: "König"
+    given-names: "Matthias"
+    orcid: "https://orcid.org/0000-0003-1725-179X"
+    affiliation: "Humboldt-University Berlin, Faculty of Life Science, Institute for Biology, Biology, Berlin; University Lübeck; University Hospital Schleswig-Holstein, Campus Lübeck, First Department of Medicine, Germany"
+version: "0.5.2"
+date-released: "2026-09-07"
+doi: "10.5281/zenodo.597155"
+license: MIT
+repository-code: "https://github.com/matthiaskoenig/libsbgnpy"
+url: "https://matthiaskoenig.github.io/libsbgnpy"
+keywords:
+  - modeling
+  - standardization
+  - COMBINE
+  - SBGN
+  - visualization

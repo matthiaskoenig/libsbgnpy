@@ -1,3 +1,17 @@
+"""Python bindings of the SBGN-ML schema.
+
+Generated from `libsbgnpy/schema/SBGN.xsd` with
+[xsdata](https://github.com/tefra/xsdata), see `libsbgnpy/schema/README.md`;
+do not edit by hand. The classes mirror the schema, so the
+[SBGN specifications](https://github.com/sbgn/sbgn/wiki/SBGN_Specifications)
+are the reference for what an element means, and the docstrings are the
+documentation of the schema.
+
+An SBGN document is an `Sbgn` holding `Map` objects, a map holds `Glyph` and
+`Arc` objects, and every element inherits from `Sbgnbase`, which carries the
+`notes` and the `extension`. See the user guide for how they are used.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field

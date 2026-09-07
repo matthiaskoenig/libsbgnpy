@@ -1,0 +1,137 @@
+[project]
+site_name = "libsbgnpy"
+site_url = "https://matthiaskoenig.github.io/libsbgnpy/"
+site_description = "Python library for the Systems Biology Graphical Notation (SBGN)"
+site_author = "Matthias König"
+
+copyright = 'Copyright &copy; 2016-2026 <a href="https://livermetabolism.com">Matthias König</a>'
+
+repo_url = "https://github.com/matthiaskoenig/libsbgnpy"
+repo_name = "matthiaskoenig/libsbgnpy"
+edit_uri = "edit/develop/docs/"
+
+nav = [
+  { "Home" = "index.md" },
+  { "Installation" = "installation.md" },
+  { "User guide" = [
+    { "SBGN maps" = "maps.md" },
+    { "Reading and writing" = "io.md" },
+    { "Notes and extensions" = "extensions.md" },
+    { "Render information" = "render.md" },
+    { "Validation" = "validation.md" },
+    { "Images" = "images.md" },
+  ] },
+  { "API reference" = [
+    { "Overview" = "api/index.md" },
+    { "libsbgnpy" = [
+      { "sbgn" = "api/sbgn.md" },
+      { "render" = "api/render.md" },
+      { "io" = "api/io.md" },
+      { "validator" = "api/validator.md" },
+      { "image" = "api/image.md" },
+      { "console" = "api/console.md" },
+      { "log" = "api/log.md" },
+    ] },
+  ] },
+  { "Contributing" = "development.md" },
+]
+
+[project.theme]
+language = "en"
+favicon = "images/favicon/favicon.ico"
+logo = "images/favicon/libsbgnpy-100x100.png"
+features = [
+  "content.action.edit",
+  "content.code.annotate",
+  "content.code.copy",
+  "content.tooltips",
+  "navigation.footer",
+  "navigation.indexes",
+  "navigation.instant",
+  "navigation.instant.prefetch",
+  "navigation.sections",
+  "navigation.top",
+  "navigation.tracking",
+  "search.highlight",
+  "search.suggest",
+  "toc.follow",
+]
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "indigo"
+accent = "indigo"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "indigo"
+accent = "indigo"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to system preference"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/matthiaskoenig/libsbgnpy"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/python"
+link = "https://pypi.org/project/libsbgnpy/"
+
+# API reference is rendered from the docstrings, see the `docs/api` pages
+[project.plugins.mkdocstrings.config]
+default_handler = "python"
+
+[project.plugins.mkdocstrings.config.handlers.python]
+paths = ["src"]
+
+[project.plugins.mkdocstrings.config.handlers.python.options]
+docstring_style = "google"
+docstring_section_style = "table"
+show_source = false
+# the page provides the heading, see the `docs/api` pages
+show_root_heading = false
+show_root_toc_entry = false
+show_root_full_path = false
+show_symbol_type_heading = true
+show_symbol_type_toc = true
+members_order = "source"
+separate_signature = true
+signature_crossrefs = true
+merge_init_into_class = true
+filters = ["!^_"]
+
+[project.markdown_extensions]
+abbr = {}
+admonition = {}
+attr_list = {}
+def_list = {}
+footnotes = {}
+md_in_html = {}
+tables = {}
+toc.permalink = true
+pymdownx.betterem = {}
+pymdownx.caret = {}
+pymdownx.details = {}
+pymdownx.emoji.emoji_generator = "zensical.extensions.emoji.to_svg"
+pymdownx.emoji.emoji_index = "zensical.extensions.emoji.twemoji"
+pymdownx.highlight.anchor_linenums = true
+pymdownx.highlight.line_spans = "__span"
+pymdownx.highlight.pygments_lang_class = true
+pymdownx.inlinehilite = {}
+pymdownx.keys = {}
+pymdownx.magiclink = {}
+pymdownx.mark = {}
+pymdownx.smartsymbols = {}
+pymdownx.superfences = {}
+pymdownx.tabbed.alternate_style = true
+pymdownx.tasklist.custom_checkbox = true
+pymdownx.tilde = {}
