@@ -152,4 +152,4 @@ A release is made from `develop`:
     uv pip install libsbgnpy
     ```
 
-7. once Zenodo has archived the release, update the citation information, i.e., `date-released` in `CITATION.cff` and the version and date in the citation of `README.md` and `docs/index.md`. `bump-my-version` only updates the version, not the date, which is only known after the release
+7. once Zenodo has archived the release, update the citation information: `date-released` and the version DOI in `doi` and `identifiers` of `CITATION.cff`, and the citation and the bibtex entry of the `How to cite` section of `docs/index.md`. `bump-my-version` only updates the version, neither the date nor the DOI, which are only known after the release. The badges and the `README.md` carry the concept DOI, which always resolves to the latest version, and stay as they are

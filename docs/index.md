@@ -89,19 +89,20 @@ If you have any questions or issues please [open an issue](https://github.com/ma
 # How to cite
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.597155.svg)](https://doi.org/10.5281/zenodo.597155)
 
-If you use `libsbgnpy` please cite the archived software on [Zenodo](https://doi.org/10.5281/zenodo.597155):
+If you use `libsbgnpy` please cite the archived software on Zenodo. [10.5281/zenodo.597155](https://doi.org/10.5281/zenodo.597155) is the concept DOI, which always resolves to the latest version; the DOI below is the one of this release:
 
-> König, M. (2026). *libsbgnpy: python library for SBGN* (Version 0.6.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.597155
+> König, M. (2026). *libsbgnpy: python library for SBGN* (Version 0.6.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.22641925
 
 ```bibtex
 @software{konig_libsbgnpy,
   author    = {König, Matthias},
   title     = {libsbgnpy: python library for SBGN},
   year      = {2026},
+  month     = {9},
   version   = {0.6.0},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.597155},
-  url       = {https://doi.org/10.5281/zenodo.597155},
+  doi       = {10.5281/zenodo.22641925},
+  url       = {https://doi.org/10.5281/zenodo.22641925},
 }
 ```
 

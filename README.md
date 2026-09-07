@@ -11,25 +11,6 @@
 
 `libsbgnpy` is a python library to work with the [Systems Biology Graphical Notation (SBGN)](https://sbgn.github.io/). It provides the python bindings of the SBGN-ML schema, generated with [xsdata](https://github.com/tefra/xsdata), and reads, writes, validates and renders SBGN documents.
 
-```python
-from pathlib import Path
-
-from libsbgnpy import read_sbgn_from_file, render_sbgn
-
-sbgn = read_sbgn_from_file(Path("map.sbgn"))
-render_sbgn(sbgn, Path("map.png"))
-```
-
-![Ethanol example](https://github.com/matthiaskoenig/libsbgnpy/raw/develop/docs/images/ethanol_example.png)
-
-## Installation
-
-```bash
-pip install libsbgnpy
-```
-
-## Documentation
-
 The documentation is at **[matthiaskoenig.github.io/libsbgnpy](https://matthiaskoenig.github.io/libsbgnpy)**:
 
 - [Installation](https://matthiaskoenig.github.io/libsbgnpy/installation/)
@@ -55,4 +36,4 @@ If you use `libsbgnpy` please cite the archived software on Zenodo, see [`CITATI
 
 Matthias König (MK) was supported by the Federal Ministry of Education and Research (BMBF, Germany) within the research network Systems Medicine of the Liver (LiSyM, grant number 031L0054). MK is supported by the Federal Ministry of Education and Research (BMBF, Germany) within ATLAS by grant number 031L0304B and by the German Research Foundation (DFG) within the Research Unit Program FOR 5151 QuaLiPerF (Quantifying Liver Perfusion-Function Relationship in Complex Resection - A Systems Medicine Approach) by grant number 436883643 and by grant number 465194077 (Priority Programme SPP 2311, Subproject SimLivA).
 
-© 2016-2026 Matthias König
+© 2016-2026 Matthias König, [https://livermetabolism.com](https://livermetabolism.com)
