@@ -1,26 +1,25 @@
-*.pyc
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+
+# tools
+.cache/
+.coverage
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.tox/
+coverage.xml
+htmlcov/
+
+# editors
+.idea/
 *~
 
-libsbgn.egg-info/
-libsbgnpy.egg-info/
-.Rhistory
-.project
-.pydevproject
-.settings/
-.metadata
-.idea
-# coverage information
-.coverage
-htmlcov/
-libsbgnpy/examples/sbgn/test-output.sbgn
-libsbgnpy/examples/sbgn/test-output-annotation.sbgn
-coverage.xml
-build/
-
-.cache
-.tox
-
-# documentation
-.ipynb_checkpoints
-_site
-site
+# documentation, built by the `documentation` workflow
+site/
+_site/

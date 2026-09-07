@@ -1,61 +1,63 @@
-"""Test SBGN Notes."""
+"""Test notes on SBGN elements."""
 
-import pytest
 from pathlib import Path
 
-from libsbgnpy import *
-from libsbgnpy.examples import notes_example
+from libsbgnpy import (
+    Bbox,
+    Glyph,
+    GlyphClass,
+    Map,
+    MapLanguage,
+    Sbgn,
+    Sbgnbase,
+    element_to_string,
+    read_sbgn_from_file,
+    write_sbgn_to_file,
+)
+
+NOTE = (
+    '<body xmlns="http://www.w3.org/1999/xhtml">'
+    "This is an example note describing the INSR glyph."
+    "</body>"
+)
+
+
+def _sbgn_with_notes() -> Sbgn:
+    """Create a map with a glyph carrying a note."""
+    map = Map(id="notes", language=MapLanguage.PROCESS_DESCRIPTION)
+    sbgn = Sbgn(map=[map])
+    map.glyph.append(
+        Glyph(
+            id="g1",
+            class_value=GlyphClass.SIMPLE_CHEMICAL,
+            bbox=Bbox(x=0, y=0, w=100, h=50),
+            notes=Sbgnbase.Notes(w3_org_1999_xhtml_element=[NOTE]),
+        )
+    )
+    return sbgn
 
 
 def test_create_notes() -> None:
-    g = Glyph(
-        id="g1",
-        class_value=GlyphClass.SIMPLE_CHEMICAL,
-        bbox=Bbox(x=0, y=0, w=100, h=50),
-    )
-    notes = Sbgnbase.Notes(
-        w3_org_1999_xhtml_element=[
-            """
-       <body xmlns="http://www.w3.org/1999/xhtml">
-           This is an example note describing the INSR glyph.
-       </body>"""
-        ]
-    )
-    g.notes = notes
-    assert g.notes is not None
+    """Notes are set on a glyph."""
+    glyph = _sbgn_with_notes().map[0].glyph[0]
 
-    notes_str = str(g.notes)
-    assert "<body" in notes_str
+    assert glyph.notes is not None
+    assert glyph.notes.w3_org_1999_xhtml_element == [NOTE]
 
 
-@pytest.mark.skip
-def test_read_notes(tmpdir: Path) -> None:
-    map = Map(language=MapLanguage.PROCESS_DESCRIPTION)
-    sbgn = Sbgn(map=[map])
+def test_notes_roundtrip(tmp_path: Path) -> None:
+    """Notes survive writing and reading."""
+    f_sbgn = tmp_path / "test.sbgn"
+    write_sbgn_to_file(_sbgn_with_notes(), f_sbgn)
 
-    text = """
-           <body xmlns="http://www.w3.org/1999/xhtml">
-               This is an example note describing the map.
-           </body>
-           """
-    map.notes = Sbgnbase.Notes(text)
-    assert map.notes is not None
+    notes = read_sbgn_from_file(f_sbgn).map[0].glyph[0].notes
+    assert notes is not None
 
-    f_sbgn = tmpdir / "test.sbgn"
-    write_sbgn_to_file(sbgn, f_sbgn)
-    del map, sbgn
-
-    sbgn2 = read_sbgn_from_file(f_sbgn)
-    _ = write_sbgn_to_string(sbgn2)
-
-    map2 = sbgn2.map[0]
-    notes2 = map2.notes
-    assert notes2 is not None
-    assert "<body" in str(notes2)
+    xml_str = element_to_string(notes.w3_org_1999_xhtml_element[0])
+    assert "body" in xml_str
+    assert "This is an example note describing the INSR glyph." in xml_str
 
 
-@pytest.mark.skip
-def test_notes_example(tmpdir: Path) -> None:
-    f_sbgn = tmpdir / "test.sbgn"
-    notes_example.write_glyph_notes(f_sbgn)
-    notes_example.read_glyph_notes(f_sbgn)
+def test_element_to_string_of_string() -> None:
+    """A note which was not read back is returned unchanged."""
+    assert element_to_string(NOTE) == NOTE

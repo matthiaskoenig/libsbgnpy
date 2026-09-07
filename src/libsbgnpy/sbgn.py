@@ -19,14 +19,14 @@ class Sbgnbase:
     class Meta:
         name = "SBGNBase"
 
-    notes: None | Sbgnbase.Notes = field(
+    notes: Sbgnbase.Notes | None = field(
         default=None,
         metadata={
             "type": "Element",
             "namespace": "http://sbgn.org/libsbgn/0.3",
         },
     )
-    extension: None | Sbgnbase.Extension = field(
+    extension: Sbgnbase.Extension | None = field(
         default=None,
         metadata={
             "type": "Element",
@@ -355,7 +355,7 @@ class Label(Sbgnbase):
         name = "label"
         namespace = "http://sbgn.org/libsbgn/0.3"
 
-    bbox: None | Bbox = field(
+    bbox: Bbox | None = field(
         default=None,
         metadata={
             "type": "Element",
@@ -495,31 +495,31 @@ class Glyph(Sbgnbase):
         name = "glyph"
         namespace = "http://sbgn.org/libsbgn/0.3"
 
-    label: None | Label = field(
+    label: Label | None = field(
         default=None,
         metadata={
             "type": "Element",
         },
     )
-    state: None | Glyph.State = field(
+    state: Glyph.State | None = field(
         default=None,
         metadata={
             "type": "Element",
         },
     )
-    clone: None | Glyph.Clone = field(
+    clone: Glyph.Clone | None = field(
         default=None,
         metadata={
             "type": "Element",
         },
     )
-    callout: None | Glyph.Callout = field(
+    callout: Glyph.Callout | None = field(
         default=None,
         metadata={
             "type": "Element",
         },
     )
-    entity: None | Glyph.Entity = field(
+    entity: Glyph.Entity | None = field(
         default=None,
         metadata={
             "type": "Element",
@@ -562,28 +562,28 @@ class Glyph(Sbgnbase):
             "required": True,
         }
     )
-    compartment_ref: None | str = field(
+    compartment_ref: str | None = field(
         default=None,
         metadata={
             "name": "compartmentRef",
             "type": "Attribute",
         },
     )
-    compartment_order: None | float = field(
+    compartment_order: float | None = field(
         default=None,
         metadata={
             "name": "compartmentOrder",
             "type": "Attribute",
         },
     )
-    map_ref: None | str = field(
+    map_ref: str | None = field(
         default=None,
         metadata={
             "name": "mapRef",
             "type": "Attribute",
         },
     )
-    tag_ref: None | str = field(
+    tag_ref: str | None = field(
         default=None,
         metadata={
             "name": "tagRef",
@@ -593,7 +593,7 @@ class Glyph(Sbgnbase):
 
     @dataclass(kw_only=True)
     class Clone:
-        label: None | Label = field(
+        label: Label | None = field(
             default=None,
             metadata={
                 "type": "Element",
@@ -608,7 +608,7 @@ class Glyph(Sbgnbase):
                 "required": True,
             }
         )
-        target: None | str = field(
+        target: str | None = field(
             default=None,
             metadata={
                 "type": "Attribute",
@@ -642,13 +642,13 @@ class Glyph(Sbgnbase):
             </ns1:li> </ns1:ul> </ns1:p>
         """
 
-        value: None | str = field(
+        value: str | None = field(
             default=None,
             metadata={
                 "type": "Attribute",
             },
         )
-        variable: None | str = field(
+        variable: str | None = field(
             default=None,
             metadata={
                 "type": "Attribute",
@@ -930,7 +930,7 @@ class Map(Sbgnbase):
         name = "map"
         namespace = "http://sbgn.org/libsbgn/0.3"
 
-    bbox: None | Bbox = field(
+    bbox: Bbox | None = field(
         default=None,
         metadata={
             "type": "Element",
@@ -954,13 +954,13 @@ class Map(Sbgnbase):
             "type": "Element",
         },
     )
-    version: None | MapVersion = field(
+    version: MapVersion | None = field(
         default=None,
         metadata={
             "type": "Attribute",
         },
     )
-    language: None | MapLanguage = field(
+    language: MapLanguage | None = field(
         default=None,
         metadata={
             "type": "Attribute",

@@ -33,14 +33,14 @@ class G:
         name = "g"
         namespace = "http://www.sbml.org/sbml/level3/version1/render/version1"
 
-    stroke: None | str = field(
+    stroke: str | None = field(
         default=None,
         metadata={
             "type": "Attribute",
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    stroke_width: None | float = field(
+    stroke_width: float | None = field(
         default=None,
         metadata={
             "name": "stroke-width",
@@ -48,14 +48,14 @@ class G:
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    fill: None | str = field(
+    fill: str | None = field(
         default=None,
         metadata={
             "type": "Attribute",
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    fill_rule: None | str = field(
+    fill_rule: str | None = field(
         default=None,
         metadata={
             "name": "fill-rule",
@@ -63,7 +63,7 @@ class G:
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    font_family: None | str = field(
+    font_family: str | None = field(
         default=None,
         metadata={
             "name": "font-family",
@@ -71,7 +71,7 @@ class G:
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    font_weight: None | str = field(
+    font_weight: str | None = field(
         default=None,
         metadata={
             "name": "font-weight",
@@ -79,7 +79,7 @@ class G:
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    font_style: None | str = field(
+    font_style: str | None = field(
         default=None,
         metadata={
             "name": "font-style",
@@ -87,7 +87,7 @@ class G:
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    text_anchor: None | str = field(
+    text_anchor: str | None = field(
         default=None,
         metadata={
             "name": "text-anchor",
@@ -95,7 +95,7 @@ class G:
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    vtext_anchor: None | str = field(
+    vtext_anchor: str | None = field(
         default=None,
         metadata={
             "name": "vtext-anchor",
@@ -103,7 +103,7 @@ class G:
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    font_size: None | int = field(
+    font_size: int | None = field(
         default=None,
         metadata={
             "name": "font-size",
@@ -133,28 +133,28 @@ class LinearGradient:
             "required": True,
         }
     )
-    x1: None | str = field(
+    x1: str | None = field(
         default=None,
         metadata={
             "type": "Attribute",
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    x2: None | str = field(
+    x2: str | None = field(
         default=None,
         metadata={
             "type": "Attribute",
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    y1: None | str = field(
+    y1: str | None = field(
         default=None,
         metadata={
             "type": "Attribute",
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    y2: None | str = field(
+    y2: str | None = field(
         default=None,
         metadata={
             "type": "Attribute",
@@ -225,7 +225,7 @@ class Style:
             "required": True,
         }
     )
-    id_list: None | str = field(
+    id_list: str | None = field(
         default=None,
         metadata={
             "name": "idList",
@@ -233,7 +233,7 @@ class Style:
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    role_list: None | str = field(
+    role_list: str | None = field(
         default=None,
         metadata={
             "name": "roleList",
@@ -241,7 +241,7 @@ class Style:
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    type_list: None | str = field(
+    type_list: str | None = field(
         default=None,
         metadata={
             "name": "typeList",
@@ -293,21 +293,21 @@ class RenderInformation:
             "required": True,
         }
     )
-    id: None | str = field(
+    id: str | None = field(
         default=None,
         metadata={
             "type": "Attribute",
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    name: None | str = field(
+    name: str | None = field(
         default=None,
         metadata={
             "type": "Attribute",
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    program_name: None | str = field(
+    program_name: str | None = field(
         default=None,
         metadata={
             "name": "programName",
@@ -315,7 +315,7 @@ class RenderInformation:
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    program_version: None | str = field(
+    program_version: str | None = field(
         default=None,
         metadata={
             "name": "programVersion",
@@ -323,7 +323,7 @@ class RenderInformation:
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
         },
     )
-    background_color: None | str = field(
+    background_color: str | None = field(
         default=None,
         metadata={
             "name": "backgroundColor",

@@ -1,23 +1,41 @@
-"""Test validator."""
+"""Test validation against the SBGN XSD schema."""
 
-import pytest
 from pathlib import Path
-from libsbgnpy import validator
+
+from libsbgnpy import validate_xsd
+
+#: the SBGN documents the examples read
+EXAMPLES_SBGN_DIR = Path(__file__).parent.parent / "examples" / "sbgn"
 
 
-def find_sbgn_files(directory: Path) -> list[Path]:
-    """Find SBGN files in directory."""
+def test_valid_file() -> None:
+    """A valid document has no errors."""
+    assert validate_xsd(EXAMPLES_SBGN_DIR / "adh.sbgn") == []
 
-    return sorted([f for f in directory.glob("**/*.sbgn")])
+
+def test_valid_file_upconverted() -> None:
+    """An SBGN-ML 0.2 document is validated against the 0.3 schema."""
+    assert validate_xsd(EXAMPLES_SBGN_DIR / "adh_0.3.sbgn") == []
 
 
-@pytest.mark.skip(reason="Not implemented")
-@pytest.mark.parametrize(
-    "filename",
-    find_sbgn_files(directory=Path(__file__).parent / "test-files"),
-    ids=lambda x: f"{x.parent.name}/{x.name}",
-)
-def test_validate_file(filename: str, tmpdir: Path) -> None:
-    """Validate test files."""
-    errors = validator.validate_xsd(f=Path(filename)) is None
-    assert not errors
+def test_invalid_file(tmp_path: Path) -> None:
+    """A document which does not follow the schema reports the errors."""
+    f_sbgn = tmp_path / "invalid.sbgn"
+    f_sbgn.write_text(
+        '<sbgn xmlns="http://sbgn.org/libsbgn/0.3">'
+        '<map language="process description"/>'
+        "</sbgn>",
+        encoding="utf-8",
+    )
+
+    errors = validate_xsd(f_sbgn)
+    assert len(errors) == 1
+    assert "id" in errors[0]
+
+
+def test_not_xml(tmp_path: Path) -> None:
+    """A file which is no XML reports the syntax error."""
+    f_sbgn = tmp_path / "invalid.sbgn"
+    f_sbgn.write_text("this is not xml", encoding="utf-8")
+
+    assert len(validate_xsd(f_sbgn)) == 1

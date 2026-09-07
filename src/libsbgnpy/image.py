@@ -1,75 +1,83 @@
-"""
-Helper functions for rendering SBGN images.
+"""Rendering of SBGN documents as images.
 
-Uses the webservice provided by Frank Bergmann
-at "http://sysbioapps.dyndns.org/Layout/GenerateImage".
-For documentation see http://sysbioapps.spdns.org/Layout
+The rendering is performed by the web service of Frank Bergmann at
+<https://sbml.bioquant.uni-heidelberg.de/layout>, i.e., it requires an internet
+connection. For the documentation of the service see
+<http://sysbioapps.spdns.org/Layout>.
+
+```python
+from pathlib import Path
+
+from libsbgnpy import read_sbgn_from_file, render_sbgn
+
+sbgn = read_sbgn_from_file(Path("map.sbgn"))
+render_sbgn(sbgn, Path("map.png"))
+```
 """
 
+import logging
 import tempfile
 from pathlib import Path
+
 import requests
 
-from libsbgnpy import io
-import libsbgnpy.sbgn as libsbgn
+from libsbgnpy.io import write_sbgn_to_file
+from libsbgnpy.sbgn import Sbgn
 
+logger = logging.getLogger(__name__)
 
+#: web service rendering an SBGN document
 RENDER_URL = "https://sbml.bioquant.uni-heidelberg.de/layout"
 
+#: image formats supported by the web service
+RENDER_FORMATS = ("png",)
 
-def render_sbgn(sbgn: libsbgn.Sbgn, image_file: Path, file_format: str = "png") -> None:
-    """Render given sbgn object to image.
+#: seconds to wait for the web service
+RENDER_TIMEOUT = 60
 
-    Supports the following file_formats: "png"
 
-    :param sbgn: sbgn object
-    :param image_file: image to create
-    :return: None
+def render_sbgn(sbgn: Sbgn, image_file: Path, file_format: str = "png") -> None:
+    """Render an SBGN document to an image.
+
+    The document is sent to the rendering web service, which lays the map out
+    and returns the image. The request is equivalent to
+
+    ```bash
+    curl -X POST -F file=@"map.sbgn" \
+        https://sbml.bioquant.uni-heidelberg.de/layout -o map.png
+    ```
+
+    Args:
+        sbgn: SBGN document
+        image_file: path of the image to create, ending in `.<file_format>`
+        file_format: image format, only `png` is supported
+
+    Raises:
+        ValueError: if the format is not supported or the file has another suffix
+        requests.RequestException: if the web service cannot be reached or fails
     """
-    return render_sbgn_sysbioapps(
-        sbgn=sbgn, image_file=image_file, file_format=file_format
-    )
-
-
-def render_sbgn_sysbioapps(
-    sbgn: libsbgn.Sbgn, image_file: Path, file_format: str = "png"
-) -> None:
-    """Render given sbgn object to image.
-
-    Supports the following file_formats: "png"
-    The image file must end in .file_format, e.g. in '.png'
-
-    Performs a request analogue to:
-    curl -X POST -F file=@"BorisEJB.xml" https://sbml.bioquant.uni-heidelberg.de/layout -o out.png
-
-    :param sbgn: sbgn object
-    :param image_file: image to create
-    :return: None
-    """
-    if file_format != "png":
-        raise ValueError("Only png rendering supported.")
-
-    if not str(image_file).endswith(f".{file_format}"):
+    if file_format not in RENDER_FORMATS:
         raise ValueError(
-            "The filename must end in <.file_format>, e.g. for png it must end in <.png>."
+            f"Unsupported image format: '{file_format}', "
+            f"supported formats are {RENDER_FORMATS}."
+        )
+    if image_file.suffix != f".{file_format}":
+        raise ValueError(
+            f"The image file must end in '.{file_format}', but is '{image_file}'."
         )
 
-    # Create temporary file for request
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_dir:
-        f_in: Path = Path(tmp_dir) / "render.sbgn"
-        io.write_sbgn_to_file(sbgn, f_in)
+        f_sbgn = Path(tmp_dir) / "render.sbgn"
+        write_sbgn_to_file(sbgn, f_sbgn)
 
-        # Call webservice for rendering
-        files = [
-            ("file", open(f_in, "rb")),
-        ]
-        r = requests.post(f"{RENDER_URL}", files=files)
+        with open(f_sbgn, "rb") as f_in:
+            response = requests.post(
+                RENDER_URL, files={"file": f_in}, timeout=RENDER_TIMEOUT
+            )
+        response.raise_for_status()
 
-        r.raise_for_status()
+    with open(image_file, "wb") as f_out:
+        for chunk in response.iter_content(chunk_size=128):
+            f_out.write(chunk)
 
-        with open(image_file, "wb") as fd:
-            for chunk in r.iter_content(chunk_size=128):
-                fd.write(chunk)
-            fd.close()
-
-        print("SBGN rendered:", image_file)
+    logger.info("SBGN rendered: %s", image_file)

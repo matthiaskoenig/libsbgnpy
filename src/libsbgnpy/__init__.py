@@ -1,10 +1,25 @@
-__version__ = "0.5.2"
-__author__ = "Matthias König"
+"""libsbgnpy - python utilities for working with SBGN.
 
-from pathlib import Path
-from .console import console
+The package provides the python bindings of the [SBGN-ML](https://sbgn.github.io/)
+schema, generated with [xsdata](https://github.com/tefra/xsdata), together with
+the functions to read, write, validate and render SBGN documents.
+"""
 
-from .render import (
+import logging
+
+from libsbgnpy.image import render_sbgn
+from libsbgnpy.io import (
+    element_from_string,
+    element_to_string,
+    read_render_from_extension,
+    read_render_from_string,
+    read_sbgn_from_file,
+    read_sbgn_from_string,
+    write_render_to_string,
+    write_sbgn_to_file,
+    write_sbgn_to_string,
+)
+from libsbgnpy.render import (
     ColorDefinition,
     G,
     LinearGradient,
@@ -14,7 +29,7 @@ from .render import (
     RenderInformation,
     Style,
 )
-from .sbgn import (
+from libsbgnpy.sbgn import (
     Arc,
     ArcClass,
     Arcgroup,
@@ -33,57 +48,49 @@ from .sbgn import (
     Sbgn,
     Sbgnbase,
 )
+from libsbgnpy.validator import validate_xsd
 
-from .io import (
-    read_sbgn_from_file,
-    write_sbgn_to_file,
-    write_sbgn_to_string,
-    read_render_from_string,
-    write_render_to_string,
-)
+__author__ = "Matthias Koenig"
+__version__ = "0.5.2"
 
-from .image import (
-    render_sbgn,
-)
-from .validator import validate_xsd
-
-sbgn_examples_dir = Path(__file__).parent / "examples" / "sbgn"
-
+# the package does not configure logging, see `libsbgnpy.log`
+logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 __all__ = [
-    "ColorDefinition",
-    "G",
-    "LinearGradient",
-    "ListOfColorDefinitions",
-    "ListOfGradientDefinitions",
-    "ListOfStyles",
-    "RenderInformation",
-    "Style",
-    "Sbgnbase",
     "Arc",
     "ArcClass",
     "Arcgroup",
     "ArcgroupClass",
     "Bbox",
+    "ColorDefinition",
     "EntityName",
+    "G",
     "Glyph",
     "GlyphClass",
     "GlyphOrientation",
     "Label",
+    "LinearGradient",
+    "ListOfColorDefinitions",
+    "ListOfGradientDefinitions",
+    "ListOfStyles",
     "Map",
     "MapLanguage",
     "MapVersion",
     "Point",
     "Port",
+    "RenderInformation",
     "Sbgn",
-    # custom
-    "read_sbgn_from_file",
-    "write_sbgn_to_string",
-    "write_sbgn_to_file",
+    "Sbgnbase",
+    "Style",
+    "element_from_string",
+    "element_to_string",
+    "read_render_from_extension",
     "read_render_from_string",
-    "write_render_to_string",
+    "read_sbgn_from_file",
+    "read_sbgn_from_string",
     "render_sbgn",
     "validate_xsd",
-    "console",
-    "sbgn_examples_dir",
+    "write_render_to_string",
+    "write_sbgn_to_file",
+    "write_sbgn_to_string",
 ]

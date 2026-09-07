@@ -1,75 +1,35 @@
+"""Run the examples.
+
+The examples are runnable scripts in `examples/`, not part of the package, see
+`examples/README.md`. Every example is executed in a temporary working
+directory, so the files it writes do not end up in the repository.
 """
-Test the example scripts in the examples folder.
-"""
+
+import subprocess
+import sys
+from pathlib import Path
 
 import pytest
-from pathlib import Path
-from libsbgnpy import sbgn_examples_dir
-from libsbgnpy.examples.info_example import info_example
-from libsbgnpy.examples.read_example import read_sbgn_01
-from libsbgnpy.examples.write_example import write_sbgn_01, write_sbgn_02, write_sbgn_03
-from libsbgnpy.examples.special_character_example import special_character_example
-from libsbgnpy.examples.clone_marker_example import clone_marker_example
 
+#: the runnable examples, see `examples/README.md`
+EXAMPLES_DIR = Path(__file__).parent.parent / "examples"
 
-@pytest.mark.parametrize(
-    "filename",
-    [
-        "adh.sbgn",
-        "glycolysis.sbgn",
-        "test-output-01.sbgn",
-        "test-output-02.sbgn",
-    ],
+#: examples which query the rendering web service, see `tests/test_image.py`
+NETWORK_EXAMPLES = {"ethanol.py"}
+
+EXAMPLES = sorted(
+    f for f in EXAMPLES_DIR.glob("*.py") if f.name not in NETWORK_EXAMPLES
 )
-def test_read_examples(filename: str) -> None:
-    """Parse SBGN file test."""
-    sbgn = read_sbgn_01(sbgn_examples_dir / filename)
-    assert sbgn is not None
 
 
-def test_write_example_01(tmpdir: Path) -> None:
-    """Write SBGN file test 1."""
-    write_sbgn_01(tmpdir / "test-output-01.sbgn")
-
-
-def test_write_example_02(tmpdir: Path) -> None:
-    """Write SBGN file test 2."""
-    write_sbgn_02(tmpdir / "test-output-02.sbgn")
-
-
-def test_write_example_03(tmpdir: Path) -> None:
-    """Write SBGN file test 3."""
-    write_sbgn_03(tmpdir / "test-output-03.sbgn")
-
-
-def test_write_read_example_01(tmpdir: Path) -> None:
-    write_sbgn_01(tmpdir / "test-output-01.sbgn")
-    sbgn = read_sbgn_01(tmpdir / "test-output-01.sbgn")
-    assert sbgn is not None
-
-
-def test_write_read_example_02(tmpdir: Path) -> None:
-    write_sbgn_02(tmpdir / "test-output-02.sbgn")
-    sbgn = read_sbgn_01(tmpdir / "test-output-02.sbgn")
-    assert sbgn is not None
-
-
-def test_write_read_example_03(tmpdir: Path) -> None:
-    write_sbgn_02(tmpdir / "test-output-01.sbgn")
-    sbgn = read_sbgn_01(tmpdir / "test-output-01.sbgn")
-    assert sbgn is not None
-
-
-def test_info_example() -> None:
-    info_example()
-
-
-def test_special_characters() -> None:
-    xml_str = special_character_example()
-    assert "α/β" in xml_str
-    assert "5′-3′" in xml_str
-
-
-def test_clone_marker_example() -> None:
-    sbgn = clone_marker_example()
-    assert sbgn
+@pytest.mark.parametrize("f", EXAMPLES, ids=lambda f: f.name)
+def test_example(f: Path, tmp_path: Path) -> None:
+    """Every example runs without an error."""
+    result = subprocess.run(
+        [sys.executable, str(f)],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr

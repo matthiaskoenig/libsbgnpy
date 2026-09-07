@@ -17,3 +17,6 @@ commit_args = ""
 
 [[tool.bumpversion.files]]
 filename = "./src/libsbgnpy/__init__.py"
+
+[[tool.bumpversion.files]]
+filename = "./CITATION.cff"
