@@ -136,10 +136,6 @@ Run `ruff format` and `ruff check --fix` afterwards, the generated modules are n
 
 `libsbgnpy.oven` collects unfinished work: it is not wired into the package, not documented, not part of the public API and not shipped in the release, see `[tool.hatch.build]` in `pyproject.toml`. It currently holds the mapping of SBO terms to SBGN glyphs, groundwork for the conversion of SBML to SBGN, see [issue #52](https://github.com/matthiaskoenig/libsbgnpy/issues/52).
 
-## Presentations
-
-`presentations/` holds the [Quarto](https://quarto.org/) sources of the talks about `libsbgnpy`. They are not part of the documentation site and are rendered separately with `quarto render`.
-
 ## Release
 
 A release is made from `develop`:
