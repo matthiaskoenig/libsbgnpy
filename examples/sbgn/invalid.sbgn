@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  An intentionally invalid SBGN-ML document, used by `examples/validate.py`
+  to show what the XSD validation reports. It contains three mistakes:
+
+  - the map carries no `id`
+  - `simple chemcial` is a typo, it is not an SBGN glyph class
+  - the arc `a01` carries no `end` point
+-->
+<sbgn xmlns="http://sbgn.org/libsbgn/0.3">
+  <map language="process description">
+    <bbox x="0" y="0" w="363" h="253"/>
+    <glyph class="simple chemcial" id="glyph_ethanol">
+      <label text="Ethanol"/>
+      <bbox x="40" y="120" w="60" h="60"/>
+    </glyph>
+    <glyph class="process" orientation="horizontal" id="pn1">
+      <bbox x="148" y="168" w="24" h="24"/>
+      <port x="136" y="180" id="pn1.1"/>
+      <port x="184" y="180" id="pn1.2"/>
+    </glyph>
+    <arc class="consumption" source="glyph_ethanol" target="pn1.1" id="a01">
+      <start x="98" y="160"/>
+    </arc>
+  </map>
+</sbgn>

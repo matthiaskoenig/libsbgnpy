@@ -1,5 +1,8 @@
 """Validate SBGN documents against the SBGN XSD schema.
 
+The documents in `examples/sbgn/` are valid, `invalid.sbgn` breaks the schema
+on purpose, so a run shows both outcomes.
+
 ```bash
 python examples/validate.py
 ```
@@ -33,5 +36,8 @@ def validate(f: Path) -> list[str]:
 
 
 if __name__ == "__main__":
-    for f_sbgn in sorted(SBGN_DIR.glob("*.sbgn")):
-        validate(f_sbgn)
+    files = sorted(SBGN_DIR.glob("*.sbgn"))
+    invalid = [f_sbgn for f_sbgn in files if validate(f_sbgn)]
+    console.print(f"\n{len(files) - len(invalid)}/{len(files)} documents are valid")
+    if invalid:
+        console.print(f"invalid: {', '.join(f_sbgn.name for f_sbgn in invalid)}")
