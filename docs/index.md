@@ -99,7 +99,7 @@ The documentation is published as markdown as well, following the [llms.txt conv
 
 If you use `libsbgnpy` please cite the archived software on Zenodo. [10.5281/zenodo.597155](https://doi.org/10.5281/zenodo.597155) is the concept DOI, which always resolves to the latest version; the DOI below is the one of this release:
 
-> König, M. (2026). *libsbgnpy: python library for SBGN* (Version 0.6.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.22641925
+> König, M. (2026). *libsbgnpy: python library for SBGN* (Version 0.6.1) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.22642321
 
 ```bibtex
 @software{konig_libsbgnpy,
@@ -107,10 +107,10 @@ If you use `libsbgnpy` please cite the archived software on Zenodo. [10.5281/zen
   title     = {libsbgnpy: python library for SBGN},
   year      = {2026},
   month     = {9},
-  version   = {0.6.0},
+  version   = {0.6.1},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.22641925},
-  url       = {https://doi.org/10.5281/zenodo.22641925},
+  doi       = {10.5281/zenodo.22642321},
+  url       = {https://doi.org/10.5281/zenodo.22642321},
 }
 ```
 
