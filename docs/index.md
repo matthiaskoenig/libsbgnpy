@@ -86,6 +86,14 @@ The complete example, which builds the alcohol dehydrogenase reaction step by st
 
 If you have any questions or issues please [open an issue](https://github.com/matthiaskoenig/libsbgnpy/issues).
 
+# For agents
+
+The documentation is published as markdown as well, following the [llms.txt convention](https://llmstxt.org/):
+
+- [llms.txt](https://matthiaskoenig.github.io/libsbgnpy/llms.txt) — an annotated index of every page
+- [llms-full.txt](https://matthiaskoenig.github.io/libsbgnpy/llms-full.txt) — the complete documentation in a single file
+- the markdown of every page next to its html, i.e., [io.md](https://matthiaskoenig.github.io/libsbgnpy/io.md) for [io](io.md)
+
 # How to cite
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.597155.svg)](https://doi.org/10.5281/zenodo.597155)
 

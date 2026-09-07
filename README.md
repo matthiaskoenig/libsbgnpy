@@ -21,6 +21,10 @@ The documentation is at **[matthiaskoenig.github.io/libsbgnpy](https://matthiask
 
 Runnable examples are in [`examples/`](./examples), the release notes in [`release-notes/`](./release-notes).
 
+## For agents
+
+The documentation is published as markdown as well, following the [llms.txt convention](https://llmstxt.org/): [llms.txt](https://matthiaskoenig.github.io/libsbgnpy/llms.txt) is an annotated index of every page, [llms-full.txt](https://matthiaskoenig.github.io/libsbgnpy/llms-full.txt) the complete documentation in a single file, and the markdown of every page sits next to its html.
+
 ## How to cite
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.597155.svg)](https://doi.org/10.5281/zenodo.597155)
