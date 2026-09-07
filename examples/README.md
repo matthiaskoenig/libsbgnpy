@@ -1,7 +1,6 @@
 # Examples
 
-Runnable examples of `libsbgnpy`. They are not part of the package, they are
-run from a checkout of the repository:
+Runnable examples of `libsbgnpy`. They are not part of the package, they are run from a checkout of the repository:
 
 ```bash
 python examples/read.py
@@ -19,7 +18,6 @@ python examples/read.py
 | [`validate.py`](validate.py) | validate against the SBGN schema |
 | [`ethanol.py`](ethanol.py) | build a map step by step and render it as an image |
 
-`ethanol.py` renders images with a web service and therefore needs an internet
-connection, all other examples run offline.
+`ethanol.py` renders images with a web service and therefore needs an internet connection, all other examples run offline.
 
 The SBGN documents the examples read are in [`sbgn/`](sbgn).

@@ -4,10 +4,7 @@ The API reference is generated from the docstrings of the package.
 
 ## The SBGN bindings
 
-The python bindings of the SBGN-ML schemas, generated with
-[xsdata](https://github.com/tefra/xsdata), see
-[SBGN maps](../maps.md). The classes mirror the schemas, so the SBGN
-specifications are the reference for what an element means.
+The python bindings of the SBGN-ML schemas, generated with [xsdata](https://github.com/tefra/xsdata), see [SBGN maps](../maps.md). The classes mirror the schemas, so the SBGN specifications are the reference for what an element means.
 
 | module | description |
 | --- | --- |
