@@ -19,7 +19,7 @@ A pull request can only be merged once the four required checks are green:
 
 | check   | workflow      | content                                                              |
 | ------- | ------------- | -------------------------------------------------------------------- |
-| `tests` | `ci-cd.yml`   | the test matrix, linux, macos and windows with python 3.11 to 3.14    |
+| `tests` | `ci-cd.yml`   | python 3.11 to 3.15 on linux, python 3.15 on macos and windows        |
 | `ruff`  | `ruff.yml`    | `ruff check` and `ruff format --check`                                |
 | `ty`    | `ty.yml`      | `tox r -e ty`                                                         |
 | `docs`  | `docs.yml`    | the zensical build including the api reference and the agent files    |
@@ -92,16 +92,18 @@ From now on every commit is checked with ruff (lint and format) and ty, i.e., th
 
 The tests are written with pytest, tox runs them against every supported python version.
 
-The tox environments are named after the interpreter (`py3.11` to `py3.14`, see `envlist` in `tox.ini`), a single one is run with
+The tox environments are named after the interpreter (`py3.11` to `py3.15`, see `envlist` in `tox.ini`), a single one is run with
 ```bash
-tox r -e py3.14
+tox r -e py3.15
 ```
 and the complete matrix, including the `ty` environment, in parallel with
 ```bash
 tox run-parallel
 ```
 
-This needs the interpreters to be available, which uv installs with `uv python install 3.11 3.12 3.13 3.14`. Continuous integration runs the same environments as `uvx --with tox-uv tox -e py3.14`.
+This needs the interpreters to be available, which uv installs with `uv python install 3.11 3.12 3.13 3.14 3.15`. Continuous integration runs the same environments as `uvx --with tox-uv tox -e py3.15`.
+
+Python 3.15 is tested using the available prerelease until its final release. The default development, documentation and release environments remain on Python 3.14.
 
 To run the tests directly against the development environment use
 
