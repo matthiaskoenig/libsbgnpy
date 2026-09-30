@@ -77,6 +77,11 @@ exclude = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# tests which query the rendering web service run with `pytest -m network`
+addopts = ["-m", "not network"]
+markers = [
+    "network: the test queries the rendering web service",
+]
 
 [tool.ty.environment]
 # first-party modules live in the src layout; the checked python version is

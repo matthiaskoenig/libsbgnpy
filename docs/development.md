@@ -108,10 +108,13 @@ Python 3.15 is tested using the available prerelease until its final release. Th
 To run the tests directly against the development environment use
 
 ```bash
-pytest                                    # the full suite
+pytest                                    # the full suite, without network
 pytest tests/test_io.py                   # a single module
 pytest tests/test_io.py::test_upconvert   # a single test
+pytest -m network                         # the tests querying the web service
 ```
+
+The tests which query the rendering web service, i.e., `test_render_sbgn` and the `ethanol.py` example, are marked as `network` and deselected by default, so the suite and the CI do not depend on the availability of the service. The behavior of `render_sbgn` is tested against a local HTTP server.
 
 `tests/data` holds the reference maps of the SBGN specifications, one directory per map language. `tests/test_data.py` reads, writes and validates every one of them, so a change to the bindings or to the io is checked against the whole corpus.
 

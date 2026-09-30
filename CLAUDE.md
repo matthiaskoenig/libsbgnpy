@@ -17,6 +17,7 @@ uv run pre-commit install
 pytest                                    # all tests
 pytest tests/test_io.py                   # single file
 pytest tests/test_io.py::test_upconvert   # single test
+pytest -m network                         # tests querying the rendering web service (deselected by default)
 tox r -e py3.14                           # single tox env (py3.11-3.14 available)
 tox run-parallel                          # full matrix + ty
 
@@ -56,7 +57,7 @@ The subtle part is the raw XML of `notes` and `extension`: the schema allows arb
 
 - Type checking is done with [ty](https://docs.astral.sh/ty/) (mypy was removed in 0.6.0). `[tool.ty.terminal] error-on-warning = true` means warnings fail the check, so the tree must stay at zero diagnostics; the checked python version is inferred from `project.requires-python`. Suppress a diagnostic with a rule-specific `# ty: ignore[rule-name]`, never a blanket `# type: ignore`. ty also runs as a pre-commit hook (`--extra dev`).
 - Every module, class and function carries full type annotations and a google-style docstring. The generated bindings are exempt from the docstring rules, see `[lint.per-file-ignores]` in `.ruff.toml`.
-- `examples/` at the top level holds the runnable usage examples, they are not part of the package and every one of them is run by `tests/test_examples.py` in a temporary working directory. `examples/sbgn/` holds the documents they read. Only `examples/ethanol.py` needs network access.
+- `examples/` at the top level holds the runnable usage examples, they are not part of the package and every one of them is run by `tests/test_examples.py` in a temporary working directory. `examples/sbgn/` holds the documents they read. Only `examples/ethanol.py` needs network access, it is marked as `network` like `test_render_sbgn` and only runs with `pytest -m network`.
 - `tests/data/` holds the reference maps of the SBGN specifications, one directory per map language (`AF`, `ER`, `PD`); `tests/test_data.py` reads, writes and validates all of them.
 - Markdown carries no hard line wraps: a paragraph, a list item or a table row is a single line and the wrapping is left to the editor.
 - Release notes go in `release-notes/` as part of a release commit.

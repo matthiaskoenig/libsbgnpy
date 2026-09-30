@@ -7,7 +7,7 @@ the functions to read, write, validate and render SBGN documents.
 
 import logging
 
-from libsbgnpy.image import render_sbgn
+from libsbgnpy.image import RenderError, render_sbgn
 from libsbgnpy.io import (
     element_from_string,
     element_to_string,
@@ -78,6 +78,7 @@ __all__ = [
     "MapVersion",
     "Point",
     "Port",
+    "RenderError",
     "RenderInformation",
     "Sbgn",
     "Sbgnbase",
