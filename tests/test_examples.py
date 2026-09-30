@@ -14,12 +14,14 @@ import pytest
 #: the runnable examples, see `examples/README.md`
 EXAMPLES_DIR = Path(__file__).parent.parent / "examples"
 
-#: examples which query the rendering web service, see `tests/test_image.py`
+#: examples which query the rendering web service, see `tests/test_image.py`;
+#: they are marked as `network` and run with `pytest -m network`
 NETWORK_EXAMPLES = {"ethanol.py"}
 
-EXAMPLES = sorted(
-    f for f in EXAMPLES_DIR.glob("*.py") if f.name not in NETWORK_EXAMPLES
-)
+EXAMPLES = [
+    pytest.param(f, marks=pytest.mark.network) if f.name in NETWORK_EXAMPLES else f
+    for f in sorted(EXAMPLES_DIR.glob("*.py"))
+]
 
 
 @pytest.mark.parametrize("f", EXAMPLES, ids=lambda f: f.name)

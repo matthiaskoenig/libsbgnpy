@@ -21,9 +21,13 @@ curl -X POST -F file=@"map.sbgn" https://sbml.bioquant.uni-heidelberg.de/layout 
 
 ## Requirements and errors
 
-Rendering needs an internet connection. The service is queried with a timeout of 60 seconds, `requests` raises a `RequestException` if it cannot be reached or answers with an error.
+Rendering needs an internet connection. The service is queried with a timeout of 60 seconds, `requests` raises a `RequestException` if it cannot be reached or answers with an error. If it answers with something else than an image, e.g., the html page of a proxy, or with an image larger than 50 MB, `render_sbgn` raises a `RenderError`, a subclass of `RequestException`. The image file is written atomically, so a failed rendering never leaves a partial file and an existing image stays as it is.
 
-Only PNG is supported, and the image file has to end in `.png`; anything else raises a `ValueError` before the request is made.
+Only PNG is supported, and the image file has to end in `.png` (in any case); anything else raises a `ValueError` before the request is made.
+
+!!! warning "The service currently returns JPEG images"
+
+    The web service declares its answer as `image/png`, but currently sends a JPEG. `render_sbgn` writes the image as it is and logs a warning; most image viewers and browsers detect the actual format.
 
 ## The layout comes from the document
 
