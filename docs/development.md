@@ -181,9 +181,13 @@ The `documentation` workflow runs both steps, so the files are regenerated with 
 
 ## Regenerating the bindings { #regenerating-the-bindings }
 
-`libsbgnpy.sbgn` and `libsbgnpy.render` are generated modules and should not be edited by hand. They are generated from the schemas in `src/libsbgnpy/schema/` with [xsdata](https://github.com/tefra/xsdata); the current schemas are published with [sbgn/libsbgn](https://github.com/sbgn/libsbgn) in the `resources` folder. The procedure and the manual fixes which are applied afterwards are described in `src/libsbgnpy/schema/README.md`.
+`libsbgnpy.sbgn` and `libsbgnpy.render` are generated modules and should not be edited by hand. They are generated from the schemas in `src/libsbgnpy/schema/` with [xsdata](https://github.com/tefra/xsdata); the current schemas are published with [sbgn/libsbgn](https://github.com/sbgn/libsbgn) in the `resources` folder. `scripts/generate_bindings.py` runs the generation, including every fix applied to the output of xsdata and the formatting:
 
-Run `ruff format` and `ruff check --fix` afterwards, the generated modules are neither formatted nor on current python syntax.
+```bash
+uv run python scripts/generate_bindings.py
+```
+
+`tests/test_bindings.py` checks that the committed modules are up to date with the schemas and the installed xsdata. The fixes are described in `src/libsbgnpy/schema/README.md`.
 
 ## Work in progress
 

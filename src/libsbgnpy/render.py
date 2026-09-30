@@ -1,8 +1,8 @@
 """Python bindings of the render extension used by SBGN-ML.
 
 Generated from `libsbgnpy/schema/render.xsd` with
-[xsdata](https://github.com/tefra/xsdata), see `libsbgnpy/schema/README.md`;
-do not edit by hand.
+[xsdata](https://github.com/tefra/xsdata) by `scripts/generate_bindings.py`, see
+`libsbgnpy/schema/README.md`; do not edit by hand.
 
 Render information colours a map. It is not part of the SBGN-ML schema: a
 `RenderInformation` document is stored as an extension of the map, using the
@@ -27,14 +27,12 @@ class ColorDefinition:
         metadata={
             "type": "Attribute",
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
-            "required": True,
         }
     )
     value: str = field(
         metadata={
             "type": "Attribute",
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
-            "required": True,
         }
     )
 
@@ -142,7 +140,6 @@ class LinearGradient:
         metadata={
             "type": "Attribute",
             # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
-            "required": True,
         }
     )
     x1: str | None = field(
@@ -180,7 +177,6 @@ class LinearGradient:
             metadata={
                 "type": "Attribute",
                 # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
-                "required": True,
             }
         )
         stop_color: str = field(
@@ -188,7 +184,6 @@ class LinearGradient:
                 "name": "stop-color",
                 "type": "Attribute",
                 # "namespace": "http://www.sbml.org/sbml/level3/version1/render/version1",
-                "required": True,
             }
         )
 
@@ -234,7 +229,6 @@ class Style:
     g: G = field(
         metadata={
             "type": "Element",
-            "required": True,
         }
     )
     id_list: str | None = field(
@@ -288,21 +282,18 @@ class RenderInformation:
         metadata={
             "name": "listOfColorDefinitions",
             "type": "Element",
-            "required": True,
         }
     )
     list_of_gradient_definitions: ListOfGradientDefinitions = field(
         metadata={
             "name": "listOfGradientDefinitions",
             "type": "Element",
-            "required": True,
         }
     )
     list_of_styles: ListOfStyles = field(
         metadata={
             "name": "listOfStyles",
             "type": "Element",
-            "required": True,
         }
     )
     id: str | None = field(
