@@ -75,6 +75,24 @@ exclude = [
     "src/libsbgnpy/oven",
 ]
 
+[tool.hatch.build.targets.sdist]
+# the source distribution holds what is needed to build, test and document the
+# package; not the presentations, the CI configuration or the lock file
+include = [
+    "/src",
+    "/tests",
+    "/examples",
+    "/docs",
+    "/scripts",
+    "/release-notes",
+    "/README.md",
+    "/LICENSE",
+    "/CITATION.cff",
+    "/zensical.toml",
+    "/tox.ini",
+    "/.ruff.toml",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 # tests which query the rendering web service run with `pytest -m network`

@@ -129,7 +129,7 @@ def members(obj: ModuleType | type, module: str) -> list[tuple[str, Any]]:
         module: name of the module the members must be defined in.
 
     Returns:
-        The members as `(name, member)` in definition order.
+        The members as `(name, member)`, sorted by name.
     """
     items: list[tuple[str, Any]] = []
     for name, member in inspect.getmembers(obj):

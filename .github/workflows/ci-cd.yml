@@ -96,12 +96,19 @@ jobs:
       with:
         python-version: "3.14"
         enable-cache: true
+    - name: Check the tag is the version of the package
+      env:
+        TAG: ${{ github.ref_name }}
+      run: |
+        version=$(sed -n 's/^__version__ = "\(.*\)"$/\1/p' src/libsbgnpy/__init__.py)
+        echo "tag: $TAG, version: $version"
+        test "$TAG" = "$version"
     - name: Build package
-      run: uvx hatch build
+      run: uv build
     - name: Check the package
       run: uvx twine check dist/*
     - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
+      uses: pypa/gh-action-pypi-publish@a892a5a61159132606e93a2fa6f4358831b04d26  # v1.14.2
       with:
         packages-dir: dist
     - name: Create GitHub release
