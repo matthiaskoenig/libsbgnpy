@@ -524,6 +524,7 @@ dev = [
     { name = "ruff" },
     { name = "tox" },
     { name = "ty" },
+    { name = "xsdata", extra = ["cli"] },
     { name = "zensical" },
 ]
 
@@ -542,6 +543,7 @@ requires-dist = [
     { name = "tox", marker = "extra == 'dev'", specifier = ">=4.61.2" },
     { name = "ty", marker = "extra == 'dev'", specifier = ">=0.0.78" },
     { name = "xsdata", specifier = ">=26.2" },
+    { name = "xsdata", extras = ["cli"], marker = "extra == 'dev'", specifier = ">=26.2" },
     { name = "zensical", marker = "extra == 'dev'", specifier = ">=0.0.59" },
 ]
 provides-extras = ["dev"]
@@ -1412,6 +1414,15 @@ wheels = [
 ]
 
 [[package]]
+name = "toposort"
+version = "1.10"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/69/19/8e955d90985ecbd3b9adb2a759753a6840da2dff3c569d412b2c9217678b/toposort-1.10.tar.gz", hash = "sha256:bfbb479c53d0a696ea7402601f4e693c97b0367837c8898bc6471adfca37a6bd", size = 11132, upload-time = "2023-02-27T13:59:51.834Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f6/17/57b444fd314d5e1593350b9a31d000e7411ba8e17ce12dc7ad54ca76b810/toposort-1.10-py3-none-any.whl", hash = "sha256:cbdbc0d0bee4d2695ab2ceec97fe0679e9c10eab4b2a87a9372b929e70563a87", size = 8500, upload-time = "2023-02-25T20:07:06.538Z" },
+]
+
+[[package]]
 name = "tox"
 version = "4.64.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1570,6 +1581,14 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/2f/c9/71e9e8eac669091fd434ed494d806c8cc37614aecb34ce4c62c283f99abf/xsdata-26.2.tar.gz", hash = "sha256:c631af71aaa75734f8ce92a08fcf8389d905dee2aab0b5032c9032e9071009a6", size = 349690, upload-time = "2026-02-15T16:13:31.274Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d3/92/f0edcbc2f895ecea14a68e492b24c157625e251279a94b172a6b263290e7/xsdata-26.2-py3-none-any.whl", hash = "sha256:85a591a4405d903416afbd4a917e8dda8ea44641a3e66d72134bc2a31b3c16b0", size = 235561, upload-time = "2026-02-15T16:13:29.614Z" },
+]
+
+[package.optional-dependencies]
+cli = [
+    { name = "click" },
+    { name = "jinja2" },
+    { name = "ruff" },
+    { name = "toposort" },
 ]
 
 [[package]]

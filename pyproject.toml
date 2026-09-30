@@ -55,6 +55,7 @@ dev = [
     "zensical>=0.0.59",
     "mkdocstrings-python>=2.0.8",
     "lxml-stubs>=0.5.1",
+    "xsdata[cli]>=26.2",
 ]
 
 [project.urls]
@@ -83,7 +84,7 @@ testpaths = ["tests"]
 root = ["./src"]
 
 [tool.ty.src]
-include = ["src", "tests", "examples"]
+include = ["src", "tests", "examples", "scripts"]
 
 [tool.ty.terminal]
 # warnings are failures: keep the codebase free of any diagnostic
