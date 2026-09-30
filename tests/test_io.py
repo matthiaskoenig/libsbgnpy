@@ -3,7 +3,7 @@
 from pathlib import Path
 
 import pytest
-from xsdata.exceptions import ParserError
+from xsdata.exceptions import ConverterWarning, ParserError
 
 from libsbgnpy import (
     Bbox,
@@ -239,5 +239,9 @@ def test_read_sbgn_does_not_resolve_entities(tmp_path: Path) -> None:
 
 def test_read_sbgn_missing_required_element() -> None:
     """A document which lacks a required element raises a `ParserError`."""
-    with pytest.raises(ParserError, match="no valid SBGN-ML"):
+    # the example also carries an invalid glyph class, which xsdata warns about
+    with (
+        pytest.warns(ConverterWarning, match="simple chemcial"),
+        pytest.raises(ParserError, match="no valid SBGN-ML"),
+    ):
         read_sbgn_from_file(EXAMPLES_SBGN_DIR / "invalid.sbgn")
