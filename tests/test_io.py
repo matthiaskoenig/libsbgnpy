@@ -1,9 +1,10 @@
 """Test reading and writing of SBGN documents."""
 
+import logging
 from pathlib import Path
 
 import pytest
-from xsdata.exceptions import ConverterWarning, ParserError
+from xsdata.exceptions import ParserError
 
 from libsbgnpy import (
     Bbox,
@@ -239,9 +240,18 @@ def test_read_sbgn_does_not_resolve_entities(tmp_path: Path) -> None:
 
 def test_read_sbgn_missing_required_element() -> None:
     """A document which lacks a required element raises a `ParserError`."""
-    # the example also carries an invalid glyph class, which xsdata warns about
-    with (
-        pytest.warns(ConverterWarning, match="simple chemcial"),
-        pytest.raises(ParserError, match="no valid SBGN-ML"),
-    ):
+    with pytest.raises(ParserError, match="no valid SBGN-ML"):
         read_sbgn_from_file(EXAMPLES_SBGN_DIR / "invalid.sbgn")
+
+
+def test_read_sbgn_invalid_class_logs(caplog: pytest.LogCaptureFixture) -> None:
+    """A value outside of an enumeration is kept as a string and logged."""
+    with caplog.at_level(logging.WARNING, logger="libsbgnpy"):
+        sbgn = read_sbgn_from_string(
+            '<sbgn xmlns="http://sbgn.org/libsbgn/0.3">'
+            '<map id="m" language="process description">'
+            '<glyph id="g1" class="simple chemcial"><bbox x="0" y="0" w="1" h="1"/>'
+            "</glyph></map></sbgn>"
+        )
+    assert sbgn.map[0].glyph[0].class_value == "simple chemcial"
+    assert "simple chemcial" in caplog.text

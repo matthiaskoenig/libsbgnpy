@@ -10,6 +10,7 @@ python examples/labels.py
 """
 
 from libsbgnpy import (
+    LATEST,
     Arc,
     ArcClass,
     Bbox,
@@ -33,6 +34,7 @@ def labels() -> str:
     """
     map = Map(
         id="labels",
+        version=LATEST[MapLanguage.PROCESS_DESCRIPTION],
         language=MapLanguage.PROCESS_DESCRIPTION,
         bbox=Bbox(x=0, y=0, w=600, h=200),
     )

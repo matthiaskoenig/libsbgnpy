@@ -1,13 +1,16 @@
 # Validation
 
-Reading a document parses it, it does not check that it follows the SBGN-ML schema. `validate_xsd` performs that check against the packaged schema, `libsbgnpy/schema/SBGN.xsd`:
+Reading a document parses it, it does not check that it follows SBGN-ML. Two functions perform that check:
+
+- `validate_xsd` validates against the packaged schema, `libsbgnpy/schema/SBGN.xsd`, i.e., the structure of the document,
+- `validate` adds the rules of the SBGN specifications which the schema cannot express, see [What the specifications add](#what-the-specifications-add).
 
 ```python
 from pathlib import Path
 
-from libsbgnpy import validate_xsd
+from libsbgnpy import validate
 
-errors = validate_xsd(Path("map.sbgn"))
+errors = validate(Path("map.sbgn"))
 if errors:
     for error in errors:
         print(error)
@@ -15,7 +18,7 @@ else:
     print("valid")
 ```
 
-The function returns the errors as a list of strings, which is empty for a valid document, so a check is `if validate_xsd(f):`. Nothing is written to stdout or stderr; a summary is logged at info level, see [Logging](installation.md#logging).
+Both functions return the errors as a list of strings, which is empty for a valid document, so a check is `if validate(f):`. Nothing is written to stdout or stderr; a summary is logged at info level, see [Logging](installation.md#logging).
 
 An error names the line, the element and what is wrong with it:
 
@@ -84,21 +87,35 @@ The line number in front of every error, e.g. `<string>:13:0:`, is the line of t
 
 !!! note
 
-    A document which does not validate can still be read. `read_sbgn_from_file` parses without validating, so the invalid classes end up in the bindings as they are written. Validate first if a document comes from somewhere else.
+    A document which does not validate can often still be read. `read_sbgn_from_file` parses without validating, so an invalid class ends up in the bindings as the string it is written as, and a warning is logged. Only a document which lacks a required element or attribute, like the missing `end` of the arc above, cannot be read, it raises a `ParserError`. Validate first if a document comes from somewhere else.
 
 ## Which schema is used
 
-The packaged schema is the SBGN-ML 0.3 schema. Documents in the earlier namespaces are upconverted before they are validated, exactly as they are when they are read, see [Older SBGN-ML versions](io.md#older-sbgn-ml-versions). A 0.1 or 0.2 document is therefore validated against the 0.3 schema, which is what `libsbgnpy` reads it as.
+The packaged schema is the SBGN-ML 0.3 schema. Documents in the earlier namespaces are upconverted before they are validated, exactly as they are when they are read, see [Older SBGN-ML versions](io.md#older-sbgn-ml-versions). A 0.1 or 0.2 document is therefore validated against the 0.3 schema, which is what `libsbgnpy` reads it as. The schema is the one of [sbgn/libsbgn](https://github.com/sbgn/libsbgn) with the versions PD L1V2.0 and L1V2.1 added, which the published schema lacks, see [The version of a map](specifications.md#the-version-of-a-map).
+
+## What the specifications add
+
+The schema has a single enumeration of glyph classes and of arc classes for all languages, and it cannot require one of two attributes. `validate` therefore checks, after the schema, the rules of the specifications which the schema lacks, see [SBGN specifications](specifications.md#checking-a-map):
+
+- a map declares its language with a `version` or a `language`, SBGN-ML 0.3 requires one of them,
+- the `version` and the `language` of a map name the same language,
+- every glyph and every arc has a class of the language of the map, e.g., a `biological activity` is no glyph of a process description.
+
+```
+map 'm': glyph 'g1' has the class 'biological activity', which is no glyph class of process description
+```
+
+A deprecated class, e.g., the `perturbation` activity node of an activity flow map, is no error, it is logged as a warning. The checks are also available on a document which was read or created in python, as `check_sbgn` and `check_map`. A document which cannot be read is only validated against the schema.
 
 ## What is not checked
 
-An XSD schema checks the structure of a document: which elements may occur where, which attributes are required, and which values an enumeration allows. It does not check the rules of the SBGN languages, e.g., that a consumption arc starts at an entity pool node and ends at a process, or that a process has at most one arc per port. Those rules are the validation rules of the SBGN specifications; they are not implemented, see [issue #60](https://github.com/matthiaskoenig/libsbgnpy/issues/60).
+The validation rules of the SBGN languages are not checked, e.g., that a consumption arc starts at an entity pool node and ends at a process, or that a process has at most one arc per port. They are defined by the language specifications and implemented as Schematron rules by the Java library [libSBGN](https://github.com/sbgn/libsbgn), see [issue #101](https://github.com/matthiaskoenig/libsbgnpy/issues/101).
 
 ## Examples
 
 | example | what it shows |
 | --- | --- |
-| [`validate.py`](https://github.com/matthiaskoenig/libsbgnpy/blob/develop/examples/validate.py) | validate the documents in `examples/sbgn/` and report the errors |
+| [`validate.py`](https://github.com/matthiaskoenig/libsbgnpy/blob/develop/examples/validate.py) | validate the documents in `examples/sbgn/` against the schema and the specifications and report the errors |
 
 ```bash
 python examples/validate.py

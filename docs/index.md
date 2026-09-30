@@ -13,16 +13,17 @@ A pathway drawn by hand is a picture: a human sees what it means, a machine sees
 - **Entity Relationship (ER)** — which entity influences which other entity, without ordering the events,
 - **Activity Flow (AF)** — the flow of activity between the entities, the level of a cartoon in a review.
 
-**SBGN-ML** is the exchange format of such a map ([van Iersel et al. 2012](https://doi.org/10.1186/1471-2105-13-S6-S12)): an XML document which stores the glyphs, the arcs between them, and the coordinates they are drawn at, so a map travels between the tools that draw it. `libsbgnpy` reads, writes, validates and renders these documents from python.
+**SBGN-ML** is the exchange format of such a map ([van Iersel et al. 2012](https://doi.org/10.1186/1471-2105-13-S6-S12)): an XML document which stores the glyphs, the arcs between them, and the coordinates they are drawn at, so a map travels between the tools that draw it. `libsbgnpy` reads, writes, validates and renders these documents from python, following SBGN-ML 0.3 ([Bergmann et al. 2020](https://doi.org/10.1515/jib-2020-0016)) and the latest language specifications, see [SBGN specifications](specifications.md).
 
 ## Features
 
-- **[SBGN maps](maps.md)** — the complete SBGN-ML schema as python classes, generated with [xsdata](https://github.com/tefra/xsdata): maps, glyphs, arcs, ports and bounding boxes, with the classes of the three languages as enums.
-- **[Reading and writing](io.md)** — read and write SBGN-ML documents from files or strings; SBGN-ML 0.1 and 0.2 documents are upconverted while reading.
-- **[Notes and extensions](extensions.md)** — the arbitrary XML which SBGN elements carry, written and read back as XML.
-- **[Render information](render.md)** — colors, gradients and styles of a map, stored as an extension.
-- **[Validation](validation.md)** — validation of a document against the SBGN XSD schema.
-- **[Images](images.md)** — rendering of a map as a PNG through a web service.
+- **[SBGN specifications](specifications.md)** - the versions of the language specifications, up to PD Level 1 Version 2.1, and the glyphs and arcs of every language.
+- **[SBGN maps](maps.md)** - the complete SBGN-ML schema as python classes, generated with [xsdata](https://github.com/tefra/xsdata): maps, glyphs, arcs, ports and bounding boxes, with the classes of the three languages as enums.
+- **[Reading and writing](io.md)** - read and write SBGN-ML documents from files or strings; SBGN-ML 0.1 and 0.2 documents are upconverted while reading.
+- **[Notes and extensions](extensions.md)** - the arbitrary XML which SBGN elements carry, written and read back as XML.
+- **[Render information](render.md)** - colors, gradients and styles of a map, stored as an extension.
+- **[Validation](validation.md)** - validation of a document against the SBGN XSD schema and the rules of the SBGN specifications which the schema lacks.
+- **[Images](images.md)** - rendering of a map as a PNG through a web service.
 
 ## Quickstart
 
@@ -31,12 +32,12 @@ Read an SBGN document and walk over its content:
 ```python
 from pathlib import Path
 
-from libsbgnpy import read_sbgn_from_file
+from libsbgnpy import map_language, read_sbgn_from_file
 
 sbgn = read_sbgn_from_file(Path("examples/sbgn/adh.sbgn"))
 map = sbgn.map[0]
 
-print(map.language)
+print(map_language(map))
 # MapLanguage.PROCESS_DESCRIPTION
 
 for glyph in map.glyph:
@@ -50,6 +51,7 @@ Create a map from scratch, write it and render it:
 from pathlib import Path
 
 from libsbgnpy import (
+    LATEST,
     Bbox,
     Glyph,
     GlyphClass,
@@ -63,6 +65,7 @@ from libsbgnpy import (
 
 map = Map(
     id="ethanol",
+    version=LATEST[MapLanguage.PROCESS_DESCRIPTION],
     language=MapLanguage.PROCESS_DESCRIPTION,
     bbox=Bbox(x=0, y=0, w=363, h=253),
 )

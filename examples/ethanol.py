@@ -15,6 +15,7 @@ python examples/ethanol.py
 from pathlib import Path
 
 from libsbgnpy import (
+    LATEST,
     Arc,
     ArcClass,
     Bbox,
@@ -55,6 +56,7 @@ def ethanol(prefix: str) -> Sbgn:
     """
     map = Map(
         id="ethanol",
+        version=LATEST[MapLanguage.PROCESS_DESCRIPTION],
         language=MapLanguage.PROCESS_DESCRIPTION,
         bbox=Bbox(x=0, y=0, w=363, h=253),
     )

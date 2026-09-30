@@ -1,29 +1,32 @@
 # SBGN maps
 
-The classes of `libsbgnpy.sbgn` are the python bindings of the SBGN-ML schema, generated with [xsdata](https://github.com/tefra/xsdata). They mirror the schema, so the [SBGN specifications](https://github.com/sbgn/sbgn/wiki/SBGN_Specifications) are the reference for what an element means; this page describes how the classes are used.
+The classes of `libsbgnpy.sbgn` are the python bindings of the SBGN-ML schema, generated with [xsdata](https://github.com/tefra/xsdata). They mirror the schema, so the [SBGN specifications](specifications.md) are the reference for what an element means; this page describes how the classes are used.
 
 ## The document
 
-An SBGN-ML document is an `Sbgn` object holding one or more `Map` objects. A map declares its language, an optional bounding box, and holds the glyphs and arcs it is drawn from:
+An SBGN-ML document is an `Sbgn` object holding one or more `Map` objects. A map declares the specification it follows, an optional bounding box, and holds the glyphs and arcs it is drawn from:
 
 ```python
-from libsbgnpy import Bbox, Map, MapLanguage, Sbgn
+from libsbgnpy import LATEST, Bbox, Map, MapLanguage, Sbgn
 
 map = Map(
     id="ethanol",
+    version=LATEST[MapLanguage.PROCESS_DESCRIPTION],
     language=MapLanguage.PROCESS_DESCRIPTION,
     bbox=Bbox(x=0, y=0, w=363, h=253),
 )
 sbgn = Sbgn(map=[map])
 ```
 
-`MapLanguage` is the language of the map, i.e., which vocabulary of glyphs and arcs applies:
+The language of the map decides which vocabulary of glyphs and arcs applies:
 
 | language | what it describes |
 | --- | --- |
 | `MapLanguage.PROCESS_DESCRIPTION` | what is converted into what |
 | `MapLanguage.ENTITY_RELATIONSHIP` | which entity influences which other entity |
 | `MapLanguage.ACTIVITY_FLOW` | the flow of activity between the entities |
+
+The `version` is the identifier of the specification, e.g., PD Level 1 Version 2.1, and names the language as well; `LATEST` holds the version of the latest specification of every language. SBGN-ML 0.3 deprecated the `language` in favour of the `version` and requires one of them; setting both keeps the map readable for tools which only know the `language`. `map_language` returns the language of a map from either attribute, see [SBGN specifications](specifications.md#the-version-of-a-map).
 
 All classes are keyword only, i.e., `Map(id="ethanol")` works and `Map("ethanol")` does not. Every list attribute (`map`, `glyph`, `arc`, `port`) defaults to an empty list, so it can be extended after the object was created.
 
@@ -44,7 +47,7 @@ map.glyph.append(
 )
 ```
 
-The class of a glyph is the shape it is drawn as, `GlyphClass` has all classes of the three languages, e.g., `SIMPLE_CHEMICAL`, `MACROMOLECULE`, `COMPLEX`, `PROCESS`, `COMPARTMENT`, `BIOLOGICAL_ACTIVITY` or `PHENOTYPE`. The attribute is called `class_value`, since `class` is a python keyword.
+The class of a glyph is the shape it is drawn as, `GlyphClass` has all classes of the three languages, e.g., `SIMPLE_CHEMICAL`, `MACROMOLECULE`, `COMPLEX`, `PROCESS`, `COMPARTMENT`, `BIOLOGICAL_ACTIVITY` or `PHENOTYPE`. Only some of them belong to the language of a map, see [Glyphs and arcs of every language](specifications.md#glyphs-and-arcs-of-every-language). The attribute is called `class_value`, since `class` is a python keyword.
 
 !!! note "Coordinates"
 

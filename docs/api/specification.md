@@ -1,0 +1,3 @@
+# specification
+
+::: libsbgnpy.specification
