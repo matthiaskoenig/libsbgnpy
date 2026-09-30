@@ -74,6 +74,8 @@ for glyph in sbgn.map[0].glyph:
         # <html:body xmlns:html="http://www.w3.org/1999/xhtml">The insulin receptor.</html:body>
 ```
 
+Element-only content is indented with two spaces. Mixed content, i.e., text next to elements as in `<p>A <b>bold</b> word</p>`, is written as it is, since indenting it would change the text. Comments are dropped, the text around them is kept.
+
 The counterpart is `element_from_string`, which parses XML into such an entry. It is applied automatically when a document is written, so it is only needed to work with the entries directly.
 
 Render information stored in an extension is read back with `read_render_from_extension`, see [Render information](render.md).

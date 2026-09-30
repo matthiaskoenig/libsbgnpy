@@ -26,6 +26,7 @@ from xsdata.formats.dataclass.context import XmlContext
 from xsdata.formats.dataclass.models.generics import AnyElement
 from xsdata.formats.dataclass.parsers import XmlParser
 from xsdata.formats.dataclass.parsers.config import ParserConfig
+from xsdata.formats.dataclass.parsers.handlers import LxmlEventHandler
 from xsdata.formats.dataclass.serializers import XmlSerializer
 from xsdata.formats.dataclass.serializers.config import SerializerConfig
 
@@ -46,22 +47,175 @@ SBGN_NAMESPACES_OLD = (
     "http://sbgn.org/libsbgn/0.2",
 )
 
+#: namespace of the earlier EML render extension, read by upconverting it to
+#: `RENDER_NAMESPACE`
+RENDER_NAMESPACES_OLD = ("http://projects.eml.org/bcb/sbml/render/level2",)
+
+#: attributes of the EML render extension without counterpart in
+#: `RENDER_NAMESPACE`, dropped while upconverting
+RENDER_ATTRIBUTES_OLD = {"linearGradient": ("z1", "z2", "spreadMethod")}
+
+
+def _xml_parser(encoding: str | None = None) -> etree.XMLParser:
+    """Create the lxml parser for untrusted documents.
+
+    Entities are not resolved, nothing is loaded from the network and the
+    limits of libxml2 against huge documents stay in place, so neither external
+    entities (XXE) nor entity expansion are an issue. Comments and processing
+    instructions are dropped, they have no representation in the bindings.
+
+    Args:
+        encoding: encoding which overrides the one declared by the document,
+            used for documents which are already decoded into a string
+
+    Returns:
+        The parser.
+    """
+    return etree.XMLParser(
+        encoding=encoding,
+        resolve_entities=False,
+        no_network=True,
+        huge_tree=False,
+        remove_comments=True,
+        remove_pis=True,
+    )
+
+
+def parse_xml(source: str | bytes) -> etree._Element:
+    """Parse an untrusted XML document.
+
+    Entities are not resolved, nothing is loaded from the network, comments,
+    processing instructions and unresolved entity references are dropped. A
+    string is already decoded, so an encoding declared in it is ignored; bytes
+    are decoded with the declared encoding, UTF-8 by default.
+
+    Args:
+        source: XML document
+
+    Returns:
+        The root element.
+
+    Raises:
+        lxml.etree.XMLSyntaxError: if the document is no well-formed XML
+    """
+    if isinstance(source, str):
+        root = etree.fromstring(source.encode("utf-8"), _xml_parser("utf-8"))
+    else:
+        root = etree.fromstring(source, _xml_parser())
+    etree.strip_elements(root, etree.Entity, with_tail=False)
+    return root
+
+
+def _move_namespaces(
+    node: etree._Element, old: tuple[str, ...], new: str
+) -> etree._Element:
+    """Copy a tree with its elements and attributes moved into a new namespace.
+
+    Only the names and the namespace declarations change, the prefixes, the
+    text, the attribute values, the source lines, comments and processing
+    instructions are copied as they are.
+
+    Args:
+        node: root of the tree
+        old: namespaces to move
+        new: namespace they are moved to
+
+    Returns:
+        The copy of the tree.
+    """
+
+    def moved(name: str) -> str:
+        namespace, _, local = name[1:].partition("}")
+        if name.startswith("{") and namespace in old:
+            return f"{{{new}}}{local}"
+        return name
+
+    copy_node = etree.Element(
+        moved(node.tag),
+        # the `None` prefix is the default namespace, lxml-stubs types it wrong
+        nsmap={  # ty: ignore[invalid-argument-type]
+            prefix: new if uri in old else uri for prefix, uri in node.nsmap.items()
+        },
+    )
+    # the lines of the source are kept, the validation errors refer to them
+    copy_node.sourceline = node.sourceline
+    for name, value in node.attrib.items():
+        copy_node.set(moved(name), value)
+    copy_node.text = node.text
+    for child in node:
+        if isinstance(child.tag, str):
+            copy_child = _move_namespaces(child, old, new)
+        else:
+            copy_child = copy.copy(child)
+        copy_child.tail = child.tail
+        copy_node.append(copy_child)
+    return copy_node
+
+
+def upconvert_tree(root: etree._Element) -> etree._Element:
+    """Move an SBGN-ML 0.1 or 0.2 tree into the 0.3 namespace.
+
+    Args:
+        root: root element of an SBGN-ML document, see `parse_xml`
+
+    Returns:
+        The tree in the `SBGN_NAMESPACE`, see `upconvert`: a copy for a 0.1 or
+        0.2 document, the tree itself otherwise.
+    """
+    prefixes = tuple(f"{{{namespace}}}" for namespace in SBGN_NAMESPACES_OLD)
+    if not any(node.tag.startswith(prefixes) for node in root.iter(etree.Element)):
+        return root
+    return _move_namespaces(root, SBGN_NAMESPACES_OLD, SBGN_NAMESPACE)
+
 
 def upconvert(xml_str: str) -> str:
-    """Replace an SBGN-ML 0.1 or 0.2 namespace with the 0.3 namespace.
+    """Move a document from the SBGN-ML 0.1 or 0.2 into the 0.3 namespace.
 
     The bindings are generated from the SBGN-ML 0.3 schema, the earlier
-    versions are read by upconverting the document.
+    versions are read by upconverting the document. Only the names of the
+    elements and attributes are changed, text and attribute values which
+    mention a namespace are left as they are.
 
     Args:
         xml_str: SBGN-ML document
 
     Returns:
-        The document in the `SBGN_NAMESPACE`.
+        The document in the `SBGN_NAMESPACE`, without XML declaration.
+
+    Raises:
+        lxml.etree.XMLSyntaxError: if the document is no well-formed XML
     """
-    for namespace in SBGN_NAMESPACES_OLD:
-        xml_str = xml_str.replace(namespace, SBGN_NAMESPACE)
-    return xml_str
+    return etree.tostring(upconvert_tree(parse_xml(xml_str)), encoding="unicode")
+
+
+def _read_sbgn(source: str | bytes) -> Sbgn:
+    """Parse, upconvert, check and bind an SBGN-ML document.
+
+    Args:
+        source: SBGN-ML document, a decoded string or bytes
+
+    Returns:
+        The SBGN document.
+
+    Raises:
+        xsdata.exceptions.ParserError: if the content is no SBGN-ML
+    """
+    try:
+        root = upconvert_tree(parse_xml(source))
+    except etree.XMLSyntaxError as err:
+        raise ParserError(str(err)) from err
+
+    expected = f"{{{SBGN_NAMESPACE}}}sbgn"
+    if root.tag != expected:
+        raise ParserError(
+            f"The root element of an SBGN-ML document is '{expected}', "
+            f"but is '{root.tag}'."
+        )
+    try:
+        return XmlParser(handler=LxmlEventHandler).parse(root, Sbgn)
+    except TypeError as err:
+        # a required element or attribute is missing, the dataclass rejects it
+        raise ParserError(f"The document is no valid SBGN-ML: {err}") from err
 
 
 def read_sbgn_from_file(f: Path) -> Sbgn:
@@ -77,15 +231,15 @@ def read_sbgn_from_file(f: Path) -> Sbgn:
     Returns:
         The SBGN document.
 
+    The file is decoded with the encoding its XML declaration names, UTF-8 by
+    default.
+
     Raises:
         OSError: if the file cannot be read
-        xsdata.exceptions.ParserError: if the content is no valid SBGN-ML
+        xsdata.exceptions.ParserError: if the content is no SBGN-ML
     """
-    with open(f, encoding="utf-8") as f_in:
-        xml_str = f_in.read()
-
     try:
-        return read_sbgn_from_string(xml_str)
+        return _read_sbgn(Path(f).read_bytes())
     except ParserError:
         logger.error("SBGN file could not be parsed: '%s'", f)
         raise
@@ -94,6 +248,9 @@ def read_sbgn_from_file(f: Path) -> Sbgn:
 def read_sbgn_from_string(xml_str: str) -> Sbgn:
     """Read an SBGN document from a string.
 
+    The string is already decoded, an encoding named by its XML declaration is
+    ignored. SBGN-ML 0.1 and 0.2 documents are upconverted while reading.
+
     Args:
         xml_str: SBGN-ML document
 
@@ -101,10 +258,9 @@ def read_sbgn_from_string(xml_str: str) -> Sbgn:
         The SBGN document.
 
     Raises:
-        xsdata.exceptions.ParserError: if the content is no valid SBGN-ML
+        xsdata.exceptions.ParserError: if the content is no SBGN-ML
     """
-    parser = XmlParser()
-    return parser.from_string(upconvert(xml_str), Sbgn)
+    return _read_sbgn(xml_str)
 
 
 def write_sbgn_to_file(sbgn: Sbgn, f: Path) -> None:
@@ -197,6 +353,9 @@ def element_to_string(element: object) -> str:
     Args:
         element: entry of `Sbgnbase.Notes` or `Sbgnbase.Extension`
 
+    Element-only content is indented with two spaces, mixed content (text
+    next to elements, as in XHTML notes) is written as it is.
+
     Returns:
         The XML of the entry.
 
@@ -220,8 +379,28 @@ def element_to_string(element: object) -> str:
         )
 
     node = _element_to_node(element)
-    etree.indent(node, space="  ")
+    if not _has_mixed_content(node):
+        etree.indent(node, space="  ")
     return etree.tostring(node, encoding="unicode")
+
+
+def _has_mixed_content(node: etree._Element) -> bool:
+    """Check whether text stands next to child elements in a tree.
+
+    Args:
+        node: root of the tree
+
+    Returns:
+        True if an element has children and non-whitespace text or tails.
+    """
+    for element in node.iter(etree.Element):
+        if len(element) == 0:
+            continue
+        if (element.text or "").strip():
+            return True
+        if any((child.tail or "").strip() for child in element):
+            return True
+    return False
 
 
 def element_from_string(xml_str: str) -> AnyElement:
@@ -236,7 +415,7 @@ def element_from_string(xml_str: str) -> AnyElement:
     Raises:
         lxml.etree.XMLSyntaxError: if the string is no well-formed XML
     """
-    return _node_to_element(etree.fromstring(xml_str.encode("utf-8")))
+    return _node_to_element(parse_xml(xml_str))
 
 
 def _element_to_node(element: AnyElement) -> etree._Element:
@@ -258,7 +437,15 @@ def _element_to_node(element: AnyElement) -> etree._Element:
     node.text = element.text
     for child in element.children:
         if isinstance(child, AnyElement):
-            node.append(_element_to_node(child))
+            child_node = _element_to_node(child)
+            child_node.tail = child.tail
+            node.append(child_node)
+        elif isinstance(child, str):
+            # text between the child elements, it follows the previous element
+            if len(node):
+                node[-1].tail = (node[-1].tail or "") + child
+            else:
+                node.text = (node.text or "") + child
     return node
 
 
@@ -266,7 +453,7 @@ def _node_to_element(node: etree._Element) -> AnyElement:
     """Convert an lxml element tree into an `AnyElement` tree.
 
     Comments and processing instructions are dropped, they have no
-    representation in the bindings.
+    representation in the bindings; the text after them is kept.
 
     Args:
         node: lxml element to convert
@@ -274,12 +461,23 @@ def _node_to_element(node: etree._Element) -> AnyElement:
     Returns:
         The element tree.
     """
+    text = node.text
+    children: list[AnyElement] = []
+    for child in node:
+        if isinstance(child.tag, str):
+            element = _node_to_element(child)
+            element.tail = child.tail
+            children.append(element)
+        elif child.tail:
+            if children:
+                children[-1].tail = (children[-1].tail or "") + child.tail
+            else:
+                text = (text or "") + child.tail
+
     return AnyElement(
         qname=node.tag,
-        text=node.text,
-        children=[
-            _node_to_element(child) for child in node if isinstance(child.tag, str)
-        ],
+        text=text,
+        children=list(children),
         attributes=dict(node.attrib),
     )
 
@@ -333,7 +531,8 @@ def read_render_from_extension(
 
     Render information is stored as raw XML in the `extension` of an SBGN
     element, see `libsbgnpy.render`; the first `renderInformation` entry of the
-    extension is returned.
+    extension is returned. Render information in the namespace of the earlier
+    EML render extension is upconverted to `RENDER_NAMESPACE`.
 
     Args:
         extension: extension of an SBGN element, e.g., of a map
@@ -342,13 +541,39 @@ def read_render_from_extension(
         The render information, or `None` if the extension contains none.
 
     Raises:
-        xsdata.exceptions.ParserError: if the entry is no render information
+        xsdata.exceptions.ParserError: if the `renderInformation` entry is no
+            valid render information
+        lxml.etree.XMLSyntaxError: if an entry set as a string is no
+            well-formed XML
     """
     if extension is None:
         return None
 
+    qname = f"{{{RENDER_NAMESPACE}}}renderInformation"
     for element in extension.any_element:
-        xml_str = element_to_string(element)
-        if "renderInformation" in xml_str:
-            return read_render_from_string(xml_str)
+        root = parse_xml(element_to_string(element))
+        if etree.QName(root).namespace in RENDER_NAMESPACES_OLD:
+            root = _upconvert_render(root)
+        if root.tag == qname:
+            return read_render_from_string(etree.tostring(root, encoding="unicode"))
     return None
+
+
+def _upconvert_render(root: etree._Element) -> etree._Element:
+    """Upconvert render information of the EML render extension.
+
+    Args:
+        root: `renderInformation` element in a namespace of
+            `RENDER_NAMESPACES_OLD`
+
+    Returns:
+        A copy in the `RENDER_NAMESPACE`, without the attributes of
+        `RENDER_ATTRIBUTES_OLD`.
+    """
+    root = _move_namespaces(root, RENDER_NAMESPACES_OLD, RENDER_NAMESPACE)
+    for tag, attributes in RENDER_ATTRIBUTES_OLD.items():
+        for node in root.iter(f"{{{RENDER_NAMESPACE}}}{tag}"):
+            for name in attributes:
+                if node.attrib.pop(name, None) is not None:
+                    logger.debug("Render attribute '%s' of '%s' dropped", name, tag)
+    return root

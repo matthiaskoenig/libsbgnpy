@@ -51,3 +51,32 @@ def test_not_xml(tmp_path: Path) -> None:
     f_sbgn.write_text("this is not xml", encoding="utf-8")
 
     assert len(validate_xsd(f_sbgn)) == 1
+
+
+def test_declared_encoding(tmp_path: Path) -> None:
+    """A file is decoded with the encoding of its XML declaration."""
+    f_sbgn = tmp_path / "latin1.sbgn"
+    f_sbgn.write_bytes(
+        (
+            '<?xml version="1.0" encoding="ISO-8859-1"?>'
+            '<sbgn xmlns="http://sbgn.org/libsbgn/0.3">'
+            '<map id="m" language="process description">'
+            '<glyph id="g" class="macromolecule"><label text="König"/>'
+            '<bbox x="0" y="0" w="10" h="10"/></glyph>'
+            "</map></sbgn>"
+        ).encode("latin-1")
+    )
+
+    assert validate_xsd(f_sbgn) == []
+
+
+def test_error_lines(tmp_path: Path) -> None:
+    """The errors carry the lines of the file, also for an upconverted file."""
+    xml_str = (EXAMPLES_SBGN_DIR / "invalid.sbgn").read_text(encoding="utf-8")
+    f_old = tmp_path / "invalid_0.2.sbgn"
+    f_old.write_text(xml_str.replace("libsbgn/0.3", "libsbgn/0.2"), encoding="utf-8")
+
+    for f in [EXAMPLES_SBGN_DIR / "invalid.sbgn", f_old]:
+        errors = validate_xsd(f)
+        assert errors[0].startswith("<string>:11:0:")
+        assert errors[1].startswith("<string>:13:0:")

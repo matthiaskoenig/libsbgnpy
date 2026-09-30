@@ -21,7 +21,7 @@ from pathlib import Path
 
 from lxml import etree
 
-from libsbgnpy.io import upconvert
+from libsbgnpy.io import parse_xml, upconvert_tree
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +32,9 @@ XSD_SCHEMA = Path(__file__).parent / "schema" / "SBGN.xsd"
 def validate_xsd(f: Path) -> list[str]:
     """Validate an SBGN file against the SBGN XSD schema.
 
+    The file is decoded with the encoding its XML declaration names, UTF-8 by
+    default; a file which is no well-formed XML is reported as a single error.
+
     Args:
         f: path of the SBGN file
 
@@ -41,17 +44,14 @@ def validate_xsd(f: Path) -> list[str]:
     Raises:
         OSError: if the file cannot be read
     """
-    schema = etree.XMLSchema(etree.parse(XSD_SCHEMA))
-
-    with open(f, encoding="utf-8") as f_in:
-        xml_str = upconvert(f_in.read())
-
+    source = Path(f).read_bytes()
     try:
-        doc = etree.fromstring(xml_str.encode("utf-8"))
+        doc = upconvert_tree(parse_xml(source))
     except etree.XMLSyntaxError as err:
         logger.info("SBGN file is no well-formed XML: '%s'", f)
         return [str(err)]
 
+    schema = etree.XMLSchema(etree.parse(XSD_SCHEMA))
     if schema.validate(doc):
         return []
 

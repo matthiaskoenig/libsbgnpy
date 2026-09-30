@@ -13,6 +13,9 @@ from libsbgnpy import (
     write_sbgn_to_file,
 )
 
+#: the SBGN documents the examples read
+EXAMPLES_SBGN_DIR = Path(__file__).parent.parent / "examples" / "sbgn"
+
 RENDER_INFORMATION = """<renderInformation id="example" programName="libsbgnpy"
  programVersion="1.0.0"
  xmlns="http://www.sbml.org/sbml/level3/version1/render/version1">
@@ -75,3 +78,24 @@ def test_read_render_from_extension_without_render() -> None:
     """A map without render information returns `None`."""
     assert read_render_from_extension(None) is None
     assert read_render_from_extension(Sbgnbase.Extension()) is None
+
+
+def test_read_render_from_extension_other_entry() -> None:
+    """An entry which merely mentions `renderInformation` is skipped."""
+    extension = Sbgnbase.Extension(
+        any_element=['<info xmlns="urn:x">renderInformation</info>']
+    )
+    assert read_render_from_extension(extension) is None
+
+
+def test_read_render_from_extension_eml() -> None:
+    """Render information of the earlier EML render extension is upconverted."""
+    sbgn = read_sbgn_from_file(
+        EXAMPLES_SBGN_DIR / "neuronal_muscle_signalling_color.sbgn"
+    )
+
+    render_info = read_render_from_extension(sbgn.map[0].extension)
+    assert render_info is not None
+    assert len(render_info.list_of_color_definitions.color_definition) == 8
+    assert len(render_info.list_of_gradient_definitions.linear_gradient) == 4
+    assert render_info.list_of_styles.style[0].g.stroke == "Color_2"
