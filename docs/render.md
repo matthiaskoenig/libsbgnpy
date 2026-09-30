@@ -77,7 +77,7 @@ if render_info is not None:
         # grey #969696
 ```
 
-It returns `None` if the map carries no render information. To parse a `renderInformation` document which is not stored in an extension use `read_render_from_string`.
+It returns `None` if the map carries no render information. Render information in the namespace of the earlier EML render extension (`http://projects.eml.org/bcb/sbml/render/level2`), as written by older tools, is upconverted; the attributes without counterpart in the SBML render extension, `z1`, `z2` and `spreadMethod` of a linear gradient, are dropped. To parse a `renderInformation` document which is not stored in an extension use `read_render_from_string`.
 
 ## Examples
 

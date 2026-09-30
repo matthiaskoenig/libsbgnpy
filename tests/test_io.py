@@ -3,7 +3,7 @@
 from pathlib import Path
 
 import pytest
-from xsdata.exceptions import ParserError
+from xsdata.exceptions import ConverterWarning, ParserError
 
 from libsbgnpy import (
     Bbox,
@@ -13,6 +13,7 @@ from libsbgnpy import (
     Map,
     MapLanguage,
     Sbgn,
+    element_to_string,
     read_render_from_string,
     read_sbgn_from_file,
     read_sbgn_from_string,
@@ -152,3 +153,95 @@ def test_render_roundtrip() -> None:
     render_info2 = read_render_from_string(write_render_to_string(render_info))
 
     assert render_info2 == render_info
+
+
+LATIN1_DOCUMENT = (
+    '<?xml version="1.0" encoding="ISO-8859-1"?>'
+    '<sbgn xmlns="http://sbgn.org/libsbgn/0.3">'
+    '<map id="m" language="process description">'
+    '<glyph id="g" class="macromolecule"><label text="König"/>'
+    '<bbox x="0" y="0" w="10" h="10"/></glyph>'
+    "</map></sbgn>"
+)
+
+
+def test_read_sbgn_from_file_declared_encoding(tmp_path: Path) -> None:
+    """A file is decoded with the encoding of its XML declaration."""
+    f_sbgn = tmp_path / "latin1.sbgn"
+    f_sbgn.write_bytes(LATIN1_DOCUMENT.encode("latin-1"))
+
+    label = read_sbgn_from_file(f_sbgn).map[0].glyph[0].label
+    assert label is not None
+    assert label.text == "König"
+
+
+def test_read_sbgn_from_string_ignores_declared_encoding() -> None:
+    """A string is already decoded, the declared encoding is ignored."""
+    label = read_sbgn_from_string(LATIN1_DOCUMENT).map[0].glyph[0].label
+    assert label is not None
+    assert label.text == "König"
+
+
+@pytest.mark.parametrize(
+    "xml_str",
+    [
+        '<foo xmlns="urn:x"/>',
+        "<sbgn/>",
+        '<sbgn xmlns="http://sbgn.org/libsbgn/0.4"/>',
+        '<map xmlns="http://sbgn.org/libsbgn/0.3"/>',
+    ],
+)
+def test_read_sbgn_from_string_wrong_root(xml_str: str) -> None:
+    """A document whose root is no SBGN-ML `sbgn` element is rejected."""
+    with pytest.raises(ParserError, match="root element"):
+        read_sbgn_from_string(xml_str)
+
+
+def test_upconvert_keeps_values() -> None:
+    """Only names are upconverted, text and attribute values are kept."""
+    xml_str = upconvert(
+        '<sbgn xmlns="http://sbgn.org/libsbgn/0.2">'
+        '<map id="m" language="process description">'
+        '<glyph id="g" class="macromolecule">'
+        '<label text="see http://sbgn.org/libsbgn/0.2"/>'
+        "</glyph></map></sbgn>"
+    )
+    assert xml_str.startswith(f'<sbgn xmlns="{SBGN_NAMESPACE}">')
+    assert 'text="see http://sbgn.org/libsbgn/0.2"' in xml_str
+
+
+def test_upconvert_keeps_prefixes() -> None:
+    """Prefixed documents keep their prefixes and foreign namespaces."""
+    xml_str = upconvert(
+        '<s:sbgn xmlns:s="http://sbgn.org/libsbgn/0.1" xmlns:x="urn:x">'
+        '<s:map x:a="1"/></s:sbgn>'
+    )
+    assert xml_str == (
+        f'<s:sbgn xmlns:s="{SBGN_NAMESPACE}" xmlns:x="urn:x"><s:map x:a="1"/></s:sbgn>'
+    )
+
+
+def test_read_sbgn_does_not_resolve_entities(tmp_path: Path) -> None:
+    """External entities are not resolved (XXE)."""
+    f_secret = tmp_path / "secret.txt"
+    f_secret.write_text("secret")
+    xml_str = (
+        f'<!DOCTYPE sbgn [<!ENTITY xxe SYSTEM "{f_secret.as_uri()}">]>'
+        '<sbgn xmlns="http://sbgn.org/libsbgn/0.3">'
+        '<map id="m" language="process description">'
+        '<notes><body xmlns="http://www.w3.org/1999/xhtml">&xxe;</body></notes>'
+        "</map></sbgn>"
+    )
+    notes = read_sbgn_from_string(xml_str).map[0].notes
+    assert notes is not None
+    assert "secret" not in element_to_string(notes.w3_org_1999_xhtml_element[0])
+
+
+def test_read_sbgn_missing_required_element() -> None:
+    """A document which lacks a required element raises a `ParserError`."""
+    # the example also carries an invalid glyph class, which xsdata warns about
+    with (
+        pytest.warns(ConverterWarning, match="simple chemcial"),
+        pytest.raises(ParserError, match="no valid SBGN-ML"),
+    ):
+        read_sbgn_from_file(EXAMPLES_SBGN_DIR / "invalid.sbgn")

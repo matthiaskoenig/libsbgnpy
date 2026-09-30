@@ -22,7 +22,7 @@ for arc in map.arc:
 
 Reading does not validate the document against the schema, it only parses it. To check that a document follows the schema see [Validation](validation.md).
 
-A file which is no well formed XML raises an `xsdata.exceptions.ParserError`, and the path of the file is logged:
+A file which is no well formed XML, or whose root is no SBGN-ML `sbgn` element, raises an `xsdata.exceptions.ParserError`, and the path of the file is logged:
 
 ```python
 from xsdata.exceptions import ParserError
@@ -33,9 +33,13 @@ except ParserError as err:
     print(f"not an SBGN document: {err}")
 ```
 
+A file is decoded with the encoding its XML declaration names, UTF-8 if it names none. A string passed to `read_sbgn_from_string` is already decoded, so an encoding in its declaration is ignored.
+
+Documents are parsed as untrusted input: entities are not resolved and nothing is loaded from the network, so a document cannot read local files or reach other hosts through an external entity.
+
 ### Older SBGN-ML versions
 
-The bindings are generated from the SBGN-ML 0.3 schema. Documents in the earlier namespaces `http://sbgn.org/libsbgn/0.1` and `http://sbgn.org/libsbgn/0.2` are upconverted while reading, i.e., they are read like a 0.3 document and written back as one. The conversion is `upconvert`, which is applied by the reader and by the validator:
+The bindings are generated from the SBGN-ML 0.3 schema. Documents in the earlier namespaces `http://sbgn.org/libsbgn/0.1` and `http://sbgn.org/libsbgn/0.2` are upconverted while reading, i.e., they are read like a 0.3 document and written back as one. The conversion is `upconvert`, which is applied by the reader and by the validator. It changes only the names of the elements and attributes, text and attribute values which mention a namespace are left as they are:
 
 ```python
 from libsbgnpy.io import upconvert
