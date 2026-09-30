@@ -54,7 +54,7 @@ Generated from `libsbgnpy/schema/SBGN.xsd` with
 [xsdata](https://github.com/tefra/xsdata) by `scripts/generate_bindings.py`, see
 `libsbgnpy/schema/README.md`; do not edit by hand. The classes mirror the
 schema, so the
-[SBGN specifications](https://github.com/sbgn/sbgn/wiki/SBGN_Specifications)
+[SBGN specifications](https://sbgn.github.io/specifications)
 are the reference for what an element means, and the docstrings are the
 documentation of the schema.
 

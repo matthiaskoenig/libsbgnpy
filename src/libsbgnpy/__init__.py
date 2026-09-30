@@ -48,7 +48,15 @@ from libsbgnpy.sbgn import (
     Sbgn,
     Sbgnbase,
 )
-from libsbgnpy.validator import validate_xsd
+from libsbgnpy.specification import (
+    LATEST,
+    SPECIFICATIONS,
+    Specification,
+    check_map,
+    check_sbgn,
+    map_language,
+)
+from libsbgnpy.validator import validate, validate_xsd
 
 __author__ = "Matthias Koenig"
 __version__ = "0.6.5"
@@ -57,6 +65,8 @@ __version__ = "0.6.5"
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 __all__ = [
+    "LATEST",
+    "SPECIFICATIONS",
     "Arc",
     "ArcClass",
     "Arcgroup",
@@ -82,14 +92,19 @@ __all__ = [
     "RenderInformation",
     "Sbgn",
     "Sbgnbase",
+    "Specification",
     "Style",
+    "check_map",
+    "check_sbgn",
     "element_from_string",
     "element_to_string",
+    "map_language",
     "read_render_from_extension",
     "read_render_from_string",
     "read_sbgn_from_file",
     "read_sbgn_from_string",
     "render_sbgn",
+    "validate",
     "validate_xsd",
     "write_render_to_string",
     "write_sbgn_to_file",

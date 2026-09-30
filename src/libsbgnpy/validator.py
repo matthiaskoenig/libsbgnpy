@@ -1,15 +1,17 @@
-"""Validation of SBGN documents against the SBGN XSD schema.
+"""Validation of SBGN documents.
 
-The packaged schema is the SBGN-ML 0.3 schema in `libsbgnpy/schema/SBGN.xsd`,
-documents in the earlier namespaces are upconverted before they are validated,
-i.e., the same documents are read and validated.
+`validate_xsd` validates against the SBGN XSD schema, the packaged SBGN-ML 0.3
+schema in `libsbgnpy/schema/SBGN.xsd`. Documents in the earlier namespaces are
+upconverted before they are validated, i.e., the same documents are read and
+validated. `validate` adds the rules of the SBGN specifications which the
+schema cannot express, see `libsbgnpy.specification`.
 
 ```python
 from pathlib import Path
 
-from libsbgnpy import validate_xsd
+from libsbgnpy import validate
 
-errors = validate_xsd(Path("map.sbgn"))
+errors = validate(Path("map.sbgn"))
 if errors:
     for error in errors:
         print(error)
@@ -20,8 +22,10 @@ import logging
 from pathlib import Path
 
 from lxml import etree
+from xsdata.exceptions import ParserError
 
-from libsbgnpy.io import parse_xml, upconvert_tree
+from libsbgnpy.io import _read_sbgn, parse_xml, upconvert_tree
+from libsbgnpy.specification import check_sbgn
 
 logger = logging.getLogger(__name__)
 
@@ -44,9 +48,8 @@ def validate_xsd(f: Path) -> list[str]:
     Raises:
         OSError: if the file cannot be read
     """
-    source = Path(f).read_bytes()
     try:
-        doc = upconvert_tree(parse_xml(source))
+        doc = upconvert_tree(parse_xml(Path(f).read_bytes()))
     except etree.XMLSyntaxError as err:
         logger.info("SBGN file is no well-formed XML: '%s'", f)
         return [str(err)]
@@ -58,3 +61,29 @@ def validate_xsd(f: Path) -> list[str]:
     errors = [str(error) for error in schema.error_log]
     logger.info("SBGN file is invalid: '%s' (%s errors)", f, len(errors))
     return errors
+
+
+def validate(f: Path) -> list[str]:
+    """Validate an SBGN file against the schema and the SBGN specifications.
+
+    The errors of [`validate_xsd`][libsbgnpy.validator.validate_xsd] are
+    followed by the errors of
+    [`check_sbgn`][libsbgnpy.specification.check_sbgn], i.e., of the rules of
+    the specifications which the schema cannot express. A document which cannot
+    be read is only checked against the schema.
+
+    Args:
+        f: path of the SBGN file
+
+    Returns:
+        The validation errors, empty if the document is valid.
+
+    Raises:
+        OSError: if the file cannot be read
+    """
+    errors = validate_xsd(f)
+    try:
+        sbgn = _read_sbgn(Path(f).read_bytes())
+    except ParserError:
+        return errors
+    return errors + check_sbgn(sbgn)

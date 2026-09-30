@@ -11,6 +11,7 @@ python examples/notes.py
 from pathlib import Path
 
 from libsbgnpy import (
+    LATEST,
     Bbox,
     Glyph,
     GlyphClass,
@@ -35,7 +36,11 @@ def write_notes(f: Path) -> Sbgn:
     Returns:
         The SBGN document.
     """
-    map = Map(id="notes", language=MapLanguage.PROCESS_DESCRIPTION)
+    map = Map(
+        id="notes",
+        version=LATEST[MapLanguage.PROCESS_DESCRIPTION],
+        language=MapLanguage.PROCESS_DESCRIPTION,
+    )
     sbgn = Sbgn(map=[map])
 
     glyph = Glyph(

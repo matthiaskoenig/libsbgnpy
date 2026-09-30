@@ -12,6 +12,7 @@ python examples/render.py
 from pathlib import Path
 
 from libsbgnpy import (
+    LATEST,
     Bbox,
     ColorDefinition,
     G,
@@ -45,7 +46,11 @@ def write_render(f: Path) -> Sbgn:
     Returns:
         The SBGN document.
     """
-    map = Map(id="render", language=MapLanguage.PROCESS_DESCRIPTION)
+    map = Map(
+        id="render",
+        version=LATEST[MapLanguage.PROCESS_DESCRIPTION],
+        language=MapLanguage.PROCESS_DESCRIPTION,
+    )
     sbgn = Sbgn(map=[map])
 
     map.glyph = [

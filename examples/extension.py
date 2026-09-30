@@ -12,6 +12,7 @@ python examples/extension.py
 from pathlib import Path
 
 from libsbgnpy import (
+    LATEST,
     Map,
     MapLanguage,
     Sbgn,
@@ -45,7 +46,11 @@ def write_extension(f: Path) -> Sbgn:
     Returns:
         The SBGN document.
     """
-    map = Map(id="extension", language=MapLanguage.PROCESS_DESCRIPTION)
+    map = Map(
+        id="extension",
+        version=LATEST[MapLanguage.PROCESS_DESCRIPTION],
+        language=MapLanguage.PROCESS_DESCRIPTION,
+    )
     sbgn = Sbgn(map=[map])
     map.extension = Sbgnbase.Extension(any_element=[ANNOTATION])
 

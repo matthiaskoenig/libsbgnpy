@@ -8,6 +8,7 @@ python examples/write.py
 from pathlib import Path
 
 from libsbgnpy import (
+    LATEST,
     Arc,
     ArcClass,
     Bbox,
@@ -33,7 +34,11 @@ def write_glyph(f: Path) -> Sbgn:
     Returns:
         The SBGN document.
     """
-    map = Map(id="glyph", language=MapLanguage.PROCESS_DESCRIPTION)
+    map = Map(
+        id="glyph",
+        version=LATEST[MapLanguage.PROCESS_DESCRIPTION],
+        language=MapLanguage.PROCESS_DESCRIPTION,
+    )
     sbgn = Sbgn(map=[map])
 
     map.glyph.append(
@@ -63,6 +68,7 @@ def write_process(f: Path) -> Sbgn:
     """
     map = Map(
         id="process",
+        version=LATEST[MapLanguage.PROCESS_DESCRIPTION],
         language=MapLanguage.PROCESS_DESCRIPTION,
         bbox=Bbox(x=0, y=0, w=363, h=253),
     )
@@ -185,7 +191,11 @@ def write_annotation(f: Path) -> Sbgn:
     Returns:
         The SBGN document.
     """
-    map = Map(id="annotation", language=MapLanguage.PROCESS_DESCRIPTION)
+    map = Map(
+        id="annotation",
+        version=LATEST[MapLanguage.PROCESS_DESCRIPTION],
+        language=MapLanguage.PROCESS_DESCRIPTION,
+    )
     sbgn = Sbgn(map=[map])
 
     map.glyph.extend(

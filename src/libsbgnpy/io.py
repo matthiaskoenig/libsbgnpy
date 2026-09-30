@@ -18,10 +18,11 @@ write_sbgn_to_file(sbgn, Path("map_copy.sbgn"))
 import copy
 import dataclasses
 import logging
+import warnings
 from pathlib import Path
 
 from lxml import etree
-from xsdata.exceptions import ParserError
+from xsdata.exceptions import ConverterWarning, ParserError
 from xsdata.formats.dataclass.context import XmlContext
 from xsdata.formats.dataclass.models.generics import AnyElement
 from xsdata.formats.dataclass.parsers import XmlParser
@@ -211,11 +212,20 @@ def _read_sbgn(source: str | bytes) -> Sbgn:
             f"The root element of an SBGN-ML document is '{expected}', "
             f"but is '{root.tag}'."
         )
-    try:
-        return XmlParser(handler=LxmlEventHandler).parse(root, Sbgn)
-    except TypeError as err:
-        # a required element or attribute is missing, the dataclass rejects it
-        raise ParserError(f"The document is no valid SBGN-ML: {err}") from err
+    with warnings.catch_warnings(record=True) as caught:
+        # a value outside of an enumeration is kept as a string, xsdata warns
+        warnings.simplefilter("always", ConverterWarning)
+        try:
+            sbgn = XmlParser(handler=LxmlEventHandler).parse(root, Sbgn)
+        except TypeError as err:
+            # a required element or attribute is missing, the dataclass rejects it
+            raise ParserError(f"The document is no valid SBGN-ML: {err}") from err
+    for warning in caught:
+        if issubclass(warning.category, ConverterWarning):
+            logger.warning("%s", warning.message)
+        else:
+            warnings.warn(warning.message, warning.category, stacklevel=2)
+    return sbgn
 
 
 def read_sbgn_from_file(f: Path) -> Sbgn:

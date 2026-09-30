@@ -4,7 +4,7 @@ Generated from `libsbgnpy/schema/SBGN.xsd` with
 [xsdata](https://github.com/tefra/xsdata) by `scripts/generate_bindings.py`, see
 `libsbgnpy/schema/README.md`; do not edit by hand. The classes mirror the
 schema, so the
-[SBGN specifications](https://github.com/sbgn/sbgn/wiki/SBGN_Specifications)
+[SBGN specifications](https://sbgn.github.io/specifications)
 are the reference for what an element means, and the docstrings are the
 documentation of the schema.
 
@@ -172,6 +172,12 @@ class MapLanguage(Enum):
 
 
 class MapVersion(Enum):
+    HTTP_IDENTIFIERS_ORG_COMBINE_SPECIFICATIONS_SBGN_PD_LEVEL_1_VERSION_2_1 = (
+        "http://identifiers.org/combine.specifications/sbgn.pd.level-1.version-2.1"
+    )
+    HTTP_IDENTIFIERS_ORG_COMBINE_SPECIFICATIONS_SBGN_PD_LEVEL_1_VERSION_2_0 = (
+        "http://identifiers.org/combine.specifications/sbgn.pd.level-1.version-2.0"
+    )
     HTTP_IDENTIFIERS_ORG_COMBINE_SPECIFICATIONS_SBGN_PD_LEVEL_1_VERSION_1_3 = (
         "http://identifiers.org/combine.specifications/sbgn.pd.level-1.version-1.3"
     )

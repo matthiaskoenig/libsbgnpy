@@ -11,6 +11,7 @@ python examples/clone_marker.py
 from pathlib import Path
 
 from libsbgnpy import (
+    LATEST,
     Arc,
     ArcClass,
     Bbox,
@@ -41,6 +42,7 @@ def clone_marker(f: Path) -> Sbgn:
     """
     map = Map(
         id="clone_marker",
+        version=LATEST[MapLanguage.PROCESS_DESCRIPTION],
         language=MapLanguage.PROCESS_DESCRIPTION,
         bbox=Bbox(x=0, y=0, w=363, h=253),
     )
