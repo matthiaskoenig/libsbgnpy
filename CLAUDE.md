@@ -18,7 +18,7 @@ pytest                                    # all tests
 pytest tests/test_io.py                   # single file
 pytest tests/test_io.py::test_upconvert   # single test
 pytest -m network                         # tests querying the rendering web service (deselected by default)
-tox r -e py3.14                           # single tox env (py3.11-3.14 available)
+tox r -e py3.14                           # single tox env (py3.11-3.15 available)
 tox run-parallel                          # full matrix + ty
 
 # lint / format / types
