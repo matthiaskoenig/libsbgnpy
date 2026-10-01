@@ -60,7 +60,7 @@ from libsbgnpy.specification import (
 from libsbgnpy.validator import validate, validate_xsd
 
 __author__ = "Matthias Koenig"
-__version__ = "0.6.5"
+__version__ = "0.7.0"
 
 # the package does not configure logging, see `libsbgnpy.log`
 logging.getLogger(__name__).addHandler(logging.NullHandler())
