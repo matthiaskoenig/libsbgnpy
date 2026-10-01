@@ -48,6 +48,7 @@ from libsbgnpy.sbgn import (
     Sbgn,
     Sbgnbase,
 )
+from libsbgnpy.schematron import Issue, validate_schematron
 from libsbgnpy.specification import (
     LATEST,
     SPECIFICATIONS,
@@ -78,6 +79,7 @@ __all__ = [
     "Glyph",
     "GlyphClass",
     "GlyphOrientation",
+    "Issue",
     "Label",
     "LinearGradient",
     "ListOfColorDefinitions",
@@ -105,6 +107,7 @@ __all__ = [
     "read_sbgn_from_string",
     "render_sbgn",
     "validate",
+    "validate_schematron",
     "validate_xsd",
     "write_render_to_string",
     "write_sbgn_to_file",
