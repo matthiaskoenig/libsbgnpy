@@ -22,7 +22,7 @@ A pathway drawn by hand is a picture: a human sees what it means, a machine sees
 - **[Reading and writing](io.md)** - read and write SBGN-ML documents from files or strings; SBGN-ML 0.1 and 0.2 documents are upconverted while reading.
 - **[Notes and extensions](extensions.md)** - the arbitrary XML which SBGN elements carry, written and read back as XML.
 - **[Render information](render.md)** - colors, gradients and styles of a map, stored as an extension.
-- **[Validation](validation.md)** - validation of a document against the SBGN XSD schema and the rules of the SBGN specifications which the schema lacks.
+- **[Validation](validation.md)** - validation of a document against the SBGN XSD schema, the rules of the SBGN specifications which the schema lacks and the schematron rules of the SBGN languages.
 - **[Images](images.md)** - rendering of a map as a PNG through a web service.
 
 ## Quickstart

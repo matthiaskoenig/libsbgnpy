@@ -1,9 +1,10 @@
 # Validation
 
-Reading a document parses it, it does not check that it follows SBGN-ML. Two functions perform that check:
+Reading a document parses it, it does not check that it follows SBGN-ML. Three functions perform that check:
 
 - `validate_xsd` validates against the packaged schema, `libsbgnpy/schema/SBGN.xsd`, i.e., the structure of the document,
-- `validate` adds the rules of the SBGN specifications which the schema cannot express, see [What the specifications add](#what-the-specifications-add).
+- `validate` adds the rules of the SBGN specifications which the schema cannot express, see [What the specifications add](#what-the-specifications-add),
+- `validate_schematron` checks the validation rules of the SBGN languages, e.g., that a consumption arc starts at an entity pool node, see [Schematron rules](#schematron-rules).
 
 ```python
 from pathlib import Path
@@ -18,7 +19,7 @@ else:
     print("valid")
 ```
 
-Both functions return the errors as a list of strings, which is empty for a valid document, so a check is `if validate(f):`. Nothing is written to stdout or stderr; a summary is logged at info level, see [Logging](installation.md#logging).
+`validate_xsd` and `validate` return the errors as a list of strings, which is empty for a valid document, so a check is `if validate(f):`. Nothing is written to stdout or stderr; a summary is logged at info level, see [Logging](installation.md#logging).
 
 An error names the line, the element and what is wrong with it:
 
@@ -107,15 +108,49 @@ map 'm': glyph 'g1' has the class 'biological activity', which is no glyph class
 
 A deprecated class, e.g., the `perturbation` activity node of an activity flow map, is no error, it is logged as a warning. The checks are also available on a document which was read or created in python, as `check_sbgn` and `check_map`. A document which cannot be read is only validated against the schema.
 
-## What is not checked
+## Schematron rules
 
-The validation rules of the SBGN languages are not checked, e.g., that a consumption arc starts at an entity pool node and ends at a process, or that a process has at most one arc per port. They are defined by the language specifications and implemented as Schematron rules by the Java library [libSBGN](https://github.com/sbgn/libsbgn), see [issue #101](https://github.com/matthiaskoenig/libsbgnpy/issues/101).
+The specifications of the SBGN languages define validation rules beyond the vocabulary of a map, e.g., that a consumption arc starts at an entity pool node and ends at a process, or that a process has at least one input and one output. The Java library [libSBGN](https://github.com/sbgn/libsbgn) implements them as Schematron rules, one set per map language, and `libsbgnpy` packages these rules: `validate_schematron` checks a document against them with the results of the Java library.
+
+```python
+from pathlib import Path
+
+from libsbgnpy import validate_schematron
+
+for issue in validate_schematron(Path("examples/sbgn/invalid.sbgn")):
+    print(issue.rule_id, issue.element_id)
+    print(f"  {issue.message}")
+```
+
+Every broken rule is reported as an `Issue`:
+
+| attribute | meaning |
+| --- | --- |
+| `severity` | the role of the rule, `error` for all rules which are checked |
+| `rule_id` | the rule, the language followed by its number, e.g., `pd10101` |
+| `message` | what the rule requires |
+| `element_id` | the id of the glyph or arc which breaks the rule, `None` if the rule does not name it |
+
+The typo `simple chemcial` of [`invalid.sbgn`](#an-invalid-document) makes the source of the consumption arc no entity pool node, and the process loses its input:
+
+```
+pd10101 a01
+  Arc with class consumption must have source reference to glyph of EPN classes
+pd10141 pn1
+  All process nodes should have at least one input and at least one ouput pointing to the arcs
+```
+
+The document is read like `validate_xsd` reads it, a 0.1 or 0.2 document is upconverted first. Every map is checked on its own with the rules of its language, which is taken from its `version` or else its `language`; a map of an unknown language is not checked, which `validate` reports. The rules do not check the structure of the document, so validate it against the schema as well, and a file which is no well-formed XML raises an `lxml.etree.XMLSyntaxError`.
+
+!!! note
+
+    The rules were written for the earlier specifications, e.g., PD L1V1.3, and some of the reference maps of the current specifications break them. Rule `pd10131`, for example, requires every entity pool node to be connected to an arc, which the maps showing glyphs on their own break. The issues are therefore kept apart from the errors of `validate`; review them rather than rejecting a document because of them. The rules are the ones of libSBGN with three XPath 2.0 expressions rewritten for the XSLT 1.0 processor of lxml, see [`libsbgnpy/schema/README.md`](https://github.com/matthiaskoenig/libsbgnpy/blob/develop/src/libsbgnpy/schema/README.md).
 
 ## Examples
 
 | example | what it shows |
 | --- | --- |
-| [`validate.py`](https://github.com/matthiaskoenig/libsbgnpy/blob/develop/examples/validate.py) | validate the documents in `examples/sbgn/` against the schema and the specifications and report the errors |
+| [`validate.py`](https://github.com/matthiaskoenig/libsbgnpy/blob/develop/examples/validate.py) | validate the documents in `examples/sbgn/` and report the errors and the broken rules |
 
 ```bash
 python examples/validate.py
@@ -129,6 +164,10 @@ invalid: invalid.sbgn
   <string>:11:0:ERROR:SCHEMASV:SCHEMAV_CVC_COMPLEX_TYPE_4: ...
   <string>:13:0:ERROR:SCHEMASV:SCHEMAV_CVC_ENUMERATION_VALID: ...
   <string>:22:0:ERROR:SCHEMASV:SCHEMAV_ELEMENT_CONTENT: ...
+  pd10101 'a01'
+    Arc with class consumption must have source reference to glyph of EPN classes
+  pd10141 'pn1'
+    All process nodes should have at least one input and at least one ouput pointing to the arcs
 valid: neuronal_muscle_signalling_color.sbgn
 
 4/5 documents are valid

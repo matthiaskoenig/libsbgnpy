@@ -1,7 +1,9 @@
-"""Validate SBGN documents against the schema and the SBGN specifications.
+"""Validate SBGN documents against the schema, the specifications and the rules.
 
 The documents in `examples/sbgn/` are valid, `invalid.sbgn` breaks the schema
-on purpose, so a run shows both outcomes.
+on purpose, so a run shows both outcomes. The schematron rules of the SBGN
+languages are checked separately, a document can be valid and still break a
+rule.
 
 ```bash
 python examples/validate.py
@@ -10,14 +12,14 @@ python examples/validate.py
 
 from pathlib import Path
 
-from libsbgnpy import validate
+from libsbgnpy import validate, validate_schematron
 from libsbgnpy.console import console
 
 SBGN_DIR = Path(__file__).parent / "sbgn"
 
 
 def report(f: Path) -> list[str]:
-    """Validate an SBGN file and report the errors.
+    """Validate an SBGN file and report the errors and the broken rules.
 
     Args:
         f: path of the SBGN file
@@ -32,6 +34,10 @@ def report(f: Path) -> list[str]:
             console.print(f"  {error}")
     else:
         console.print(f"[success]valid[/success]: {f.name}")
+
+    for issue in validate_schematron(f):
+        console.print(f"  {issue.rule_id} '{issue.element_id}'")
+        console.print(f"    {issue.message}")
     return errors
 
 

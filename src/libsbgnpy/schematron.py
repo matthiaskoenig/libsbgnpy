@@ -13,7 +13,8 @@ from pathlib import Path
 from libsbgnpy import validate_schematron
 
 for issue in validate_schematron(Path("map.sbgn")):
-    print(issue.rule_id, issue.element_id, issue.message)
+    print(issue.rule_id, issue.element_id)
+    print(f"  {issue.message}")
 ```
 
 The rules are packaged in `libsbgnpy/schema/`, see the `README.md` there for

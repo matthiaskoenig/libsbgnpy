@@ -168,4 +168,4 @@ print(check_map(map))
 # ["map 'm': glyph 'g1' has the class 'biological activity', which is no glyph class of process description"]
 ```
 
-The validation rules of the language specifications, e.g., that a consumption arc connects an entity pool node with a process, are not checked, see [issue #101](https://github.com/matthiaskoenig/libsbgnpy/issues/101).
+The validation rules of the language specifications, e.g., that a consumption arc connects an entity pool node with a process, are checked by `validate_schematron`, see [Schematron rules](validation.md#schematron-rules).
