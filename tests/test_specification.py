@@ -27,6 +27,7 @@ from libsbgnpy.specification import (
     GLYPH_CLASSES,
     LATEST,
     SPECIFICATIONS,
+    language_of,
     map_specification,
 )
 
@@ -114,6 +115,32 @@ def test_map_language() -> None:
         == MapLanguage.ENTITY_RELATIONSHIP
     )
     assert map_language(Map(id="m")) is None
+
+
+@pytest.mark.parametrize(
+    ("version", "language", "expected"),
+    [
+        (AF_1_2, None, MapLanguage.ACTIVITY_FLOW),
+        (AF_1_2.value, None, MapLanguage.ACTIVITY_FLOW),
+        (None, MapLanguage.ENTITY_RELATIONSHIP, MapLanguage.ENTITY_RELATIONSHIP),
+        (None, "entity relationship", MapLanguage.ENTITY_RELATIONSHIP),
+        (AF_1_2.value, "process description", MapLanguage.ACTIVITY_FLOW),
+        ("unknown", "process description", MapLanguage.PROCESS_DESCRIPTION),
+        ("unknown", "unknown", None),
+        (None, None, None),
+    ],
+)
+def test_language_of(
+    version: MapVersion | str | None,
+    language: MapLanguage | str | None,
+    expected: MapLanguage | None,
+) -> None:
+    """The language is taken from the version, else from the language.
+
+    Both are members of the enumerations, or their values as they are in a
+    document.
+    """
+    assert language_of(version, language) is expected
 
 
 def test_check_valid_map() -> None:

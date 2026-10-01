@@ -132,14 +132,14 @@ def _move_namespaces(
         return name
 
     copy_node = etree.Element(
-        moved(node.tag),
-        # the `None` prefix is the default namespace, lxml-stubs types it wrong
-        nsmap={  # ty: ignore[invalid-argument-type]
+        moved(etree.QName(node).text),
+        nsmap={
             prefix: new if uri in old else uri for prefix, uri in node.nsmap.items()
         },
     )
-    # the lines of the source are kept, the validation errors refer to them
-    copy_node.sourceline = node.sourceline
+    # the lines of the source are kept, the validation errors refer to them;
+    # lxml allows to set them, types-lxml declares them read-only
+    copy_node.sourceline = node.sourceline  # ty: ignore[invalid-assignment]
     for name, value in node.attrib.items():
         copy_node.set(moved(name), value)
     copy_node.text = node.text
@@ -163,8 +163,10 @@ def upconvert_tree(root: etree._Element) -> etree._Element:
         The tree in the `SBGN_NAMESPACE`, see `upconvert`: a copy for a 0.1 or
         0.2 document, the tree itself otherwise.
     """
-    prefixes = tuple(f"{{{namespace}}}" for namespace in SBGN_NAMESPACES_OLD)
-    if not any(node.tag.startswith(prefixes) for node in root.iter(etree.Element)):
+    if not any(
+        etree.QName(node).namespace in SBGN_NAMESPACES_OLD
+        for node in root.iter(etree.Element)
+    ):
         return root
     return _move_namespaces(root, SBGN_NAMESPACES_OLD, SBGN_NAMESPACE)
 
@@ -485,7 +487,7 @@ def _node_to_element(node: etree._Element) -> AnyElement:
                 text = (text or "") + child.tail
 
     return AnyElement(
-        qname=node.tag,
+        qname=etree.QName(node).text,
         text=text,
         children=list(children),
         attributes=dict(node.attrib),

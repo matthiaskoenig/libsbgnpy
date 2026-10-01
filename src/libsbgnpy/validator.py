@@ -4,7 +4,8 @@
 schema in `libsbgnpy/schema/SBGN.xsd`. Documents in the earlier namespaces are
 upconverted before they are validated, i.e., the same documents are read and
 validated. `validate` adds the rules of the SBGN specifications which the
-schema cannot express, see `libsbgnpy.specification`.
+schema cannot express, see `libsbgnpy.specification`. The schematron rules of
+the SBGN languages are checked separately, see `libsbgnpy.schematron`.
 
 ```python
 from pathlib import Path

@@ -18,6 +18,7 @@ The python bindings of the SBGN-ML schemas, generated with [xsdata](https://gith
 | [io](io.md) | reading and writing of SBGN documents |
 | [specification](specification.md) | versions and vocabularies of the SBGN specifications, the checks beyond the schema |
 | [validator](validator.md) | validation against the schema and the SBGN specifications |
+| [schematron](schematron.md) | validation against the schematron rules of the SBGN languages |
 | [image](image.md) | rendering of a map as an image |
 
 ## Output of the package

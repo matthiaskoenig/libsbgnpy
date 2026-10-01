@@ -20,8 +20,11 @@ from libsbgnpy.specification import LANGUAGE_ABBREVIATIONS
 #: reference maps of the SBGN specifications
 DATA_DIR = Path(__file__).parent / "data"
 
-#: every SBGN document of the corpus
-SBGN_FILES = sorted(DATA_DIR.glob("**/*.sbgn"))
+#: every SBGN document of the corpus, one directory per map language; the test
+#: files of the schematron rules in `schematron/` break the rules on purpose
+SBGN_FILES = sorted(
+    f for language in ("AF", "ER", "PD") for f in (DATA_DIR / language).glob("*.sbgn")
+)
 
 
 def _file_id(f: Path) -> str:

@@ -15,7 +15,7 @@ python examples/read.py
 | [`notes.py`](notes.py) | write and read notes |
 | [`extension.py`](extension.py) | write and read extensions |
 | [`render.py`](render.py) | write and read render information |
-| [`validate.py`](validate.py) | validate against the SBGN schema |
+| [`validate.py`](validate.py) | validate against the SBGN schema, the specifications and the schematron rules |
 | [`ethanol.py`](ethanol.py) | build a map step by step and render it as an image |
 
 `ethanol.py` renders images with a web service and therefore needs an internet connection, all other examples run offline.

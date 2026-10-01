@@ -320,11 +320,35 @@ def map_language(map: Map) -> MapLanguage | None:
         The language of the map, None if neither its version nor its language
         is a known value.
     """
-    if isinstance(map.version, MapVersion):
-        return SPECIFICATIONS[map.version].language
-    if isinstance(map.language, MapLanguage):
-        return map.language
-    return None
+    return language_of(map.version, map.language)
+
+
+def language_of(
+    version: MapVersion | str | None, language: MapLanguage | str | None
+) -> MapLanguage | None:
+    """Get the language of a map from its version and its language.
+
+    The rule of [`map_language`][libsbgnpy.specification.map_language] for the
+    values of the attributes, e.g., as they are in a document which is not
+    bound: the language is taken from the version, else from the language.
+
+    Args:
+        version: the version of the map, a member of `MapVersion` or its value.
+        language: the language of the map, a member of `MapLanguage` or its
+            value.
+
+    Returns:
+        The language, None if neither the version nor the language is a known
+        value.
+    """
+    try:
+        return SPECIFICATIONS[MapVersion(version)].language
+    except ValueError:
+        pass
+    try:
+        return MapLanguage(language)
+    except ValueError:
+        return None
 
 
 def map_specification(map: Map) -> Specification | None:

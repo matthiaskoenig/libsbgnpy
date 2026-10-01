@@ -54,8 +54,9 @@ dev = [
     "pytest-cov>=7.1.0",
     "zensical>=0.0.59",
     "mkdocstrings-python>=2.0.8",
-    "lxml-stubs>=0.5.1",
     "xsdata[cli]>=26.2",
+    "types-lxml>=2026.2.16",
+    "tox-uv>=1.36.0",
 ]
 
 [project.urls]
