@@ -144,7 +144,7 @@ The document is read like `validate_xsd` reads it, a 0.1 or 0.2 document is upco
 
 !!! note
 
-    The rules were written for the earlier specifications, e.g., PD L1V1.3, and some of the reference maps of the current specifications break them. Rule `pd10131`, for example, requires every entity pool node to be connected to an arc, which the maps showing glyphs on their own break. The issues are therefore kept apart from the errors of `validate`; review them rather than rejecting a document because of them. The rules are the ones of libSBGN with three XPath 2.0 expressions rewritten for the XSLT 1.0 processor of lxml, see [`libsbgnpy/schema/README.md`](https://github.com/matthiaskoenig/libsbgnpy/blob/develop/src/libsbgnpy/schema/README.md).
+    The rules were written for the earlier specifications, e.g., PD L1V1.3, and some of the reference maps of the current specifications break them. Rule `pd10131`, for example, requires every entity pool node to be connected to an arc, which the maps showing glyphs on their own break. The issues are therefore kept apart from the errors of `validate`; review them rather than rejecting a document because of them, see [issue #103](https://github.com/matthiaskoenig/libsbgnpy/issues/103). The rules are the ones of libSBGN with three XPath 2.0 expressions rewritten for the XSLT 1.0 processor of lxml, see [`libsbgnpy/schema/README.md`](https://github.com/matthiaskoenig/libsbgnpy/blob/develop/src/libsbgnpy/schema/README.md).
 
 ## Examples
 
