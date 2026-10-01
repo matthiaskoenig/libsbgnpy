@@ -45,7 +45,7 @@ The script is the single source of truth for the generation, `xsdata[cli]` is a 
 
 `sbgn_pd.sch`, `sbgn_er.sch` and `sbgn_af.sch` are the rules of the SBGN languages in `validation/rules` of [sbgn/libsbgn](https://github.com/sbgn/libsbgn) at commit [`2aae05b`](https://github.com/sbgn/libsbgn/tree/2aae05b). The Java library runs them with Saxon, an XSLT 2.0 processor; `libsbgnpy` runs them with `lxml.isoschematron`, which implements XSLT 1.0 and XPath 1.0. Three expressions of the rules are XPath 2.0, they are rewritten into XPath 1.0 and marked with a `libsbgnpy:` comment:
 
-- `sbgn_pd.sch`, rule `pd10133`: `count(distinct-values(//sbgn:arc[@source = $port-id-N]/@target))` counts the distinct targets of the arcs leaving a port; `count(//sbgn:arc[@source = $port-id-N][not(@target = preceding::sbgn:arc[@source = $port-id-N]/@target)])` counts the arcs whose target no earlier arc of the port has, which is the same number (N = 1, 2),
+- `sbgn_pd.sch`, rule `pd10133`: `count(distinct-values(//sbgn:arc[@source = $port-id-N]/@target))` counts the distinct targets of the arcs leaving a port; `count(//sbgn:arc[@source = $port-id-N][@target][not(@target = preceding::sbgn:arc[@source = $port-id-N]/@target)])` counts the arcs with a target which no earlier arc of the port has, which is the same number (N = 1, 2); `test_pd10133` pins the rewrite, libsbgn has no test files for the rule,
 - `sbgn_er.sch`, rule `er20001`: `../local-name()` becomes `local-name(..)`.
 
 With these changes the rules report the same rule failures as the Java library on the test files of libsbgn and on `tests/data`. Besides, the line endings are converted to LF and trailing whitespace is removed, the conventions of the repository.

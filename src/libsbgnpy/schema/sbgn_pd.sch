@@ -534,10 +534,10 @@ Schematron validation for SBGN PD
 			<iso:let name="port-id-2" value="./sbgn:port[position() = 2]/@id"/>
 			<iso:let name="arc-count-1" value="count(//sbgn:arc[@source = $port-id-1])"/>
 			<!-- libsbgnpy: XPath 1.0 for count(distinct-values(//sbgn:arc[@source = $port-id-1]/@target)) -->
-			<iso:let name="arc-count-distinct-1" value="count(//sbgn:arc[@source = $port-id-1][not(@target = preceding::sbgn:arc[@source = $port-id-1]/@target)])"/>
+			<iso:let name="arc-count-distinct-1" value="count(//sbgn:arc[@source = $port-id-1][@target][not(@target = preceding::sbgn:arc[@source = $port-id-1]/@target)])"/>
 			<iso:let name="arc-count-2" value="count(//sbgn:arc[@source = $port-id-2])"/>
 			<!-- libsbgnpy: XPath 1.0 for count(distinct-values(//sbgn:arc[@source = $port-id-2]/@target)) -->
-			<iso:let name="arc-count-distinct-2" value="count(//sbgn:arc[@source = $port-id-2][not(@target = preceding::sbgn:arc[@source = $port-id-2]/@target)])"/>
+			<iso:let name="arc-count-distinct-2" value="count(//sbgn:arc[@source = $port-id-2][@target][not(@target = preceding::sbgn:arc[@source = $port-id-2]/@target)])"/>
 			<iso:assert
 				id="pd10133"
 				name="pns-arc-count-eq-2"

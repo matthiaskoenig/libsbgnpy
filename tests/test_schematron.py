@@ -200,3 +200,51 @@ def test_malformed_xml(tmp_path: Path) -> None:
 
     with pytest.raises(etree.XMLSyntaxError):
         validate_schematron(f)
+
+
+#: a process whose output port has two production arcs, see `test_pd10133`
+PD10133_DOCUMENT = """<sbgn xmlns="http://sbgn.org/libsbgn/0.3">
+  <map id="m" language="process description">
+    <glyph class="simple chemical" id="a"><bbox x="0" y="0" w="10" h="10"/></glyph>
+    <glyph class="simple chemical" id="b"><bbox x="40" y="0" w="10" h="10"/></glyph>
+    <glyph class="simple chemical" id="c"><bbox x="40" y="20" w="10" h="10"/></glyph>
+    <glyph class="process" id="p">
+      <bbox x="20" y="0" w="10" h="10"/>
+      <port id="p.1" x="20" y="5"/>
+      <port id="p.2" x="30" y="5"/>
+    </glyph>
+    <arc class="consumption" id="a1" source="a" target="p.1">
+      <start x="10" y="5"/><end x="20" y="5"/>
+    </arc>
+    <arc class="production" id="a2" source="p.2" target="b">
+      <start x="30" y="5"/><end x="40" y="5"/>
+    </arc>
+    <arc class="production" id="a3" source="p.2" {target}>
+      <start x="30" y="5"/><end x="40" y="25"/>
+    </arc>
+  </map>
+</sbgn>
+"""
+
+
+@pytest.mark.parametrize(
+    ("target", "broken"),
+    [
+        pytest.param('target="c"', False, id="distinct targets"),
+        pytest.param('target="b"', True, id="same target"),
+        # no XPath 2.0 value of an absent target, as in the Java library
+        pytest.param("", True, id="no target"),
+    ],
+)
+def test_pd10133(tmp_path: Path, target: str, broken: bool) -> None:
+    """The arcs of a port of a process lead to distinct entity pool nodes.
+
+    The rule counts the distinct targets with an XPath 1.0 expression instead of
+    `distinct-values`, see `src/libsbgnpy/schema/README.md`.
+    """
+    f = tmp_path / "pd10133.sbgn"
+    f.write_text(PD10133_DOCUMENT.format(target=target))
+
+    rule_ids = {issue.rule_id for issue in validate_schematron(f)}
+
+    assert ("pd10133" in rule_ids) is broken
