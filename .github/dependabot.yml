@@ -1,11 +1,12 @@
-# Keep the GitHub Actions used in the workflows up to date.
+# Keep the GitHub Actions used in the workflows and the python dependencies up to date,
+# monthly, since every update pull request runs the checks.
 # See https://docs.github.com/code-security/dependabot/dependabot-version-updates
 version: 2
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     # a single pull request for all action updates instead of one per action
     groups:
       github-actions:
@@ -18,7 +19,7 @@ updates:
   - package-ecosystem: "uv"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     # a single pull request for all dependency updates instead of one per package
     groups:
       python-dependencies:

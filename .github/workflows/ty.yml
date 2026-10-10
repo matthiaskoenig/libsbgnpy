@@ -30,6 +30,7 @@ jobs:
         with:
           python-version: "3.14"
           enable-cache: true
+          cache-python: true
       - name: Type check with tox
         env:
           # render diagnostics as GitHub Actions workflow annotations
