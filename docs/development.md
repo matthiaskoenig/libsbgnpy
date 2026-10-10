@@ -103,7 +103,7 @@ and the complete matrix, including the `ty` environment, in parallel with
 tox run-parallel
 ```
 
-This needs the interpreters to be available, which uv installs with `uv python install 3.11 3.12 3.13 3.14 3.15`. It is the complete test and is run before a pull request is opened: continuous integration runs only `py3.14`, on linux, macos and windows, as `uvx --with tox-uv tox -e py3.14`.
+This needs the interpreters to be available, which uv installs with `uv python install 3.11 3.12 3.13 3.14 3.15`. It is the complete test and is run before a pull request is opened: continuous integration runs only `py3.14`, on linux, macos and windows, as `uvx --with tox-uv tox -e py3.14 -- -n auto --durations=15`, i.e., with the tests distributed over the cores of the runner by pytest-xdist and the 15 slowest tests listed. What follows `--` is passed on to pytest, so `tox r -e py3.14 -- -n auto` does the same locally.
 
 Python 3.15 is tested using the available prerelease until its final release. The default development, documentation and release environments remain on Python 3.14.
 
