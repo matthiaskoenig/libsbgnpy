@@ -19,12 +19,14 @@ A pull request can only be merged once the four required checks are green:
 
 | check   | workflow      | content                                                              |
 | ------- | ------------- | -------------------------------------------------------------------- |
-| `tests` | `ci-cd.yml`   | python 3.11 to 3.15 on linux, python 3.15 on macos and windows        |
+| `tests` | `ci-cd.yml`   | the test matrix, python 3.14 on linux, macos and windows              |
 | `ruff`  | `ruff.yml`    | `ruff check` and `ruff format --check`                                |
 | `ty`    | `ty.yml`      | `tox r -e ty`                                                         |
 | `docs`  | `docs.yml`    | the zensical build including the api reference and the agent files    |
 
 `tests` aggregates the test matrix into a single job, so the name of the required check stays the same when the matrix changes.
+
+Continuous integration is kept small: every workflow cancels its running build when a newer commit of the same branch or pull request arrives, uv caches the packages and the interpreters between runs, dependabot proposes its updates once a month, and the matrix tests only python 3.14. The other python versions are tested locally, see [Testing](#testing), before a pull request is opened.
 
 Further rules of a pull request:
 
@@ -101,7 +103,7 @@ and the complete matrix, including the `ty` environment, in parallel with
 tox run-parallel
 ```
 
-This needs the interpreters to be available, which uv installs with `uv python install 3.11 3.12 3.13 3.14 3.15`. Continuous integration runs the same environments as `uvx --with tox-uv tox -e py3.15`.
+This needs the interpreters to be available, which uv installs with `uv python install 3.11 3.12 3.13 3.14 3.15`. It is the complete test and is run before a pull request is opened: continuous integration runs only `py3.14`, on linux, macos and windows, as `uvx --with tox-uv tox -e py3.14`.
 
 Python 3.15 is tested using the available prerelease until its final release. The default development, documentation and release environments remain on Python 3.14.
 

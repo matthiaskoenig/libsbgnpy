@@ -16,6 +16,12 @@ dist/
 coverage.xml
 htmlcov/
 
+# working files of coding agents, their design documents and plans are not committed
+.superpowers/
+docs/superpowers/
+.claude/plans/
+.claude/specs/
+
 # editors
 .idea/
 .vscode/
