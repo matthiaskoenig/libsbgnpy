@@ -564,7 +564,7 @@ requires-dist = [
     { name = "requests", specifier = ">=2.34.2" },
     { name = "rich", specifier = ">=15.0.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.16.6" },
-    { name = "tox", marker = "extra == 'dev'", specifier = ">=4.61.2" },
+    { name = "tox", marker = "extra == 'dev'", specifier = ">=4.61.2,!=4.67.5" },
     { name = "tox-uv", marker = "extra == 'dev'", specifier = ">=1.36.0" },
     { name = "ty", marker = "extra == 'dev'", specifier = ">=0.0.78" },
     { name = "types-lxml", marker = "extra == 'dev'", specifier = ">=2026.2.16" },
