@@ -33,12 +33,11 @@ jobs:
         python-version: ["3.14"]
 
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       with:
         persist-credentials: false
     - name: Install uv and set the python version
-      # astral-sh/setup-uv publishes no floating major tag beyond v7
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d  # v10.4.0
       with:
         python-version: ${{ matrix.python-version }}
         # a release run restores no cache, which zizmor cannot tell from the
@@ -80,11 +79,11 @@ jobs:
       id-token: write  # trusted publishing to PyPI
       contents: write  # create the GitHub release
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       with:
         persist-credentials: false
     - name: Install uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d  # v10.4.0
       with:
         python-version: "3.14"
         # a release is built from a clean state, never from a restored cache
@@ -105,7 +104,7 @@ jobs:
       with:
         packages-dir: dist
     - name: Create GitHub release
-      uses: softprops/action-gh-release@v3
+      uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3  # v3.0.4
       with:
         body_path: "release-notes/${{ github.ref_name }}.md"
         draft: false
@@ -120,10 +119,17 @@ jobs:
     permissions:
       contents: write  # fast-forward main to the released commit
     steps:
-    - uses: actions/checkout@v7
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       with:
         # a shallow clone cannot be pushed to another branch
         fetch-depth: 0
+        persist-credentials: false
     - name: Fast-forward main to the release
       # no --force: the push fails loudly if it would not be a fast-forward
-      run: git push origin HEAD:main
+      env:
+        GH_TOKEN: ${{ github.token }}
+      # Supply credentials only to this push, without storing them in the checkout.
+      run: >-
+        git -c credential.helper=
+        -c 'credential.helper=!f() { printf "username=x-access-token\npassword=%s\n" "$GH_TOKEN"; }; f'
+        push origin HEAD:main

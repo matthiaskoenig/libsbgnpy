@@ -67,6 +67,8 @@ def render_sbgn(sbgn: Sbgn, image_file: Path, file_format: str = "png") -> None:
     is. The service currently returns a JPEG although it declares a PNG; the
     JPEG is written as it is and a warning is logged.
 
+    Redirects are rejected so that the document is only sent to `RENDER_URL`.
+
     Args:
         sbgn: SBGN document
         image_file: path of the image to create, ending in `.<file_format>`
@@ -75,8 +77,8 @@ def render_sbgn(sbgn: Sbgn, image_file: Path, file_format: str = "png") -> None:
 
     Raises:
         ValueError: if the format is not supported or the file has another suffix
-        RenderError: if the web service answers with something else than an
-            image, or with an image larger than `RENDER_MAX_BYTES`
+        RenderError: if the web service redirects, answers with something else
+            than an image, or with an image larger than `RENDER_MAX_BYTES`
         requests.RequestException: if the web service cannot be reached or fails;
             `RenderError` is a subclass
     """
@@ -97,6 +99,8 @@ def render_sbgn(sbgn: Sbgn, image_file: Path, file_format: str = "png") -> None:
         files={"file": ("render.sbgn", xml_bytes, "application/xml")},
         timeout=RENDER_TIMEOUT,
         stream=True,
+        allow_redirects=False,
+        hooks={"response": _reject_redirect},
     ) as response:
         response.raise_for_status()
         content_type = response.headers.get("Content-Type", "")
@@ -117,6 +121,35 @@ def render_sbgn(sbgn: Sbgn, image_file: Path, file_format: str = "png") -> None:
         raise RenderError("The web service returned no image.", response=response)
     _write_atomic(image_file, image)
     logger.info("SBGN rendered: %s", image_file)
+
+
+def _reject_redirect(
+    response: requests.Response, *args: object, **kwargs: object
+) -> requests.Response:
+    """Reject redirects before Requests reads their bodies.
+
+    Requests consumes a redirect body even with `allow_redirects=False` to
+    prepare the next request. A response hook runs before that happens, keeping
+    the body outside the image size limit from being read into memory. The
+    response must be closed here because the caller has not received it yet.
+
+    Args:
+        response: response from the rendering web service
+        args: positional arguments supplied by Requests
+        kwargs: request options supplied by Requests
+
+    Returns:
+        The response if it does not redirect.
+
+    Raises:
+        RenderError: if the web service redirects
+    """
+    if 300 <= response.status_code < 400:
+        response.close()
+        raise RenderError(
+            "The rendering web service redirected the request.", response=response
+        )
+    return response
 
 
 def _read_limited(response: requests.Response) -> bytes:

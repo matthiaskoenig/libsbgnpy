@@ -1,6 +1,6 @@
 # Installation
 
-`libsbgnpy` requires python >= 3.11 and is available from [pypi](https://pypi.python.org/pypi/libsbgnpy).
+`libsbgnpy` requires python >= 3.11.5 and is available from [pypi](https://pypi.python.org/pypi/libsbgnpy).
 
 ## With uv
 

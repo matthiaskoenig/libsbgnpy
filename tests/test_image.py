@@ -8,10 +8,12 @@ local HTTP server; `test_render_sbgn` queries the real service, it is marked as
 import threading
 from collections.abc import Iterator
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from io import BytesIO
 from pathlib import Path
 
 import pytest
 import requests
+from requests.adapters import BaseAdapter
 
 from libsbgnpy import Sbgn, read_sbgn_from_file, render_sbgn
 from libsbgnpy import image as image_module
@@ -145,6 +147,54 @@ def test_render_sbgn_server_error(tmp_path: Path, sbgn: Sbgn, service: Service) 
     with pytest.raises(requests.HTTPError):
         render_sbgn(sbgn, tmp_path / "test.png")
     assert not (tmp_path / "test.png").exists()
+
+
+@pytest.mark.parametrize("status", [301, 302, 303, 307, 308])
+def test_render_sbgn_rejects_redirects(
+    tmp_path: Path, sbgn: Sbgn, monkeypatch: pytest.MonkeyPatch, status: int
+) -> None:
+    """A redirect cannot forward the document or replace an existing image."""
+    requests_sent: list[requests.PreparedRequest] = []
+
+    class RedirectBody(BytesIO):
+        def read(self, *args: object, **kwargs: object) -> bytes:
+            """Fail if Requests consumes a redirect body before it is rejected."""
+            raise AssertionError("The redirect body must not be read.")
+
+    class RedirectAdapter(BaseAdapter):
+        def send(
+            self, request: requests.PreparedRequest, *args: object, **kwargs: object
+        ) -> requests.Response:
+            """Redirect the initial upload to an unrelated origin."""
+            requests_sent.append(request)
+            assert request.url is not None
+            response = requests.Response()
+            response.request = request
+            response.url = request.url
+            response.status_code = status if len(requests_sent) == 1 else 200
+            response.headers["Content-Type"] = "image/png"
+            response.headers["Location"] = "https://untrusted.example/upload"
+            response.raw = RedirectBody(PNG)
+            return response
+
+        def close(self) -> None:
+            """Close the in-memory transport, which holds no connections."""
+
+    adapter = RedirectAdapter()
+    monkeypatch.setattr(requests.Session, "get_adapter", lambda self, url: adapter)
+    f_png = tmp_path / "test.png"
+    f_png.write_bytes(b"previous")
+
+    with pytest.raises(RenderError, match="redirected") as error:
+        render_sbgn(sbgn, f_png)
+
+    assert error.value.response is not None
+    assert error.value.response.status_code == status
+    assert error.value.response.raw.closed
+    assert len(requests_sent) == 1
+    assert requests_sent[0].url == image_module.RENDER_URL
+    assert f_png.read_bytes() == b"previous"
+    assert [f.name for f in tmp_path.iterdir()] == ["test.png"]
 
 
 def test_render_sbgn_unsupported_format(tmp_path: Path, sbgn: Sbgn) -> None:
