@@ -57,6 +57,11 @@ RENDER_NAMESPACES_OLD = ("http://projects.eml.org/bcb/sbml/render/level2",)
 RENDER_ATTRIBUTES_OLD = {"linearGradient": ("z1", "z2", "spreadMethod")}
 
 
+def _binding_context() -> XmlContext:
+    """Restrict XML-selected model types to the library's bindings."""
+    return XmlContext(models_package="libsbgnpy.")
+
+
 def _xml_parser(encoding: str | None = None) -> etree.XMLParser:
     """Create the lxml parser for untrusted documents.
 
@@ -218,7 +223,9 @@ def _read_sbgn(source: str | bytes) -> Sbgn:
         # a value outside of an enumeration is kept as a string, xsdata warns
         warnings.simplefilter("always", ConverterWarning)
         try:
-            sbgn = XmlParser(handler=LxmlEventHandler).parse(root, Sbgn)
+            sbgn = XmlParser(
+                context=_binding_context(), handler=LxmlEventHandler
+            ).parse(root, Sbgn)
         except TypeError as err:
             # a required element or attribute is missing, the dataclass rejects it
             raise ParserError(f"The document is no valid SBGN-ML: {err}") from err
@@ -315,6 +322,8 @@ def read_render_from_string(xml_str: str) -> RenderInformation:
     Render information is stored in the `extension` of an SBGN element, see
     `libsbgnpy.render`.
 
+    The string is already decoded, so any encoding declared in it is ignored.
+
     Args:
         xml_str: `renderInformation` document
 
@@ -324,15 +333,40 @@ def read_render_from_string(xml_str: str) -> RenderInformation:
     Raises:
         xsdata.exceptions.ParserError: if the content is no render information
     """
+    try:
+        root = parse_xml(xml_str)
+    except etree.XMLSyntaxError as err:
+        raise ParserError(str(err)) from err
+    return _bind_render(root)
+
+
+def _bind_render(root: etree._Element) -> RenderInformation:
+    """Bind parsed render XML to its data model.
+
+    Args:
+        root: root element of the render information
+
+    Returns:
+        The render information.
+
+    Raises:
+        xsdata.exceptions.ParserError: if the content is no render information
+    """
     parser = XmlParser(
-        context=XmlContext(),
+        context=_binding_context(),
+        handler=LxmlEventHandler,
         config=ParserConfig(
             fail_on_converter_warnings=False,
             fail_on_unknown_attributes=True,
             fail_on_unknown_properties=True,
         ),
     )
-    return parser.from_string(xml_str, RenderInformation)
+    try:
+        return parser.parse(root, RenderInformation)
+    except TypeError as err:
+        raise ParserError(
+            f"The document is no valid render information: {err}"
+        ) from err
 
 
 def write_render_to_string(render_info: RenderInformation) -> str:
@@ -567,7 +601,7 @@ def read_render_from_extension(
         if etree.QName(root).namespace in RENDER_NAMESPACES_OLD:
             root = _upconvert_render(root)
         if root.tag == qname:
-            return read_render_from_string(etree.tostring(root, encoding="unicode"))
+            return _bind_render(root)
     return None
 
 

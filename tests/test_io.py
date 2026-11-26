@@ -148,6 +148,32 @@ def test_read_render_from_string() -> None:
     assert len(render_info.list_of_styles.style) == 2
 
 
+def test_read_render_from_string_rejects_incomplete_xml() -> None:
+    """An incomplete XML document raises a `ParserError`."""
+    xml_str = RENDER_XML.rstrip().removesuffix("</renderInformation>")
+    with pytest.raises(ParserError, match="Premature end"):
+        read_render_from_string(xml_str)
+
+
+def test_read_render_from_string_ignores_declared_encoding() -> None:
+    """An already decoded string keeps Unicode regardless of its declaration."""
+    xml_str = '<?xml version="1.0" encoding="ISO-8859-1"?>' + RENDER_XML.replace(
+        'programName="libsbgnpy"', 'programName="König"'
+    )
+    assert read_render_from_string(xml_str).program_name == "König"
+
+
+def test_read_render_from_string_does_not_expand_entities() -> None:
+    """An inline entity does not add a color definition to render information."""
+    dtd = """<!DOCTYPE renderInformation [
+    <!ENTITY extraColor '<colorDefinition id="extra" value="#000000"/>'>
+]>"""
+    xml_str = dtd + RENDER_XML.replace(
+        "</listOfColorDefinitions>", "&extraColor;</listOfColorDefinitions>"
+    )
+    assert read_render_from_string(xml_str) == read_render_from_string(RENDER_XML)
+
+
 def test_render_roundtrip() -> None:
     """Render information survives the round trip."""
     render_info = read_render_from_string(RENDER_XML)

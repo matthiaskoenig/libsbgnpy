@@ -7,7 +7,7 @@ name = "libsbgnpy"
 dynamic = ["version"]
 description = "libsbgnpy are python utilities for working with SBGN."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11.5"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [
@@ -38,29 +38,30 @@ keywords = [
 ]
 dependencies = [
 	# the CA bundle of requests, without the emSign roots of GHSA-6q48-6c7w-9gw2
-	"certifi>=2026.10.19",
+	"certifi>=2026.11.20",
 	"lxml>=6.1.3",
 	"requests>=2.34.2",
 	"rich>=15.0.0",
-	"xsdata>=26.2",
+	"xsdata>=26.11",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "bump-my-version>=1.5.1",
-    "ruff>=0.16.6",
-    "pre-commit>=4.6.2",
-    "ty>=0.0.78",
-    # 4.67.5 refuses its package staging directory when it was created under
-    # umask 002, tox-dev/tox#4357
-    "tox>=4.61.2,!=4.67.5",
-    "pytest>=9.1.1",
+    "bump-my-version>=1.8.1",
+    "ruff>=0.17.6",
+    "pre-commit>=4.7.0",
+    "ty>=0.0.111",
+    "tox>=4.67.16",
+    "pytest>=9.2.0",
     "pytest-cov>=7.1.0",
-    "zensical>=0.0.59",
-    "mkdocstrings-python>=2.0.8",
-    "xsdata[cli]>=26.2",
+    "zensical>=0.1.3",
+    "mkdocstrings-python>=2.0.11",
+    "xsdata[cli]>=26.11",
+    # Security floors for transitive CSS and filename pattern parsers.
+    "soupsieve>=4.1.3",
+    "wcmatch>=12.0.4",
     "types-lxml>=2026.2.16",
-    "tox-uv>=1.36.0",
+    "tox-uv>=1.37.9",
 ]
 
 [project.urls]
@@ -123,4 +124,4 @@ error-on-warning = true
 # class, which a subclass replaces by a class of its own; the generated `Meta`
 # classes are no subclasses of each other and are only read by xsdata
 include = ["src/libsbgnpy/sbgn.py", "src/libsbgnpy/render.py"]
-rules = { invalid-attribute-override = "ignore" }
+rules = { incompatible-attribute-override = "ignore" }
